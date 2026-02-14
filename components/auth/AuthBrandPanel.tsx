@@ -92,7 +92,7 @@ export default function AuthBrandPanel() {
                 </div>
 
                 {/* Card 1: Recent assignment */}
-                <FloatingCard
+                {/* <FloatingCard
                     className="absolute top-[12%] left-[7%] w-[280px]"
                     delay={0.3}
                     floatDuration={7}
@@ -122,10 +122,10 @@ export default function AuthBrandPanel() {
                             </div>
                         </div>
                     </div>
-                </FloatingCard>
+                </FloatingCard> */}
 
                 {/* Card 2: Live activity */}
-                <FloatingCard
+                {/* <FloatingCard
                     className="absolute top-[10%] right-[8%] w-[240px]"
                     delay={0.5}
                     floatDuration={8}
@@ -149,10 +149,10 @@ export default function AuthBrandPanel() {
                             </div>
                         </div>
                     </div>
-                </FloatingCard>
+                </FloatingCard> */}
 
                 {/* Card 3: This week stats */}
-                <FloatingCard
+                {/* <FloatingCard
                     className="absolute top-[45%] left-[6%] w-[220px]"
                     delay={0.7}
                     floatDuration={9}
@@ -178,10 +178,10 @@ export default function AuthBrandPanel() {
                             Assignments completed
                         </p>
                     </div>
-                </FloatingCard>
+                </FloatingCard> */}
 
                 {/* Card 4: Student count */}
-                <FloatingCard
+                {/* <FloatingCard
                     className="absolute top-[40%] right-[7%] w-[200px]"
                     delay={0.9}
                     floatDuration={7.5}
@@ -201,10 +201,10 @@ export default function AuthBrandPanel() {
                             Across 12 countries
                         </p>
                     </div>
-                </FloatingCard>
+                </FloatingCard> */}
 
                 {/* Card 5: Turnaround info */}
-                <FloatingCard
+                {/* <FloatingCard
                     className="absolute bottom-[16%] left-[10%] w-[235px]"
                     delay={1.1}
                     floatDuration={6.5}
@@ -218,10 +218,10 @@ export default function AuthBrandPanel() {
                             Rush delivery available for urgent deadlines
                         </p>
                     </div>
-                </FloatingCard>
+                </FloatingCard> */}
 
                 {/* Card 6: Quality note */}
-                <FloatingCard
+                {/* <FloatingCard
                     className="absolute bottom-[14%] right-[10%] w-[210px]"
                     delay={1.3}
                     floatDuration={8}
@@ -240,7 +240,7 @@ export default function AuthBrandPanel() {
                             Full report included with every order
                         </p>
                     </div>
-                </FloatingCard>
+                </FloatingCard> */}
 
                 {/* Central tagline */}
                 <motion.div
