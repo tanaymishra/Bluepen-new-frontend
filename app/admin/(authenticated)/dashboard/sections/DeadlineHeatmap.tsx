@@ -144,9 +144,9 @@ export default function DeadlineHeatmap() {
                         </button>
                     </div>
                     <div className="max-h-[80px] overflow-y-auto space-y-1">
-                        {selectedData.assignments.slice(0, 4).map((a, i) => (
-                            <p key={i} className="text-[11px] text-gray-500 font-poppins truncate">
-                                • {a}
+                        {selectedData.assignments.slice(0, 4).map((a) => (
+                            <p key={a.id} className="text-[11px] text-gray-500 font-poppins truncate">
+                                • {a.id} — {a.title}
                             </p>
                         ))}
                         {selectedData.count > 4 && (

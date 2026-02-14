@@ -19,18 +19,6 @@ const slideIcons: Record<AdminSlide["type"], React.ElementType> = {
     pm_of_month: UserCheck,
 };
 
-const slideBg: Record<AdminSlide["type"], string> = {
-    weather: "from-sky-500/10 to-blue-500/5",
-    freelancer_of_month: "from-primary/10 to-primary/5",
-    pm_of_month: "from-indigo-500/10 to-primary/5",
-};
-
-const slideIconBg: Record<AdminSlide["type"], string> = {
-    weather: "bg-sky-500/10 text-sky-600",
-    freelancer_of_month: "bg-primary/10 text-primary",
-    pm_of_month: "bg-indigo-500/10 text-indigo-600",
-};
-
 export default function HeroSlideshow() {
     const [current, setCurrent] = useState(0);
     const total = ADMIN_SLIDES.length;
@@ -47,7 +35,13 @@ export default function HeroSlideshow() {
     const Icon = slideIcons[slide.type];
 
     return (
-        <div className="relative rounded-2xl border border-gray-100 bg-white overflow-hidden h-full min-h-[220px]">
+        <div className="relative rounded-2xl overflow-hidden h-full min-h-[220px] bg-[#012551]">
+            {/* Background decoration */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-white/[0.04] rounded-full -translate-y-1/3 translate-x-1/4" />
+                <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-white/[0.03] rounded-full translate-y-1/3 -translate-x-1/4" />
+            </div>
+
             <AnimatePresence mode="wait">
                 <motion.div
                     key={slide.id}
@@ -55,39 +49,31 @@ export default function HeroSlideshow() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -30 }}
                     transition={{ duration: 0.35, ease: "easeInOut" }}
-                    className={cn(
-                        "absolute inset-0 bg-gradient-to-br p-6 flex flex-col justify-between",
-                        slideBg[slide.type]
-                    )}
+                    className="absolute inset-0 p-6 flex flex-col justify-between"
                 >
                     {/* Top */}
                     <div className="flex items-start justify-between">
-                        <div
-                            className={cn(
-                                "w-11 h-11 rounded-xl flex items-center justify-center",
-                                slideIconBg[slide.type]
-                            )}
-                        >
-                            <Icon className="w-5 h-5" />
+                        <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center">
+                            <Icon className="w-5 h-5 text-white/80" />
                         </div>
                         {slide.type === "weather" && (
-                            <Sun className="w-10 h-10 text-amber-400 opacity-40" />
+                            <Sun className="w-10 h-10 text-[#F8D881] opacity-50" />
                         )}
                     </div>
 
                     {/* Content */}
                     <div className="mt-4">
-                        <p className="text-[11px] uppercase tracking-[0.1em] text-gray-400 font-poppins font-semibold">
+                        <p className="text-[11px] uppercase tracking-[0.1em] text-white/50 font-poppins font-semibold">
                             {slide.title}
                         </p>
-                        <h3 className="text-xl font-bold text-gray-900 font-montserrat mt-1">
+                        <h3 className="text-xl font-bold text-white font-montserrat mt-1">
                             {slide.subtitle}
                         </h3>
-                        <p className="text-2xl font-extrabold text-primary font-montserrat mt-1">
+                        <p className="text-2xl font-extrabold text-[#F8D881] font-montserrat mt-1">
                             {slide.highlight}
                         </p>
                         {slide.meta && (
-                            <p className="text-xs text-gray-500 font-poppins mt-2">
+                            <p className="text-xs text-white/60 font-poppins mt-2">
                                 {slide.meta}
                             </p>
                         )}
@@ -99,9 +85,9 @@ export default function HeroSlideshow() {
             <div className="absolute bottom-4 right-4 flex items-center gap-2 z-10">
                 <button
                     onClick={prev}
-                    className="w-7 h-7 rounded-lg bg-white/80 backdrop-blur-sm border border-gray-200 flex items-center justify-center hover:bg-white transition-colors"
+                    className="w-7 h-7 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
                 >
-                    <ChevronLeft className="w-3.5 h-3.5 text-gray-600" />
+                    <ChevronLeft className="w-3.5 h-3.5 text-white/80" />
                 </button>
                 <div className="flex items-center gap-1.5">
                     {ADMIN_SLIDES.map((_, i) => (
@@ -111,17 +97,17 @@ export default function HeroSlideshow() {
                             className={cn(
                                 "h-1.5 rounded-full transition-all duration-300",
                                 i === current
-                                    ? "w-5 bg-primary"
-                                    : "w-1.5 bg-gray-300 hover:bg-gray-400"
+                                    ? "w-5 bg-[#F8D881]"
+                                    : "w-1.5 bg-white/30 hover:bg-white/50"
                             )}
                         />
                     ))}
                 </div>
                 <button
                     onClick={next}
-                    className="w-7 h-7 rounded-lg bg-white/80 backdrop-blur-sm border border-gray-200 flex items-center justify-center hover:bg-white transition-colors"
+                    className="w-7 h-7 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
                 >
-                    <ChevronRight className="w-3.5 h-3.5 text-gray-600" />
+                    <ChevronRight className="w-3.5 h-3.5 text-white/80" />
                 </button>
             </div>
         </div>

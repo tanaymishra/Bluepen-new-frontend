@@ -9,6 +9,8 @@ import {
     CalendarDays,
     X,
     FileText,
+    UserCog,
+    PenTool,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -222,18 +224,43 @@ export default function FullCalendar() {
                                 </button>
                             </div>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 max-h-[200px] overflow-y-auto">
-                                {selectedDeadline.assignments.map((a, i) => (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 max-h-[280px] overflow-y-auto">
+                                {selectedDeadline.assignments.map((a) => (
                                     <div
-                                        key={i}
-                                        className="flex items-center gap-2.5 p-3 rounded-xl bg-gray-50 border border-gray-100 hover:border-primary/20 transition-colors"
+                                        key={a.id}
+                                        className="p-3 rounded-xl bg-gray-50 border border-gray-100 hover:border-primary/20 transition-colors"
                                     >
-                                        <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                                            <FileText className="w-3.5 h-3.5 text-primary" />
+                                        {/* Title row */}
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                                                <FileText className="w-3.5 h-3.5 text-primary" />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="text-[12px] text-gray-800 font-poppins font-semibold truncate">
+                                                    {a.title}
+                                                </p>
+                                                <p className="text-[10px] text-gray-400 font-poppins">
+                                                    {a.id}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <p className="text-[12px] text-gray-700 font-poppins font-medium truncate">
-                                            {a}
-                                        </p>
+                                        {/* PM & Writer */}
+                                        <div className="space-y-1 pl-9">
+                                            <div className="flex items-center gap-1.5">
+                                                <UserCog className="w-3 h-3 text-indigo-500 shrink-0" />
+                                                <span className="text-[11px] text-gray-500 font-poppins">PM:</span>
+                                                <span className="text-[11px] text-gray-700 font-poppins font-medium truncate">
+                                                    {a.pm}
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center gap-1.5">
+                                                <PenTool className="w-3 h-3 text-emerald-500 shrink-0" />
+                                                <span className="text-[11px] text-gray-500 font-poppins">Writer:</span>
+                                                <span className="text-[11px] text-gray-700 font-poppins font-medium truncate">
+                                                    {a.writer}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
