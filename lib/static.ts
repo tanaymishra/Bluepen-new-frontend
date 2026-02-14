@@ -411,3 +411,59 @@ export const MOCK_NOTIFICATIONS: AppNotification[] = [
     { id: "N-007", type: "assignment", title: "Under Review", message: "Your assignment 'Climate Change Effects on Coastal Biodiversity' is now under quality review.", timestamp: "2026-02-12T15:32:00", read: true, link: "/students/assignments/ASG-1003" },
     { id: "N-008", type: "payment", title: "Refund Processed", message: "A refund of ₹1,200 has been credited to your wallet.", timestamp: "2026-02-05T16:02:00", read: true },
 ];
+
+/* ──────────────────────────────────────────────────────────
+   Mock Referrals
+   ────────────────────────────────────────────────────────── */
+
+export interface Referral {
+    id: string;
+    name: string;
+    email: string;
+    status: "pending" | "signed_up" | "first_order" | "rewarded";
+    invitedAt: string;
+    rewardAmount: number | null;
+}
+
+export const MOCK_REFERRAL_DATA = {
+    code: "RAHUL15",
+    link: "https://bluepen.co.in/ref/RAHUL15",
+    totalEarnings: 2250,
+    totalReferred: 6,
+    successfulReferrals: 3,
+    referrals: [
+        { id: "REF-001", name: "Ankit Verma", email: "ankit.v@gmail.com", status: "rewarded" as const, invitedAt: "2026-01-10T14:00:00", rewardAmount: 750 },
+        { id: "REF-002", name: "Neha Gupta", email: "neha.g@outlook.com", status: "rewarded" as const, invitedAt: "2026-01-15T09:30:00", rewardAmount: 750 },
+        { id: "REF-003", name: "Siddharth Rao", email: "sid.rao@gmail.com", status: "rewarded" as const, invitedAt: "2026-01-22T16:00:00", rewardAmount: 750 },
+        { id: "REF-004", name: "Priya Singh", email: "priya.s@yahoo.com", status: "first_order" as const, invitedAt: "2026-02-01T11:00:00", rewardAmount: null },
+        { id: "REF-005", name: "Karan Mehta", email: "karan.m@gmail.com", status: "signed_up" as const, invitedAt: "2026-02-08T13:30:00", rewardAmount: null },
+        { id: "REF-006", name: "Riya Patel", email: "riya.p@gmail.com", status: "pending" as const, invitedAt: "2026-02-12T10:15:00", rewardAmount: null },
+    ],
+};
+
+/* ──────────────────────────────────────────────────────────
+   Mock Coupons
+   ────────────────────────────────────────────────────────── */
+
+export interface Coupon {
+    id: string;
+    code: string;
+    description: string;
+    discountType: "percentage" | "flat";
+    discountValue: number;
+    minOrderValue: number | null;
+    maxDiscount: number | null;
+    validFrom: string;
+    validUntil: string;
+    usedAt: string | null;
+    status: "active" | "used" | "expired";
+}
+
+export const MOCK_COUPONS: Coupon[] = [
+    { id: "CPN-001", code: "WELCOME10", description: "Welcome discount for new users", discountType: "percentage", discountValue: 10, minOrderValue: 1000, maxDiscount: 500, validFrom: "2026-01-01T00:00:00", validUntil: "2026-06-30T23:59:00", usedAt: null, status: "active" },
+    { id: "CPN-002", code: "FLAT500", description: "Flat ₹500 off on orders above ₹3,000", discountType: "flat", discountValue: 500, minOrderValue: 3000, maxDiscount: null, validFrom: "2026-02-01T00:00:00", validUntil: "2026-03-31T23:59:00", usedAt: null, status: "active" },
+    { id: "CPN-003", code: "THESIS20", description: "20% off on dissertation & thesis orders", discountType: "percentage", discountValue: 20, minOrderValue: 5000, maxDiscount: 3000, validFrom: "2026-02-01T00:00:00", validUntil: "2026-04-30T23:59:00", usedAt: null, status: "active" },
+    { id: "CPN-004", code: "NEWYEAR15", description: "New Year special — 15% off everything", discountType: "percentage", discountValue: 15, minOrderValue: null, maxDiscount: 2000, validFrom: "2026-01-01T00:00:00", validUntil: "2026-01-31T23:59:00", usedAt: "2026-01-20T14:30:00", status: "used" },
+    { id: "CPN-005", code: "DIWALI25", description: "Diwali special 25% discount", discountType: "percentage", discountValue: 25, minOrderValue: 2000, maxDiscount: 2500, validFrom: "2025-10-15T00:00:00", validUntil: "2025-11-15T23:59:00", usedAt: null, status: "expired" },
+    { id: "CPN-006", code: "REFER750", description: "Referral reward coupon", discountType: "flat", discountValue: 750, minOrderValue: null, maxDiscount: null, validFrom: "2026-01-10T00:00:00", validUntil: "2026-07-10T23:59:00", usedAt: "2026-02-05T09:00:00", status: "used" },
+];

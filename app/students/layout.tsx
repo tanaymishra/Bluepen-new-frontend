@@ -19,16 +19,49 @@ import {
     HelpCircle,
     Menu,
     X,
+    Gift,
+    Ticket,
 } from "lucide-react";
 
-const sidebarLinks = [
-    { href: "/students/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/students/assignments", label: "My Assignments", icon: FileText },
-    { href: "/students/profile", label: "Profile", icon: User },
-    { href: "/students/wallet", label: "Wallet", icon: Wallet },
-    { href: "/students/notifications", label: "Notifications", icon: Bell },
-    { href: "/students/settings", label: "Settings", icon: Settings },
-    { href: "/students/support", label: "Help & Support", icon: HelpCircle },
+/* ────────── Sidebar config with groups ────────── */
+
+interface SidebarItem {
+    href: string;
+    label: string;
+    icon: React.ElementType;
+    badge?: string;
+}
+
+interface SidebarGroup {
+    title: string;
+    items: SidebarItem[];
+}
+
+const sidebarGroups: SidebarGroup[] = [
+    {
+        title: "Overview",
+        items: [
+            { href: "/students/dashboard", label: "Dashboard", icon: LayoutDashboard },
+            { href: "/students/assignments", label: "My Assignments", icon: FileText },
+            { href: "/students/notifications", label: "Notifications", icon: Bell },
+        ],
+    },
+    {
+        title: "Account",
+        items: [
+            { href: "/students/profile", label: "Profile", icon: User },
+            { href: "/students/wallet", label: "Wallet", icon: Wallet },
+            { href: "/students/referrals", label: "Referrals", icon: Gift },
+            { href: "/students/coupons", label: "Coupons", icon: Ticket },
+        ],
+    },
+    {
+        title: "Other",
+        items: [
+            { href: "/students/settings", label: "Settings", icon: Settings },
+            { href: "/students/support", label: "Help & Support", icon: HelpCircle },
+        ],
+    },
 ];
 
 export default function StudentLayout({
@@ -115,36 +148,58 @@ export default function StudentLayout({
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
-                    {sidebarLinks.map((link) => {
-                        const Icon = link.icon;
-                        const active = pathname === link.href || pathname.startsWith(link.href + "/");
-                        return (
-                            <Link
-                                key={link.href}
-                                href={link.href}
-                                onClick={() => setMobileOpen(false)}
-                                className={cn(
-                                    "flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13.5px] font-medium font-poppins transition-all duration-200 group",
-                                    active
-                                        ? "bg-primary/[0.07] text-primary"
-                                        : "text-gray-500 hover:bg-gray-50 hover:text-gray-700",
-                                    collapsed && "justify-center px-0"
-                                )}
-                                title={collapsed ? link.label : undefined}
-                            >
-                                <Icon
-                                    className={cn(
-                                        "w-[18px] h-[18px] shrink-0 transition-colors",
-                                        active
-                                            ? "text-primary"
-                                            : "text-gray-400 group-hover:text-gray-600"
-                                    )}
-                                />
-                                {!collapsed && <span>{link.label}</span>}
-                            </Link>
-                        );
-                    })}
+                <nav className="flex-1 overflow-y-auto py-3 px-3">
+                    {sidebarGroups.map((group, gi) => (
+                        <div key={group.title} className={cn(gi > 0 && "mt-2")}>
+                            {/* Group label */}
+                            {!collapsed && (
+                                <p className="px-3 pt-3 pb-1.5 text-[10px] uppercase tracking-[0.12em] text-gray-400/70 font-poppins font-semibold select-none">
+                                    {group.title}
+                                </p>
+                            )}
+                            {collapsed && gi > 0 && (
+                                <div className="mx-3 my-2 h-px bg-gray-100" />
+                            )}
+
+                            <div className="space-y-0.5">
+                                {group.items.map((link) => {
+                                    const Icon = link.icon;
+                                    const active =
+                                        pathname === link.href ||
+                                        pathname.startsWith(link.href + "/");
+                                    return (
+                                        <Link
+                                            key={link.href}
+                                            href={link.href}
+                                            onClick={() => setMobileOpen(false)}
+                                            className={cn(
+                                                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium font-poppins transition-all duration-200 group relative",
+                                                active
+                                                    ? "bg-primary/[0.07] text-primary"
+                                                    : "text-gray-500 hover:bg-gray-50 hover:text-gray-700",
+                                                collapsed && "justify-center px-0"
+                                            )}
+                                            title={collapsed ? link.label : undefined}
+                                        >
+                                            {/* Active indicator bar */}
+                                            {active && !collapsed && (
+                                                <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-primary rounded-r-full" />
+                                            )}
+                                            <Icon
+                                                className={cn(
+                                                    "w-[18px] h-[18px] shrink-0 transition-colors",
+                                                    active
+                                                        ? "text-primary"
+                                                        : "text-gray-400 group-hover:text-gray-600"
+                                                )}
+                                            />
+                                            {!collapsed && <span>{link.label}</span>}
+                                        </Link>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ))}
                 </nav>
 
                 {/* User Card */}
@@ -210,11 +265,14 @@ export default function StudentLayout({
 
                     <div className="hidden lg:block" />
 
-                    <div className="flex items-center gap-3">
-                        <button className="relative w-9 h-9 rounded-lg flex items-center justify-center hover:bg-gray-100 text-gray-500 transition-colors">
+                    <div className="flex items-center gap-2">
+                        <Link
+                            href="/students/notifications"
+                            className="relative w-9 h-9 rounded-lg flex items-center justify-center hover:bg-gray-100 text-gray-500 transition-colors"
+                        >
                             <Bell className="w-[18px] h-[18px]" />
                             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
-                        </button>
+                        </Link>
                     </div>
                 </header>
 
