@@ -467,3 +467,106 @@ export const MOCK_COUPONS: Coupon[] = [
     { id: "CPN-005", code: "DIWALI25", description: "Diwali special 25% discount", discountType: "percentage", discountValue: 25, minOrderValue: 2000, maxDiscount: 2500, validFrom: "2025-10-15T00:00:00", validUntil: "2025-11-15T23:59:00", usedAt: null, status: "expired" },
     { id: "CPN-006", code: "REFER750", description: "Referral reward coupon", discountType: "flat", discountValue: 750, minOrderValue: null, maxDiscount: null, validFrom: "2026-01-10T00:00:00", validUntil: "2026-07-10T23:59:00", usedAt: "2026-02-05T09:00:00", status: "used" },
 ];
+
+/* ═══════════════════════════════════════════════════════
+   ADMIN DASHBOARD DATA
+   ═══════════════════════════════════════════════════════ */
+
+export interface AdminSlide {
+    id: string;
+    type: "weather" | "freelancer_of_month" | "pm_of_month";
+    title: string;
+    subtitle: string;
+    highlight: string;
+    meta?: string;
+}
+
+export const ADMIN_SLIDES: AdminSlide[] = [
+    {
+        id: "slide-weather",
+        type: "weather",
+        title: "New Delhi, India",
+        subtitle: "Partly Cloudy",
+        highlight: "24°C",
+        meta: "Humidity 62% · Wind 12 km/h",
+    },
+    {
+        id: "slide-freelancer",
+        type: "freelancer_of_month",
+        title: "Freelancer of the Month",
+        subtitle: "Ananya Verma",
+        highlight: "47 Assignments",
+        meta: "98.2% on-time delivery · 4.9★ avg rating",
+    },
+    {
+        id: "slide-pm",
+        type: "pm_of_month",
+        title: "Project Manager of the Month",
+        subtitle: "Ravi Krishnan",
+        highlight: "132 Managed",
+        meta: "96% client satisfaction · 0 escalations",
+    },
+];
+
+export interface AdminAssignmentStats {
+    total: number;
+    underProcess: number;
+    reviewed: number;
+    assignedToPm: number;
+    withFreelancers: number;
+    marksNotReceived: number;
+    completed: number;
+    lost: number;
+    resit: number;
+}
+
+export const ADMIN_ASSIGNMENT_STATS: AdminAssignmentStats = {
+    total: 5024,
+    underProcess: 312,
+    reviewed: 876,
+    assignedToPm: 245,
+    withFreelancers: 1890,
+    marksNotReceived: 408,
+    completed: 1102,
+    lost: 181,
+    resit: 10,
+};
+
+export interface AdminRecentActivity {
+    id: string;
+    action: string;
+    user: string;
+    role: string;
+    timestamp: string;
+    type: "assignment" | "payment" | "user" | "system" | "deadline";
+}
+
+export const ADMIN_RECENT_ACTIVITY: AdminRecentActivity[] = [
+    { id: "act-1", action: "New assignment #BP-5024 submitted", user: "Rahul Sharma", role: "Student", timestamp: "2026-02-15T14:32:00", type: "assignment" },
+    { id: "act-2", action: "Payment of ₹4,500 received", user: "Sneha Gupta", role: "Student", timestamp: "2026-02-15T13:15:00", type: "payment" },
+    { id: "act-3", action: "Assignment #BP-4998 marked complete", user: "Ananya Verma", role: "Freelancer", timestamp: "2026-02-15T12:45:00", type: "assignment" },
+    { id: "act-4", action: "New freelancer application approved", user: "Deepak Joshi", role: "HR", timestamp: "2026-02-15T11:30:00", type: "user" },
+    { id: "act-5", action: "Assignment #BP-5010 escalated", user: "Ravi Krishnan", role: "PM", timestamp: "2026-02-15T10:05:00", type: "system" },
+    { id: "act-6", action: "Deadline approaching for 8 assignments", user: "System", role: "Auto", timestamp: "2026-02-15T09:00:00", type: "deadline" },
+    { id: "act-7", action: "Assignment #BP-4990 resit requested", user: "Meera Iyer", role: "Student", timestamp: "2026-02-14T18:20:00", type: "assignment" },
+    { id: "act-8", action: "Bulk result upload — 24 assignments", user: "Admin User", role: "Admin", timestamp: "2026-02-14T16:00:00", type: "system" },
+];
+
+/** Deadline counts per day for Feb 2026 (day → count) */
+export const ADMIN_DEADLINE_MAP: Record<number, { count: number; assignments: string[] }> = {
+    1: { count: 2, assignments: ["BP-4901 — Essay on Climate Change", "BP-4903 — Marketing Plan"] },
+    3: { count: 5, assignments: ["BP-4910 — Data Structures Lab", "BP-4912 — Financial Analysis", "BP-4915 — Psychology Essay", "BP-4917 — History Report", "BP-4919 — Web Dev Project"] },
+    4: { count: 3, assignments: ["BP-4920 — Statistics HW", "BP-4922 — English Literature", "BP-4925 — Physics Lab"] },
+    7: { count: 1, assignments: ["BP-4930 — Business Case Study"] },
+    10: { count: 8, assignments: ["BP-4940 — Dissertation Ch.3", "BP-4941 — Accounting Assignment", "BP-4942 — Medical Ethics", "BP-4943 — Civil Engineering", "BP-4944 — AI Research", "BP-4945 — Database Design", "BP-4946 — Nursing Essay", "BP-4947 — Law Brief"] },
+    12: { count: 4, assignments: ["BP-4950 — OS Lab Report", "BP-4951 — Sociology Paper", "BP-4952 — Chemistry Lab", "BP-4953 — Art History"] },
+    15: { count: 18, assignments: ["BP-4960 — Thesis Defense Prep", "BP-4961 — MBA Case Study", "BP-4962 — Network Security", "BP-4963 — Pharmacology", "BP-4964 — UX Design", "BP-4965 — Microeconomics", "BP-4966 — Genetics Lab", "BP-4967 — Philosophy Essay", "BP-4968 — Cloud Computing", "BP-4969 — Organic Chemistry", "BP-4970 — Public Health", "BP-4971 — Machine Learning", "BP-4972 — Contract Law", "BP-4973 — Calculus III", "BP-4974 — Environmental Sci", "BP-4975 — Digital Marketing", "BP-4976 — Software Testing", "BP-4977 — Political Science"] },
+    18: { count: 6, assignments: ["BP-4980 — Anatomy Report", "BP-4981 — Java Programming", "BP-4982 — Thermal Physics", "BP-4983 — Supply Chain", "BP-4984 — Criminal Justice", "BP-4985 — Biotech Paper"] },
+    20: { count: 2, assignments: ["BP-4990 — Electrical Circuits", "BP-4991 — Education Theory"] },
+    22: { count: 10, assignments: ["BP-4995 — Capstone Project", "BP-4996 — Forensic Science", "BP-4997 — Quantum Mechanics", "BP-4998 — Investment Analysis", "BP-4999 — Pediatric Nursing", "BP-5000 — Robotics Lab", "BP-5001 — Taxation", "BP-5002 — Social Work", "BP-5003 — Signal Processing", "BP-5004 — Media Studies"] },
+    25: { count: 7, assignments: ["BP-5010 — Embedded Systems", "BP-5011 — Clinical Psychology", "BP-5012 — Strategic Mgmt", "BP-5013 — Fluid Mechanics", "BP-5014 — Data Mining", "BP-5015 — Neuroscience", "BP-5016 — Real Estate Law"] },
+    27: { count: 3, assignments: ["BP-5020 — Compiler Design", "BP-5021 — Epidemiology", "BP-5022 — Brand Strategy"] },
+    28: { count: 12, assignments: ["BP-5024 — Final Submissions", "BP-5025 — Semester Closeout", "BP-5026 — Research Methods", "BP-5027 — Cybersecurity", "BP-5028 — Bioinformatics", "BP-5029 — HRM Assignment", "BP-5030 — Power Systems", "BP-5031 — Ethics in AI", "BP-5032 — Palliative Care", "BP-5033 — Game Theory", "BP-5034 — Maritime Law", "BP-5035 — Nanotechnology"] },
+};
+
+export const ADMIN_WIN_LOSS = { wins: 4024, losses: 181 };
