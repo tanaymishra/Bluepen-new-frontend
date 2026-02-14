@@ -1,0 +1,384 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 16px;
+  width: 100%;
+
+  .headTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    .titleBox {
+      display: flex;
+      flex-direction: column;
+      padding: 18px 0;
+
+      .back {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 17.71px;
+        color: var(--primary);
+        cursor: pointer;
+      }
+
+      .pageTitle {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 600;
+        font-size: calc(var(--variable) * 3.1);
+        line-height: calc(var(--variable) * 4.22);
+        line-height: 32px;
+        color: #2c323f;
+
+        @media (max-width: 768px) {
+          font-size: 3.1rem;
+          line-height: 4.22rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        padding: 4px 0;
+      }
+    }
+
+    .addEmployee {
+      display: flex;
+      flex-direction: row;
+      border-radius: 8px;
+      background-color: var(--primary);
+      padding: 10px 12px;
+      gap: 8px;
+      cursor: pointer;
+
+      .addText {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16.41px;
+        color: #fff;
+      }
+
+      @media (max-width: 768px) {
+        padding: 8px 16px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  }
+
+  .freelancerRankingButton {
+    background-color: #2956a8;
+    color: white;
+    padding: 10px 28px 10px 28px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: "SF Pro Display", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .headingBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .headingBtns {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .btnDiv {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        padding: 10px 12px;
+        align-items: center;
+        cursor: pointer;
+
+        .btnTitle {
+          font-family: "SF Pro Display", sans-serif;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 16.41px;
+          color: var(--primary);
+
+          @media (max-width: 768px) {
+            font-size: 12px;
+            line-height: 15px;
+          }
+        }
+
+        &:hover {
+          background-color: #e0e0e0;
+          border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+          padding: 8px;
+          gap: 4px;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      gap: 10px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    top: calc(16rem + 6px);
+    position: relative;
+    min-width: -webkit-fill-available;
+  }
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow: hidden;
+
+  .tableUpper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.6rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      gap: 8px;
+    }
+  }
+}
+
+.tableHeader {
+  padding: 8px;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 14px;
+  color: #5b5b5b;
+  margin: 1rem 0;
+}
+
+.assignmentsGrid {
+  width: 100%;
+  height: 480px;
+  font-family: "SF Pro Text", sans-serif;
+  border-radius: 8px;
+}
+
+.paginationBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.paginationRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.paginationControls span {
+  font-size: small;
+}
+
+.paginationControls button {
+  margin: 0 0.25rem;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.paginationControls button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.pageSizeSelector span {
+  font-size: small;
+}
+
+.pageSizeSelector select {
+  margin: 0 0.5rem;
+  padding: 0.25rem;
+}
+
+.navShow {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.navLeft img {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  padding: 8px;
+  border-radius: 9999px;
+  cursor: pointer;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+/* In your CSS module */
+.tableSelect {
+  // -webkit-appearance: none; /* For Chrome, Safari, Edge */
+  // -moz-appearance: none; /* For Firefox */
+  text-align: center;
+  appearance: none;
+  /* Standard syntax */
+  border: #e0e0e0 1px solid;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.tableSelectEntries {
+  // -webkit-appearance: none; /* For Chrome, Safari, Edge */
+  // -moz-appearance: none; /* For Firefox */
+  text-align: center;
+  appearance: none;
+  /* Standard syntax */
+  border: #e0e0e0 1px solid;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+.show,
+.entries {
+  font-size: small;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  font-family: "League Spartan";
+  font-weight: 200;
+  font-style: normal;
+}
+
+.modalContent {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  font-size: medium;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.modalActions button {
+  margin-left: 1.5rem;
+}
+
+.confirmBtn {
+  padding: 10px 15px 10px 15px;
+  border-radius: 8px;
+  border: 1px green solid;
+  background-color: white;
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17.71px;
+  color: green;
+  cursor: pointer;
+}
+
+.confirmBtn:hover {
+  padding: 10px 15px 10px 15px;
+  border-radius: 8px;
+  border: 1px green solid;
+  background-color: green;
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17.71px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.cancelBtn {
+  padding: 10px 15px 10px 15px;
+  border-radius: 8px;
+  border: 1px #b22828 solid;
+  background-color: white;
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17.71px;
+  color: #b22828;
+  cursor: pointer;
+}
+
+.cancelBtn:hover {
+  padding: 10px 15px 10px 15px;
+  border-radius: 8px;
+  border: 1px #b22828 solid;
+  background-color: #b22828;
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17.71px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.modalh2 {
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 21.79px;
+  color: green;
+}
+
+.modalP {
+  font-family: "SF Pro Text", sans-serif;
+  font-weight: 400;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 17.71px;
+  color: #766d6d;
+}
+
+.confirmBtn:disabled,
+.cancelBtn:disabled {
+  background-color: #e0e0e0;
+  /* Light gray background */
+  color: #a0a0a0;
+  /* Gray text */
+  border: 1px solid #a0a0a0;
+  cursor: not-allowed;
+  /* Change cursor to indicate non-interactive */
+}

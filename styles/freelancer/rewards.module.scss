@@ -1,0 +1,764 @@
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  width: 100%;
+  overflow-x: hidden;
+  flex: 1;
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.8rem 0;
+    flex-wrap: wrap;
+
+    .titleBack {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .backBtn {
+        font-family: "Noto Sans", sans-serif;
+        font-weight: 500;
+        font-size: calc(var(--variable) * 1.4);
+        line-height: calc(var(--variable) * 1.8);
+        background: none;
+        color: var(--primary);
+        border: none;
+        cursor: pointer;
+
+        @media (max-width: 768px) {
+          font-size: calc(var(--variable) * 1.7);
+          line-height: calc(var(--variable) * 2);
+        }
+      }
+
+      .title {
+        font-family: "Noto Sans", sans-serif;
+        font-weight: 600;
+        font-size: calc(var(--variable) * 3.2);
+        line-height: calc(var(--variable) * 4.1);
+        color: #2c323f;
+
+        @media (max-width: 768px) {
+          font-size: calc(var(--variable) * 3.4);
+          line-height: calc(var(--variable) * 4.3);
+        }
+      }
+    }
+
+    .btns {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 3rem;
+
+      .generateBtn {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-color: #2956a8;
+        color: white;
+        border-radius: 0.8rem;
+        padding: 1rem 2.8rem;
+        gap: 1rem;
+        border: none;
+        font-family: "Noto Sans", sans-serif;
+        font-weight: 600;
+        font-size: calc(var(--variable) * 1.5);
+        line-height: calc(var(--variable) * 1.8);
+        cursor: pointer;
+
+        @media (max-width: 768px) {
+          font-size: calc(var(--variable) * 1.7);
+          line-height: calc(var(--variable) * 2);
+        }
+      }
+
+      .rewardsTC {
+        background: none;
+        color: var(--primary);
+        font-family: "Noto Sans", sans-serif;
+        font-weight: 600;
+        font-size: calc(var(--variable) * 1.5);
+        line-height: calc(var(--variable) * 1.8);
+        cursor: pointer;
+        border: none;
+
+        @media (max-width: 768px) {
+          font-size: calc(var(--variable) * 1.7);
+          line-height: calc(var(--variable) * 2);
+        }
+      }
+    }
+  }
+
+  .bottomContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+
+    .profileAssignments {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.6rem;
+
+      .profileContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 16px;
+        padding: 1.6rem;
+        gap: 3rem;
+        background-color: #ffffff;
+        width: 70%;
+        height: 100%;
+
+        .imgDetails {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 1.6rem;
+
+          .img {
+            position: relative;
+            background: #f3be2e;
+            border-radius: 50%;
+            padding: calc(var(--variable) * 0.5);
+
+            img {
+              width: calc(var(--variable) * 7.5);
+              height: calc(var(--variable) * 7.5);
+            }
+
+            .absoluteLevel {
+              position: absolute;
+              background: #ffffff;
+              border-radius: 50%;
+              padding: calc(var(--variable) * 0.3);
+              right: calc(var(--variable) * (-0.8));
+              bottom: calc(var(--variable) * 0.4);
+
+              img {
+                width: calc(var(--variable) * 1.8);
+                height: calc(var(--variable) * 1.9);
+              }
+            }
+          }
+
+          .profileDetails {
+            display: flex;
+            flex-direction: column;
+
+            .status {
+              border-radius: 20px;
+              border: 1px solid #58a55d;
+              background-color: #d8e8e6;
+              color: #00510d;
+              padding: 4px 8px;
+              font-family: "Noto Sans", sans-serif;
+              font-weight: 600;
+              font-size: calc(var(--variable) * 1.2);
+              line-height: calc(var(--variable) * 1.4);
+              width: max-content;
+
+              @media (max-width: 768px) {
+                font-size: calc(var(--variable) * 1.4);
+                line-height: calc(var(--variable) * 1.6);
+              }
+            }
+
+            .userName {
+              color: #1d1d1d;
+              font-family: "Noto Sans", sans-serif;
+              font-weight: 600;
+              font-size: calc(var(--variable) * 3.9);
+              line-height: calc(var(--variable) * 5.3);
+
+              @media (max-width: 768px) {
+                font-size: calc(var(--variable) * 4.1);
+                line-height: calc(var(--variable) * 5.5);
+              }
+            }
+
+            .level {
+              color: #615959;
+              font-family: "Noto Sans", sans-serif;
+              font-weight: 600;
+              font-size: calc(var(--variable) * 1.6);
+              line-height: calc(var(--variable) * 2.1);
+
+              @media (max-width: 768px) {
+                font-size: calc(var(--variable) * 1.8);
+                line-height: calc(var(--variable) * 2.2);
+              }
+            }
+          }
+
+          @media (max-width: 300px) {
+            flex-wrap: wrap;
+          }
+        }
+
+        .levelContainer {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 0.4rem;
+
+          .levelImg {
+            img {
+              width: 3.7rem;
+              height: 4rem;
+            }
+          }
+
+          .incomingLevel {
+            display: flex;
+            flex-direction: column;
+
+            .text {
+              font-family: "Noto Sans", sans-serif;
+              font-weight: 400;
+              font-size: calc(var(--variable) * 1);
+              line-height: calc(var(--variable) * 1.36);
+              color: #766d6d;
+
+              @media (max-width: 768px) {
+                font-size: calc(var(--variable) * 1.3);
+                line-height: calc(var(--variable) * 1.5);
+              }
+            }
+
+            .upComingLevel {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              gap: 4px;
+
+              .levelName {
+                font-family: "Noto Sans", sans-serif;
+                font-weight: 600;
+                font-size: calc(var(--variable) * 1.3);
+                line-height: calc(var(--variable) * 1.77);
+                color: #231f20;
+
+                @media (max-width: 768px) {
+                  font-size: calc(var(--variable) * 1.5);
+                  line-height: calc(var(--variable) * 2);
+                }
+              }
+            }
+          }
+        }
+
+        @media (max-width: 900px) {
+          width: 100%;
+        }
+
+        @media (max-width: 300px) {
+          flex-wrap: wrap;
+        }
+      }
+
+      .assignmentsContainer {
+        background-color: #fff;
+        border-radius: 16px;
+        padding: 1.6rem;
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        justify-content: space-between;
+        height: 100%;
+
+        .assignments {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+
+          .title {
+            font-family: "Noto Sans", sans-serif;
+            font-weight: 500;
+            font-size: calc(var(--variable) * 1.5);
+            line-height: calc(var(--variable) * 1.8);
+            color: #808080;
+
+            @media (max-width: 768px) {
+              font-size: calc(var(--variable) * 1.7);
+              line-height: calc(var(--variable) * 2);
+            }
+          }
+          
+          .noteText {
+            font-family: "Noto Sans", sans-serif;
+            font-weight: 500;
+            font-size: calc(var(--variable) * 1.5);
+            line-height: calc(var(--variable) * 1.8);
+            color: #f5a623;
+            margin-top: 0.4rem;
+            
+            @media (max-width: 768px) {
+              font-size: calc(var(--variable) * 1.6);
+              line-height: calc(var(--variable) * 2);
+            }
+          }
+
+          .subTitle {
+            display: flex;
+            flex-direction: row;
+            gap: 4px;
+            align-items: baseline;
+
+            .completed {
+              font-family: "Noto Sans", sans-serif;
+              font-weight: 600;
+              font-size: calc(var(--variable) * 3.1);
+              line-height: calc(var(--variable) * 4.8);
+              color: #231f20;
+
+              @media (max-width: 768px) {
+                font-size: calc(var(--variable) * 3.4);
+                line-height: calc(var(--variable) * 5);
+              }
+            }
+
+            .total {
+              font-family: "Noto Sans", sans-serif;
+              font-weight: 400;
+              font-size: calc(var(--variable) * 1.6);
+              line-height: calc(var(--variable) * 2.17);
+              color: #383233;
+
+              @media (max-width: 768px) {
+                font-size: calc(var(--variable) * 1.8);
+                line-height: calc(var(--variable) * 2.2);
+              }
+            }
+          }
+        }
+
+        .progress {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+        }
+
+        @media (max-width: 900px) {
+          width: 100%;
+          flex-direction: row;
+        }
+      }
+
+      @media (max-width: 900px) {
+        flex-direction: column;
+      }
+    }
+
+    .tipsCarousal {
+      display: flex;
+      flex-direction: column;
+      background-color: #ffffff;
+      padding: 24px;
+      gap: 24px;
+      border-radius: 16px;
+      overflow: hidden;
+
+      .tipsContainer {
+        display: flex;
+        flex-direction: column;
+        padding: 16px 0;
+        gap: 24px;
+
+        .tipsHeader {
+          display: flex;
+          flex-direction: row;
+          gap: 1.6rem;
+          justify-content: center;
+          align-items: center;
+
+          .tipsContent {
+            font-family: "Noto Sans", sans-serif;
+            font-weight: 600;
+            font-size: calc(var(--variable) * 1.8);
+            line-height: calc(var(--variable) * 2.2);
+            color: #383233;
+          }
+
+          @media (max-width: 900px) {
+            flex-direction: column;
+          }
+        }
+
+        .stepsBox {
+          display: flex;
+          flex-direction: row;
+          gap: 1.6rem;
+
+          .steps {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 1rem;
+            border-radius: 12px;
+            border: 1.5px solid #ebebeb;
+            padding: 8px;
+            flex: 1;
+
+            .stepsNum {
+              font-family: "Noto Sans", sans-serif;
+              font-weight: 600;
+              font-size: calc(var(--variable) * 1.6);
+              line-height: calc(var(--variable) * 1.77);
+              color: #4c4546;
+              background-color: #fcecc0;
+              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: calc(var(--variable) * 2.4);
+              height: calc(var(--variable) * 2.4);
+              min-width: calc(var(--variable) * 2.4);
+            }
+
+            .stepsContent {
+              display: flex;
+              flex-direction: column;
+              gap: 1rem;
+
+              .stepsHeader {
+                font-family: "Noto Sans", sans-serif;
+                font-weight: 600;
+                font-size: calc(var(--variable) * 1.6);
+                line-height: calc(var(--variable) * 2);
+                color: var(--primary);
+
+                @media (max-width: 768px) {
+                  font-size: calc(var(--variable) * 1.8);
+                  line-height: calc(var(--variable) * 2.2);
+                }
+              }
+
+              .content {
+                font-family: "Noto Sans", sans-serif;
+                font-weight: 500;
+                font-size: calc(var(--variable) * 1.4);
+                line-height: calc(var(--variable) * 1.77);
+                color: #766d6d;
+
+                @media (max-width: 768px) {
+                  font-size: calc(var(--variable) * 1.8);
+                  line-height: calc(var(--variable) * 2.3);
+                }
+              }
+            }
+          }
+
+          @media (max-width: 900px) {
+            flex-direction: column;
+          }
+        }
+      }
+
+      .rewardsTitle {
+        font-family: "Noto Sans", sans-serif;
+        font-weight: 600;
+        font-size: calc(var(--variable) * 1.8);
+        line-height: calc(var(--variable) * 2.2);
+        color: #766d6d;
+        text-align: center;
+        margin-bottom: 16px;
+      }
+
+      .rewardsCarousal {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+
+        .startCard {
+          display: flex;
+          flex-direction: row;
+          width: 400px;
+          align-items: end;
+
+          .startLine {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 21.5px;
+
+            .dot {
+              background: #231f20;
+              padding: 6px;
+              border-radius: 50%;
+            }
+
+            .line {
+              height: 2px;
+              width: 40px;
+              background: #231f20;
+            }
+          }
+
+          @media (max-width: 768px) {
+            width: 290px;
+          }
+        }
+
+        .carousalContent {
+          flex: 0 0 auto;
+          width: 355px;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+
+          .medal {
+            img {
+              width: 66px;
+              height: 72px;
+            }
+          }
+
+          .contentBox {
+            display: flex;
+            flex-direction: column;
+            margin-right: 2rem;
+
+            .text {
+              font-family: "Noto Sans", sans-serif;
+              font-weight: 700;
+              font-size: calc(var(--variable) * 2.5);
+              line-height: calc(var(--variable) * 3.2);
+              color: var(--primary);
+            }
+
+            .subText {
+              font-family: "Noto Sans", sans-serif;
+              font-weight: 400;
+              font-size: calc(var(--variable) * 1.6);
+              line-height: calc(var(--variable) * 2);
+              color: #686873;
+            }
+          }
+
+          .trophyLine {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .trophyBack {
+              border-radius: 50%;
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              width: max-content;
+              height: max-content;
+              padding: 12px;
+              border: 5px solid #ffffff;
+
+              img {
+                width: 21.58px;
+                height: 21.58px;
+              }
+            }
+
+            .line {
+              height: 2px;
+              width: 100%;
+              background: #231f20;
+            }
+          }
+
+          .bronze {
+            background-color: #ba623b;
+          }
+
+          .silver {
+            background-color: #9da09f;
+          }
+
+          .gold {
+            background-color: #f8a127;
+          }
+
+          .platinum {
+            background-color: #afb2b1;
+          }
+
+          .diamond {
+            background-color: #72cee3;
+          }
+
+          @media (max-width: 768px) {
+            width: 240px;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    top: calc(16rem + 6px);
+    position: relative;
+  }
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  font-family: "League Spartan";
+  font-weight: 200;
+  font-style: normal;
+}
+
+.modalContent {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  font-size: medium;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.modalActions button {
+  margin-left: 1.5rem;
+}
+
+.deleteBtnModal {
+  padding: 10px 15px 10px 15px;
+  border-radius: 8px;
+  border: 1px #00b359 solid;
+  background-color: white;
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17.71px;
+  color: #00b359;
+  cursor: pointer;
+}
+
+.deleteBtnModal:hover {
+  background-color: #00b359;
+  color: white;
+  transition: all 0.5s ease;
+}
+
+.cancelBtnModal {
+  padding: 10px 15px 10px 15px;
+  border-radius: 8px;
+  border: 1px var(--primary) solid;
+  background-color: white;
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17.71px;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.cancelBtnModal:hover {
+  padding: 10px 15px 10px 15px;
+  border-radius: 8px;
+  border: 1px var(--primary) solid;
+  background-color: var(--primary);
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17.71px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.modalh2 {
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 21.79px;
+  color: #b22828;
+}
+
+.modalP {
+  font-family: "SF Pro Text", sans-serif;
+  font-weight: 400;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 17.71px;
+  color: #766d6d;
+}
+
+.carousalContent {
+  display: flex;
+  padding: 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+
+  /* Styles for claim button */
+  .claimBtn {
+    background-color: #28a87b;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 16px;
+    width: fit-content;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #1e7e63;
+    }
+  }
+
+  /* Styles for claimed label */
+  .claimedLabel {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ccc;
+    color: #333;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+
+/* Style for tick image */
+.medal img[src$="tick.png"] {
+  width: 24px;
+  height: 24px;
+}
+
+.expiredLabel {
+  color: #FF4D4F;
+  padding: 4px 12px;
+  border-radius: 4px;
+  background-color: #FFF2F0;
+  border: 1px solid #FFCCC7;
+  font-size: 14px;
+  font-weight: 500;
+  width: fit-content;
+}

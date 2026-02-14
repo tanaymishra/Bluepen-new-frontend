@@ -1,0 +1,428 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 16px;
+  width: 100%;
+
+  .headTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    .titleBox {
+      display: flex;
+      flex-direction: column;
+      padding: 18px 0;
+
+      .back {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 17.71px;
+        color: var(--primary);
+        cursor: pointer;
+      }
+
+      .pageTitle {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 600;
+        font-size: calc(var(--variable) * 3.1);
+        line-height: calc(var(--variable) * 4.22);
+        line-height: 32px;
+        color: #2c323f;
+
+        @media (max-width: 768px) {
+          font-size: 3.1rem;
+          line-height: 4.22rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        padding: 4px 0;
+      }
+    }
+
+    .addEmployee {
+      display: flex;
+      flex-direction: row;
+      border-radius: 8px;
+      background-color: var(--primary);
+      padding: 10px 12px;
+      gap: 8px;
+      cursor: pointer;
+
+      .addText {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16.41px;
+        color: #fff;
+      }
+
+      @media (max-width: 768px) {
+        padding: 8px 16px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  }
+
+  .headingBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .headingBtns {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .btnDiv {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        padding: 10px 12px;
+        align-items: center;
+        cursor: pointer;
+
+        .btnTitle {
+          font-family: "SF Pro Display", sans-serif;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 16.41px;
+          color: var(--primary);
+
+          @media (max-width: 768px) {
+            font-size: 12px;
+            line-height: 15px;
+          }
+        }
+
+        &:hover {
+          background-color: #e0e0e0;
+          border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+          padding: 8px;
+          gap: 4px;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      gap: 10px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    top: calc(16rem + 6px);
+    position: relative;
+    min-width: -webkit-fill-available;
+  }
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow: hidden;
+
+  .tableUpper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.6rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      gap: 8px;
+    }
+  }
+}
+
+.tableHeader {
+  padding: 8px;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 14px;
+  color: #5b5b5b;
+  margin: 1rem 0;
+}
+
+.assignmentsGrid {
+  width: 100%;
+  height: 470px;
+  font-family: "SF Pro Text", sans-serif;
+  border-radius: 8px;
+}
+
+.paginationBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.paginationRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.paginationControls span {
+  font-size: small;
+}
+
+.paginationControls button {
+  margin: 0 0.25rem;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.paginationControls button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.pageSizeSelector span {
+  font-size: small;
+}
+
+.pageSizeSelector select {
+  margin: 0 0.5rem;
+  padding: 0.25rem;
+}
+
+.navLeft img {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  padding: 8px;
+  border-radius: 9999px;
+  cursor: pointer;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+/* In your CSS module */
+.tableSelect {
+  // -webkit-appearance: none; /* For Chrome, Safari, Edge */
+  // -moz-appearance: none; /* For Firefox */
+  text-align: center;
+  appearance: none;
+  /* Standard syntax */
+  border: #e0e0e0 1px solid;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.tableSelectEntries {
+  // -webkit-appearance: none; /* For Chrome, Safari, Edge */
+  // -moz-appearance: none; /* For Firefox */
+  text-align: center;
+  appearance: none;
+  /* Standard syntax */
+  border: #e0e0e0 1px solid;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+.show,
+.entries {
+  font-size: small;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  font-family: "SF Pro Disply", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.modalContent {
+  background-color: #fff;
+  //   padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  font-size: medium;
+
+  .personalDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 2rem; // width: 100%;
+
+    .rowContainer {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      flex: 1;
+
+      .rowfield {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+
+        .fieldName {
+          font-size: 13px;
+          line-height: 17.71px;
+          font-family: "SF Pro Text", sans-serif;
+          font-weight: 400;
+          color: #828282;
+        }
+
+        .fieldValue {
+          font-size: 15px;
+          line-height: 20.79px;
+          font-family: "SF Pro Text", sans-serif !important;
+          font-weight: 600;
+          color: #1d1d1d;
+
+          &::placeholder {
+            color: #828282;
+          }
+
+          @media (max-width: 768px) {
+            font-size: 14px;
+            line-height: 17.71px;
+          }
+        }
+      }
+
+      @media (max-width: 768px) {
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 300px) {
+        .rowfield {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.modalh2 {
+  font-size: 23px;
+  line-height: 17.71px;
+  font-family: "SF Pro Text", sans-serif;
+  font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 2rem;
+
+  .modalh2Text {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  .modalh2Img {
+    cursor: pointer;
+  }
+
+  .approve {
+    color: #28a87b;
+  }
+
+  .reject {
+    color: #b22828;
+  }
+}
+
+.modalSeparator {
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 2rem;
+}
+
+.modalActions button {
+  margin-left: 1.5rem;
+}
+
+.approveBtnModal {
+  padding: 10px 15px 10px 15px;
+  border-radius: 8px;
+  border: 1px #28a87b solid;
+  background-color: white;
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17.71px;
+  color: #28a87b;
+  cursor: pointer;
+}
+
+.approveBtnModal:hover {
+  padding: 10px 15px 10px 15px;
+  border-radius: 8px;
+  border: 1px #28a87b solid;
+  background-color: #28a87b;
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17.71px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.cancelBtnModal {
+  padding: 10px 15px 10px 15px;
+  border-radius: 8px;
+  border: 1px var(--primary) solid;
+  background-color: white;
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17.71px;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.cancelBtnModal:hover {
+  padding: 10px 15px 10px 15px;
+  border-radius: 8px;
+  border: 1px var(--primary) solid;
+  background-color: var(--primary);
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17.71px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}

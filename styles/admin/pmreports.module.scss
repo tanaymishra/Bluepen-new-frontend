@@ -1,0 +1,340 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 16px;
+    width: 100%;
+
+    .headTitle {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+
+        .titleBox {
+            display: flex;
+            flex-direction: column;
+            padding: 18px 0;
+
+            .back {
+                font-family: "SF Pro Display", sans-serif;
+                font-weight: 500;
+                font-size: 13px;
+                line-height: 17.71px;
+                color: var(--primary);
+                cursor: pointer;
+            }
+
+            .pageTitle {
+                font-family: "SF Pro Display", sans-serif;
+                font-weight: 600;
+                font-size: calc(var(--variable) * 3.1);
+                line-height: calc(var(--variable) * 4.22);
+                line-height: 32px;
+                color: #2c323f;
+
+                @media (max-width: 768px) {
+                    font-size: 3.1rem;
+                    line-height: 4.22rem;
+                }
+            }
+
+            @media (max-width: 768px) {
+                padding: 4px 0;
+            }
+        }
+
+        .addEmployee {
+            display: flex;
+            flex-direction: row;
+            border-radius: 8px;
+            background-color: var(--primary);
+            padding: 10px 12px;
+            gap: 8px;
+            cursor: pointer;
+
+            .addText {
+                font-family: "SF Pro Display", sans-serif;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 16.41px;
+                color: #fff;
+            }
+
+            @media (max-width: 768px) {
+                padding: 8px 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+    }
+
+    .headingBox {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .headingBtns {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            .btnDiv {
+                display: flex;
+                flex-direction: row;
+                gap: 8px;
+                padding: 10px 12px;
+                align-items: center;
+                cursor: pointer;
+
+                .btnTitle {
+                    font-family: "SF Pro Display", sans-serif;
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 16.41px;
+                    color: var(--primary);
+
+                    @media (max-width: 768px) {
+                        font-size: 12px;
+                        line-height: 15px;
+                    }
+                }
+
+                &:hover {
+                    background-color: #e0e0e0;
+                    border-radius: 8px;
+                }
+
+                @media (max-width: 768px) {
+                    padding: 8px;
+                    gap: 4px;
+                }
+            }
+        }
+
+        .monthPickerBox {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+
+            .refresh {
+                cursor: pointer;
+            }
+        }
+
+        @media (max-width: 768px) {
+            gap: 10px;
+        }
+
+        @media (max-width: 380px) {
+            flex-wrap: wrap;
+        }
+    }
+
+    .pillsDatePicker {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 1.6rem;
+        align-items: center;
+        gap: 1.6rem;
+
+        .datePickerBox {
+            display: flex;
+            flex-direction: row;
+            gap: 1.6rem;
+            align-items: center;
+            flex-wrap: wrap;
+
+            .datePicker {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 0.8rem;
+                background-color: #FFFFFF;
+                color: #444444;
+                padding: 4px 8px;
+                border-radius: 8px;
+                border: 1px solid #D7D6D6;
+                cursor: pointer;
+                position: relative;
+
+                .datePickerName {
+                    font-family: "SF Pro Text", sans-serif;
+                    font-weight: 400;
+                    font-size: 13px;
+                    line-height: 17.71px;
+                }
+
+                .datePickerImg {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    cursor: pointer;
+
+                    .selectedDate {
+                        font-size: 14px;
+                        color: #444;
+                    }
+                }
+            }
+
+            .resetBtn {
+                color: #B22828;
+                font-family: "SF Pro Text", sans-serif;
+                font-weight: 600;
+                font-size: 12px;
+                line-height: 14px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .selectedPMList {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 1.6rem;
+
+        .selectedPMItem {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            align-items: center;
+            padding: 6px 16px;
+            border-radius: 30px;
+            border: 1px solid #C2C2C2;
+
+            .pmName {
+                font-family: "SF Pro Display", sans-serif;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 18px;
+                color: var(--primary);
+            }
+
+            .removePM {
+                cursor: pointer;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        top: calc(16rem + 6px);
+        position: relative;
+        min-width: -webkit-fill-available;
+    }
+}
+
+.tableWrapper {
+    width: 100%;
+    overflow: hidden;
+
+    .tableUpper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.6rem;
+        flex-wrap: wrap;
+
+        @media (max-width: 768px) {
+            gap: 8px;
+        }
+    }
+
+}
+
+.tableHeader {
+    padding: 8px;
+    font-family: "Noto Sans", sans-serif;
+    font-size: 14px;
+    color: #5b5b5b;
+    margin: 1rem 0;
+}
+
+.assignmentsGrid {
+    width: 100%;
+    height: 380px;
+    font-family: "SF Pro Text", sans-serif;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.percentage {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .green {
+        color: #28a87b;
+    }
+
+    .red {
+        color: #b22828;
+    }
+}
+
+.viewButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: #2956a8;
+    cursor: pointer;
+    font-family: "SF Pro Text", sans-serif;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+
+    @media (max-width: 768px) {
+        font-size: 2rem;
+        line-height: 2.2rem;
+    }
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.calendarWrapperEnd,
+.calendarWrapperStart {
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 4px;
+    display: flex;
+}
+
+.calendarWrapperStart {
+    @media (max-width:620px) {
+        left: 0;
+    }
+}
+
+.calendarWrapperEnd {
+    @media (max-width:300px) {
+        right: -30%;
+    }
+}
+
+.calendarExternal {
+    max-width: 400px !important;
+    min-width: 230px !important;
+}

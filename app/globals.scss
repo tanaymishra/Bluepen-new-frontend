@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2956A8;
+  --color-primary-dark: #012551;
+  --color-primary-light: #DCE6F7;
+  --color-secondary: #6ec9f1;
+  --color-accent: #F8D881;
+  --color-accent-light: #FCECC0;
+  --color-surface: #F0F0F0;
+  --color-border: #D7D6D6;
+  --color-success: #CFF4E7;
+  --color-error: #E53E3E;
+  --color-error-dark: #C53030;
+  --font-family-poppins: var(--font-poppins), "Poppins", sans-serif;
+  --font-family-nunito: var(--font-nunito), "Nunito", sans-serif;
+  --font-family-montserrat: var(--font-montserrat), "Montserrat", sans-serif;
+}
+
+:root {
+  --primary: #2956A8;
+  --gray: #E6E3E1;
+  --yellow: #F8D881;
+  --secondary: #6ec9f1;
+  --black: #231F20;
+  --lightYellow: #FCECC0;
+  --borderGray: #D7D6D6;
+  --lightBlue: #DCE6F7;
+  --success: #CFF4E7;
+  --error: #E53E3E;
+  --error-dark: #C53030;
+  --error-darker: #9B2C2C;
+  --error-light: rgba(229, 62, 62, 0.02);
+  --compBlue: #80CAFF;
+  --compPurple: #D9B8FF;
+  --compRed: #FFAFA3;
+  --compGreen: #85E0A3;
+  --darkerPrimary: #012551;
+  --freelancer-bg: #F0F0F0;
+  --input-bg: rgba(255, 255, 255, 0.95);
+  --input-border: rgba(0, 0, 0, 0.1);
+  --input-focus: var(--primary);
+  --input-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}

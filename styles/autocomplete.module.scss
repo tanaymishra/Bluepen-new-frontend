@@ -1,0 +1,55 @@
+.autocomplete {
+    position: relative;
+    width: 100%;
+}
+
+.input {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #D7D6D6;
+    border-radius: calc(var(--variable)*1.8);
+    font-size: 1.4rem;
+    color: #000;
+
+    // &:focus {
+    //     border-color: #4a90e2;
+    //     outline: none;
+    //     box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+    // }
+
+    @media(max-width: 768px) {
+        font-size: 14px;
+    }
+}
+
+.optionsList {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #D7D6D6;
+    margin-top: 0.4rem;
+    max-height: 110px;
+    overflow-y: auto;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.optionItem {
+    padding: 0.8rem;
+    font-size: 1.2rem;
+    color: #444;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f0f0f0;
+    }
+
+    @media(max-width: 768px) {
+        font-size: 12px;
+    }
+}
+
+.highlighted {
+    background-color: #e0e0e0;
+}

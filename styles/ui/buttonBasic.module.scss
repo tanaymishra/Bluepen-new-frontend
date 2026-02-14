@@ -1,0 +1,145 @@
+.btn {
+    padding: 12px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 20rem;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: "League Spartan";
+    font-weight: 500;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease-out, height 0.6s ease-out;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+      &:before {
+        width: 300px;
+        height: 300px;
+      }
+    }
+
+    &:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  .btn.primary {
+    background: white;
+    color: var(--primary);
+
+    &:hover {
+      background: #f8f9fa;
+    }
+  }
+  
+  .btn.secondary {
+    border: 1px solid white;
+    background: transparent;
+    color: white;
+    backdrop-filter: blur(4px);
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+  
+  .btn.tertiary {
+    background-color: #ffffff;
+    color: #231F20;
+    border: 1px solid #ced4da;
+
+    &:hover {
+      background: #f8f9fa;
+      border-color: #b1b7bd;
+    }
+  }
+  
+  .btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
+  }
+  
+  .btn.custom {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--borderGray);
+    color: var(--black);
+    
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+      border-color: var(--black);
+    }
+  
+    &:active {
+      background: rgba(0, 0, 0, 0.1);
+    }
+  
+    svg {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.2s ease;
+    }
+  
+    &:hover svg {
+      transform: scale(1.1);
+    }
+  }
+  
+  .spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 3px solid #ffffff;
+    width: 16px;
+    height: 16px;
+    animation: spin 0.6s linear infinite;
+    display: inline-block;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes ripple {
+    to {
+      transform: translate(-50%, -50%) scale(20);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn {
+      transition: none;
+      
+      &:before {
+        display: none;
+      }
+    }
+  }
+
+  .link {
+    display: inline-block;
+    text-decoration: none;
+  }

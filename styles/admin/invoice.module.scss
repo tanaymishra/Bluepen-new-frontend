@@ -1,0 +1,120 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 16px;
+  width: 100%;
+  // filter: blur(5px);
+
+  .headTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    .titleBox {
+      display: flex;
+      flex-direction: column;
+      padding: 18px 0;
+
+      .back {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 17.71px;
+        color: var(--primary);
+        cursor: pointer;
+      }
+
+      .pageTitle {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 600;
+        font-size: calc(var(--variable) * 3.1);
+        line-height: calc(var(--variable) * 4.22);
+        line-height: 32px;
+        color: #2c323f;
+
+        @media (max-width: 768px) {
+          font-size: 3.1rem;
+          line-height: 4.22rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        padding: 4px 0;
+      }
+    }
+
+    .addEmployee {
+      display: flex;
+      flex-direction: row;
+      border-radius: 8px;
+      background-color: var(--primary);
+      padding: 10px 12px;
+      gap: 8px;
+      cursor: pointer;
+
+      .addText {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16.41px;
+        color: #fff;
+      }
+
+      @media (max-width: 768px) {
+        padding: 8px 16px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    top: calc(16rem + 6px);
+    position: relative;
+    min-width: -webkit-fill-available;
+  }
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow: hidden;
+
+  .tableUpper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.6rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      gap: 8px;
+    }
+  }
+}
+
+.tableHeader {
+  padding: 8px;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 14px;
+  color: #5b5b5b;
+  margin: 1rem 0;
+}
+
+.assignmentsGrid {
+  width: 100%;
+  font-family: 'Noto Sans', sans-serif;
+  border-radius: 8px;
+  border: 1px solid #E6E6E6;
+  height: 470px; // Add fixed height
+}
+
+.dropdownDiv {
+  width: 180px;
+}

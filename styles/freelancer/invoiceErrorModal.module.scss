@@ -1,0 +1,131 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modalContainer {
+  background-color: white;
+  border-radius: 12px;
+  padding: 32px;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out;
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 24px;
+  color: #6B7280;
+  cursor: pointer;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  
+  &:hover {
+    background-color: #F3F4F6;
+    color: #374151;
+  }
+}
+
+.errorIcon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+  
+  img {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+.errorTitle {
+  text-align: center;
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+.errorMessage {
+  text-align: center;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 16px;
+  color: #6B7280;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  
+  button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: "SF Pro Display", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+}
+
+.primaryBtn {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  
+  &:hover {
+    background-color: darken(#1D4ED8, 5%);
+    box-shadow: 0 4px 6px rgba(29, 78, 216, 0.1);
+  }
+  
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.secondaryBtn {
+  background-color: white;
+  color: #4B5563;
+  border: 1px solid #D1D5DB;
+  
+  &:hover {
+    background-color: #F9FAFB;
+    color: #1F2937;
+  }
+  
+  &:active {
+    transform: translateY(1px);
+  }
+}

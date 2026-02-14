@@ -1,0 +1,48 @@
+.sliderContainer {
+  overflow: hidden;
+  max-width: 100% !important;
+  padding-top: 20px;
+  width: 100%;
+  position: relative;
+}
+
+.slider {
+  display: flex;
+  gap: 30px;
+  transform: translateX(0px);
+  transition: transform 0.5s linear;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  padding-left: 50px;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+}
+
+.imgOfFlags {
+  max-width: 100%;
+  height: auto;
+  width: 50px !important;
+  height: 35px !important;
+  object-fit: cover;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}

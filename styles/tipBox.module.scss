@@ -1,0 +1,68 @@
+.tipsBox {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0;
+  gap: 24px;
+  align-items: center;
+
+  &.row {
+    width: 25%;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      // padding: 1rem;
+    }
+  }
+  &.coloumn {
+    width: 100%;
+  }
+
+  .tipsImgBox {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+
+    .tipsHeader {
+      font-family: "SF Pro Display", sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 17.71px;
+      color: #9c9797;
+      text-align: center;
+    }
+  }
+
+  .tipsContent {
+    display: flex;
+    gap: 8px;
+
+    &.coloumn {
+      flex-direction: column;
+    }
+    &.row {
+      flex-direction: row;
+    }
+    .tips {
+      display: flex;
+      flex-direction: row;
+      border-radius: 8px;
+      border: 1.5px solid #d7d6d6;
+      gap: 8px;
+      padding: 16px;
+      align-items: start;
+
+      .imgs {
+        margin-top: 3px;
+      }
+
+      .tipsMsg {
+        font-family: "SF Pro Text", sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        line-height: 17.71px;
+        color: #2956a8;
+      }
+    }
+  }
+}

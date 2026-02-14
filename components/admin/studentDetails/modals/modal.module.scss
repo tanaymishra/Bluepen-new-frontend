@@ -1,0 +1,214 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.modalContent {
+  background-color: #fff;
+  border-radius: 0.8rem;
+  box-shadow: 0 0.4rem 2.4rem rgba(0, 0, 0, 0.12);
+  width: 100%;
+  max-width: 50rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-2rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  border-bottom: 0.1rem solid #eee;
+  
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary, #222);
+  }
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 2.4rem;
+  line-height: 1;
+  color: #666;
+  cursor: pointer;
+  padding: 0.5rem;
+  
+  &:hover {
+    color: #333;
+  }
+}
+
+.modalBody {
+  padding: 2rem;
+}
+
+.modalFooter {
+  padding: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.2rem;
+  border-top: 0.1rem solid #eee;
+}
+
+.formGroup {
+  margin-bottom: 2rem;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  label {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    color: #333;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 1.2rem;
+    border: 0.1rem solid #d0d5dd;
+    border-radius: 0.6rem;
+    font-size: 1.5rem;
+    color: #333;
+    background-color: #fff;
+    font-family: inherit;
+    
+    &:focus {
+      border-color: var(--primary, #0052cc);
+      outline: none;
+      box-shadow: 0 0 0 0.3rem rgba(0, 82, 204, 0.15);
+    }
+    
+    &::placeholder {
+      color: #888;
+    }
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 10rem;
+  }
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.radioOption {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  
+  label {
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+  
+  input[type="radio"] {
+    width: 1.8rem;
+    height: 1.8rem;
+    cursor: pointer;
+  }
+}
+
+.checkboxGroup {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  
+  label {
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+  
+  input[type="checkbox"] {
+    width: 1.8rem;
+    height: 1.8rem;
+    cursor: pointer;
+  }
+}
+
+.infoBox {
+  background-color: rgba(0, 82, 204, 0.05);
+  border-left: 0.3rem solid var(--primary, #0052cc);
+  padding: 1.2rem;
+  margin: 2rem 0;
+  border-radius: 0.4rem;
+  
+  p {
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #555;
+  }
+}
+
+.cancelButton, .submitButton {
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border-radius: 0.6rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelButton {
+  background-color: transparent;
+  color: #666;
+  border: 0.1rem solid #d0d5dd;
+  
+  &:hover {
+    background-color: #f5f5f5;
+    color: #333;
+  }
+}
+
+.submitButton {
+  background-color: var(--primary, #0052cc);
+  color: #fff;
+  
+  &:hover {
+    background-color: darken(#0052cc, 8%);
+  }
+  
+  &.withdraw {
+    background-color: #ff4d4f;
+    
+    &:hover {
+      background-color: darken(#ff4d4f, 8%);
+    }
+  }
+}

@@ -1,0 +1,177 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary, #222);
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.6rem;
+  border-radius: 0.6rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &.primary {
+    background-color: var(--primary, #0052cc);
+    color: #fff;
+
+    &:hover {
+      background-color: darken(#0052cc, 8%);
+    }
+  }
+
+  &.secondary {
+    background-color: #fff;
+    color: var(--primary, #0052cc);
+    border: 0.1rem solid var(--primary, #0052cc);
+
+    &:hover {
+      background-color: rgba(0, 82, 204, 0.05);
+    }
+  }
+
+  .icon {
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+}
+
+.container {
+  background-color: #fff;
+  border-radius: 0.8rem;
+  box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.search {
+  flex: 1;
+}
+
+.filters {
+  display: flex;
+  gap: 1.2rem;
+  margin-left: 1.6rem;
+}
+
+.filterSelect {
+  padding: 1rem 1.2rem;
+  border: 0.1rem solid #d0d5dd;
+  border-radius: 0.6rem;
+  background-color: #fff;
+  font-size: 1.4rem;
+  color: #333;
+  min-width: 14rem;
+
+  &:focus {
+    border-color: var(--primary, #0052cc);
+    outline: none;
+  }
+}
+
+.grid {
+  width: 100%;
+  margin-bottom: 2rem;
+  height: 50rem;
+}
+
+.row {
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: #f8f9fa;
+  }
+}
+
+.typeChip {
+  padding: 0.5rem 1.2rem;
+  border-radius: 2rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+  min-width: 8rem;
+
+  &.credit {
+    background-color: rgba(40, 168, 123, 0.1);
+    color: #28A87B;
+    border: 0.1rem solid rgba(40, 168, 123, 0.2);
+  }
+
+  &.debit {
+    background-color: rgba(255, 77, 79, 0.1);
+    color: #ff4d4f;
+    border: 0.1rem solid rgba(255, 77, 79, 0.2);
+  }
+}
+
+.amount {
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.creditAmount {
+  color: #28A87B;
+}
+
+.debitAmount {
+  color: #ff4d4f;
+}
+
+.dateInfo {
+  display: flex;
+  flex-direction: column;
+
+  .timeInfo {
+    font-size: 1.3rem;
+    color: #666;
+    margin-top: 0.2rem;
+  }
+}
+
+.assignmentLink {
+  color: var(--primary, #0052cc);
+  cursor: pointer;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.loading,
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30rem;
+  color: #666;
+  font-size: 1.6rem;
+}
+
+/* Modal shared styles will go in a separate file */

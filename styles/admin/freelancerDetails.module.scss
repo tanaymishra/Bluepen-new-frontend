@@ -1,0 +1,1252 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 16px;
+  width: 100%;
+
+  .headTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    .titleBox {
+      display: flex;
+      flex-direction: column;
+      padding: 18px 0;
+
+      .back {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 17.71px;
+        color: var(--primary);
+        cursor: pointer;
+      }
+
+      .pageTitle {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 600;
+        font-size: calc(var(--variable) * 3.1);
+        line-height: calc(var(--variable) * 4.22);
+        line-height: 32px;
+        color: #2c323f;
+
+        @media (max-width: 768px) {
+          font-size: 3.1rem;
+          line-height: 4.22rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        padding: 4px 0;
+      }
+    }
+
+    .btns {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      position: relative;
+
+      .btnModal {
+        position: relative;
+
+        .rejectBtn {
+          padding: 10px 28px;
+          border-radius: 8px;
+          border: 1px solid #f8d881;
+          background-color: #f8d881;
+          font-family: "SF Pro Display", sans-serif;
+          font-weight: 600;
+          font-size: 13px;
+          line-height: 17.71px;
+          color: #231f20;
+          cursor: pointer;
+        }
+      }
+
+      .deleteBtn {
+        padding: 10px 28px;
+        border-radius: 8px;
+        background-color: #b22828;
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 17.71px;
+        color: #ffffff;
+        cursor: pointer;
+      }
+
+      .assignmentNavigation {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+
+        .arrowLeft,
+        .arrowRight {
+          display: flex;
+          justify-content: center;
+          gap: 8px;
+          align-items: center;
+          padding: 8px;
+          background: #fff;
+          border-radius: 32px;
+          cursor: pointer;
+
+          .arrowCont {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "SF Pro Display", sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            line-height: 17.71px;
+            color: #2c323f;
+          }
+        }
+
+        .assignmentPgNo {
+          font-family: "SF Pro Display", sans-serif;
+          font-weight: 600;
+          font-size: 13px;
+          line-height: 17.71px;
+          color: #2c323f;
+        }
+      }
+
+      @media (max-width: 500px) {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  }
+
+  .belowContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+
+    .leftContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 75%;
+
+      .assignDetailsCard {
+        display: flex;
+        flex-direction: column;
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+
+        img {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+          min-width: max-content;
+        }
+
+        .nameCircle {
+          font-family: "SF Pro Display", sans-serif;
+          font-weight: 600;
+          font-size: 39px;
+          color: #2c323f;
+          background-color: #f3be2e;
+          border-radius: 50%;
+          padding: 16px;
+          position: absolute;
+          top: 60px;
+          left: 30px;
+          border: 4px solid #fff;
+          transition: 1s ease;
+        }
+
+        .profilePhoto {
+          position: absolute;
+          top: 60px;
+          left: 30px;
+          width: 90px;
+          height: 90px;
+          object-fit: cover;
+          border-radius: 50%;
+          border: 5px solid var(--primary);
+          background: #FFF;
+        }
+
+        .assignDetailsBox {
+          display: flex;
+          flex-direction: column;
+          padding: 24px 40px;
+          gap: 16px;
+          background-color: #fff;
+
+          .NameNbutton {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            .name {
+              font-family: "SF Pro Display", sans-serif;
+              font-weight: 600;
+              font-size: 25px;
+              line-height: 34.05px;
+              color: #2c323f;
+              margin-top: 4rem;
+            }
+          }
+
+          .personalDetails {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            // width: 100%;
+
+            .rowContainer {
+              display: flex;
+              flex-direction: row;
+              gap: 16px;
+              flex: 1;
+
+              .rowfield {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                padding: 4px 8px;
+
+                .fieldName {
+                  font-size: 13px;
+                  line-height: 17.71px;
+                  font-family: "SF Pro Text", sans-serif;
+                  font-weight: 400;
+                  color: #828282;
+                }
+
+                .fieldValue {
+                  font-size: 15px;
+                  line-height: 20.79px;
+                  font-family: "SF Pro Text", sans-serif;
+                  font-weight: 600;
+                  color: #1d1d1d;
+
+                  @media (max-width: 768px) {
+                    font-size: 14px;
+                    line-height: 17.71px;
+                  }
+                }
+              }
+
+              @media (max-width: 768px) {
+                flex-wrap: wrap;
+              }
+
+              @media (max-width: 300px) {
+                .rowfield {
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .detailStatus {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        width: 100%;
+
+        .freelancingDetails {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          padding: 16px;
+          background-color: #fff;
+          border-radius: 16px;
+          width: 60%;
+
+          .titleBox {
+            font-family: "SF Pro Display", sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            line-height: 17.71px;
+            color: #383233;
+          }
+
+          .freelancerDet {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .categoryBox {
+              // display: flex;
+              // flex-direction: column;
+              padding: 4px 8px;
+              gap: 4px;
+
+              .categoryTitle {
+                font-family: "SF Pro Text", sans-serif;
+                font-size: 10px;
+                line-height: 13.62px;
+                font-weight: 400;
+                color: #766d6d;
+              }
+
+              .categoryContainer {
+                display: flex;
+                // flex-direction: row;
+                gap: 8px;
+                flex-wrap: wrap !important;
+                margin-top: 8px;
+
+                .domains {
+                  font-family: "SF Pro Text", sans-serif;
+                  font-size: 13px;
+                  line-height: 17.71px;
+                  font-weight: 400;
+                  color: #383233;
+                  background-color: #fcecc0;
+                  padding: 8px 16px;
+                  border-radius: 20px;
+                }
+
+                .subTags {
+                  font-family: "SF Pro Text", sans-serif;
+                  font-size: 13px;
+                  line-height: 17.71px;
+                  font-weight: 400;
+                  color: #383233;
+                  background-color: #cff4e7;
+                  padding: 8px 16px;
+                  border-radius: 20px;
+                }
+
+                .assTypes {
+                  font-family: "SF Pro Text", sans-serif;
+                  font-size: 13px;
+                  line-height: 17.71px;
+                  font-weight: 400;
+                  color: #383233;
+                  background-color: #e2f4fc;
+                  padding: 8px 16px;
+                  border-radius: 20px;
+                }
+              }
+            }
+          }
+
+          @media (max-width: 768px) {
+            width: 100%;
+          }
+        }
+
+        .timelineBox {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          padding: 16px;
+          background-color: #fff;
+          border-radius: 16px;
+          width: 40%;
+
+          @media (max-width: 768px) {
+            width: 100%;
+          }
+        }
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 1120px) {
+        width: 100%;
+      }
+    }
+
+    .rightContainer {
+      display: flex;
+      flex-direction: column;
+      width: 25%;
+
+      .resumeWorkBox {
+        display: flex;
+        flex-direction: column;
+        padding: 16px;
+        border-radius: 16px;
+        gap: 8px;
+        background-color: #fff;
+
+        .boxTitle {
+          font-family: "SF Pro Display", sans-serif;
+          font-weight: 600;
+          font-size: 13px;
+          line-height: 17.71px;
+          color: #383233;
+        }
+
+        .subTitle {
+          font-family: "SF Pro Display", sans-serif;
+          font-weight: 400;
+          font-size: 10px;
+          line-height: 13.62px;
+          color: #766d6d;
+        }
+
+        .contentBox {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          margin-bottom: 1rem;
+
+          .detContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .contTitle {
+              font-family: "SF Pro Text", sans-serif;
+              font-size: 10px;
+              line-height: 13.62px;
+              font-weight: 400;
+              color: #766d6d;
+            }
+
+            .fileBox {
+              display: flex;
+              flex-direction: row;
+              gap: 10px;
+              flex-wrap: wrap;
+
+              .fileCont {
+                display: flex;
+                flex-direction: row;
+                gap: 4px;
+                align-items: center;
+                background-color: #e2f4fc;
+                border-radius: 30px;
+                padding: 8px 16px;
+                word-break: break-word;
+
+                .fileName {
+                  font-family: "SF Pro Text", sans-serif;
+                  font-size: 10px;
+                  line-height: 13.62px;
+                  font-weight: 500;
+                  color: #383233;
+                }
+              }
+            }
+          }
+        }
+
+        .iconBox {
+          display: flex;
+          flex-direction: row;
+          gap: 1rem;
+          justify-content: center;
+          position: relative;
+
+          .absBox {
+            display: flex;
+            flex-direction: row;
+            position: absolute;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            transform: translateY(-18%);
+
+            .logoIcon {
+              display: flex;
+              background-color: #f8d881;
+              border-radius: 50%;
+              width: 5rem;
+              height: 5rem;
+              justify-content: center;
+              align-items: center;
+              transition: all 0.3 ease;
+              cursor: pointer;
+
+              &:hover {
+                transform: translateY(-25%);
+              }
+
+              img {
+                width: 2rem;
+                height: 2rem;
+              }
+            }
+          }
+        }
+
+        @media (max-width: 768px) {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 1120px) {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 1120px) {
+      flex-direction: column;
+    }
+  }
+
+  .totalCounterMarksContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    width: 100%;
+
+    .cardCont {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 30%;
+
+      .card {
+        display: flex;
+        flex-direction: column;
+        border-radius: 16px;
+        padding: 16px;
+        background-color: #fff;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+
+        .cardTitle {
+          font-family: "SF Pro Display", sans-serif;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 21.79px;
+          color: #383233;
+        }
+
+        .cardValue {
+          font-family: "SF Pro Display", sans-serif;
+          font-weight: 600;
+          font-size: 39px;
+          line-height: 53.12px;
+          color: #231f20;
+        }
+      }
+
+      @media (max-width: 985px) {
+        width: 100%;
+        flex-direction: row;
+      }
+
+      @media (max-width: 300px) {
+        width: 100%;
+        flex-direction: column;
+      }
+    }
+
+    .marksDistribution {
+      background-color: #fff;
+      border-radius: 16px;
+      gap: 16px;
+      padding: 16px;
+      width: 70%;
+
+      .head {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+
+        .title {
+          font-size: 16px;
+          line-height: 21px;
+          font-family: "SF Pro Display", sans-serif;
+          font-weight: 600;
+        }
+
+        .filterRow {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .refresh {
+          cursor: pointer;
+        }
+
+        @media (max-width: 648px) {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 16px;
+        }
+      }
+
+      .content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 16px;
+
+        .speedometerWrapper {
+          @media (max-width: 768px) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(-15%);
+          }
+        }
+
+        .line {
+          background-color: #e0e0e0;
+          width: 1px;
+          margin: 2rem;
+
+          @media (max-width: 648px) {
+            transform: rotate(180deg);
+            height: 1px;
+            width: 100%;
+            margin: 1rem auto;
+          }
+        }
+
+        .details {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+
+          .detailCont {
+            display: flex;
+            flex-direction: row;
+
+            .detailBox {
+              display: flex;
+              flex-direction: column;
+              padding: 16px;
+              width: 100%;
+
+              .labelDetail {
+                font-size: 14px;
+                line-height: 17.71px;
+                font-family: "SF Pro Display", sans-serif;
+                font-weight: 500;
+                color: #766d6d;
+              }
+
+              .category {
+                font-size: 25px;
+                line-height: 34.05px;
+                font-family: "SF Pro Display", sans-serif;
+                font-weight: 600;
+                color: #231f20;
+              }
+
+              .averageMarks {
+                font-size: 25px;
+                line-height: 34.05px;
+                font-family: "SF Pro Display", sans-serif;
+                font-weight: 600;
+                color: #231f20;
+              }
+
+              .totalMarks {
+                display: flex;
+                flex-direction: row;
+                align-items: baseline;
+                gap: 0.4rem;
+
+                .numerator {
+                  font-size: 25px;
+                  line-height: 48px;
+                  font-family: "SF Pro Display", sans-serif;
+                  font-weight: 600;
+                  color: #231f20;
+                }
+
+                .denominator {
+                  font-size: 14px;
+                  line-height: 17px;
+                  font-family: "SF Pro Display", sans-serif;
+                  font-weight: 600;
+                  color: #383233;
+                }
+              }
+            }
+          }
+        }
+
+        @media (max-width: 648px) {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 985px) {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 985px) {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
+  .betweenTitile {
+    font-family: "SF Pro Text", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 17.71px;
+    color: #766d6d;
+  }
+
+  .DraftTips {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+
+    .submitDraft {
+      background-color: #fff;
+      border-radius: 16px;
+      gap: 16px;
+      padding: 16px;
+      width: 100%;
+
+      .messageBox {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+
+        .profile {
+          background-color: #f3be2e;
+          display: flex;
+          justify-content: center;
+          border-radius: 50%;
+          padding: 0.8rem;
+        }
+
+        .messageInput {
+          display: flex;
+          flex-direction: column;
+          border: 1px solid #9c9797;
+          padding: 5px 16px;
+          justify-content: space-between;
+          border-radius: 3.2rem;
+          width: 100%;
+
+          .inputs {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 100%;
+
+            input {
+              border: none;
+              width: 100%;
+              font-family: "SF Pro Text", sans-serif;
+              font-weight: 400;
+              font-size: 13px;
+              line-height: 17.71px;
+              color: #766d6d;
+              padding: 8px 4px;
+
+              &:focus {
+                outline: none;
+                box-shadow: none;
+                border: none;
+              }
+            }
+
+            .statusAttach {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+
+              img {
+                cursor: pointer;
+              }
+
+              @media (max-width: 910px) {
+                align-self: flex-end;
+              }
+            }
+
+            @media (max-width: 910px) {
+              flex-direction: column;
+              gap: 2rem;
+            }
+          }
+        }
+
+        .attachments {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+
+          .documents {
+            margin-top: 0.6rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.6rem 1.6rem;
+            border-radius: 3rem;
+            border: 1px solid #c2c2c2;
+
+            .documentName {
+              font-family: "SF Pro Text", sans-serif;
+              font-weight: 500;
+              font-size: 13px;
+              line-height: 17.71px;
+              color: #1d1d1d;
+            }
+
+            .crossBtn {
+              border: none;
+              font-family: "SF Pro Text", sans-serif;
+              font-weight: 600;
+              font-size: 13px;
+              line-height: 17.71px;
+              color: red;
+              background: none;
+              border-radius: 50%;
+              width: 13px;
+              height: 13px;
+              padding: 2px;
+              cursor: pointer;
+              align-self: flex-start;
+            }
+          }
+        }
+
+        .sendButton {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: var(--primary);
+          border-radius: 50%;
+          padding: calc(var(--variable) * 1.5);
+          cursor: pointer;
+        }
+
+        @media (max-width: 300px) {
+          flex-wrap: wrap;
+        }
+      }
+
+      .commentsBox {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        margin: 2rem 0;
+
+        .title {
+          font-family: "SF Pro Text", sans-serif;
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 17.71px;
+          color: #766d6d;
+        }
+
+        .commentsContainer {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+          padding: 2px 0 1px 0;
+          overflow-y: auto;
+
+          .comments {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+
+            .commentProfile {
+              background-color: #f3be2e;
+              display: flex;
+              justify-content: center;
+              border-radius: 50%;
+              padding: 6px;
+              width: 48px;
+              height: 48px;
+            }
+
+            .userProfile {
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              font-family: "SF Pro Text", sans-serif;
+              font-weight: 600;
+              font-size: 16px;
+              line-height: 21.79px;
+              color: #ffffff;
+              border-radius: 50%;
+              background-color: #6f34ff;
+              padding: 6px;
+              width: 48px;
+              height: 48px;
+            }
+
+            .commentMessages {
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+
+              .userStatus {
+                display: flex;
+                flex-direction: row;
+                gap: 8px;
+                align-items: center;
+
+                .user {
+                  font-family: "SF Pro Text", sans-serif;
+                  font-weight: 600;
+                  font-size: 13px;
+                  line-height: 17.71px;
+                  color: #231f20;
+                }
+
+                .status {
+                  font-family: "SF Pro Text", sans-serif;
+                  font-weight: 600;
+                  font-size: 13px;
+                  line-height: 17.71px;
+                  border-radius: 0.4rem;
+                  padding: 0.2rem 0.8rem;
+                }
+
+                .completed {
+                  color: #00510d;
+                  background-color: #d8e8e6;
+                }
+
+                .updates {
+                  color: #15355e;
+                  background-color: #c7deff;
+                }
+
+                .query {
+                  color: #3f464a;
+                  background-color: #f6f6f7;
+                }
+              }
+
+              .messages {
+                font-family: "SF Pro Text", sans-serif;
+                font-weight: 500;
+                font-size: 13px;
+                line-height: 17.71px;
+                color: #383233;
+              }
+
+              .documentBox {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 0.8rem;
+
+                .documents {
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: center;
+                  align-items: center;
+                  gap: 0.8rem;
+                  padding: 0.6rem 1.6rem;
+                  border-radius: 3rem;
+                  border: 1px solid #c2c2c2;
+
+                  .documentName {
+                    font-family: "SF Pro Text", sans-serif;
+                    font-weight: 500;
+                    font-size: 13px;
+                    line-height: 17.71px;
+                    color: #1d1d1d;
+                  }
+                }
+              }
+
+              .date {
+                font-family: "SF Pro Text", sans-serif;
+                font-weight: 400;
+                font-size: 10px;
+                line-height: 13.62px;
+                color: #766d6d;
+              }
+            }
+          }
+        }
+
+        @media (max-width: 1200px) {
+          width: 100%;
+        }
+
+        .loading,
+        .endMessage {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: "SF Pro Text", sans-serif;
+          font-weight: 400;
+          font-size: 13px;
+          line-height: 17.71px;
+          color: #766d6d;
+        }
+      }
+
+      @media (max-width: 1200px) {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    top: calc(16rem + 6px);
+    position: relative;
+    min-width: -webkit-fill-available;
+  }
+}
+
+.tableWrapper {
+  width: 100%;
+  overflow: hidden;
+
+  .tableUpper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      gap: 8px;
+    }
+  }
+}
+
+.tableHeader {
+  padding: 8px;
+  font-family: "SF Pro Text", sans-serif;
+  font-size: 14px;
+  color: #5b5b5b;
+  margin: 1rem 0;
+}
+
+.assignmentsGrid {
+  width: 100%;
+  font-family: "SF Pro Text", sans-serif;
+  border-radius: 8px;
+  height: 470px;
+}
+
+.navShow {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.navLeft img {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  padding: 8px;
+  border-radius: 9999px;
+  cursor: pointer;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+/* In your CSS module */
+.tableSelect {
+  // -webkit-appearance: none; /* For Chrome, Safari, Edge */
+  // -moz-appearance: none; /* For Firefox */
+  text-align: center;
+  appearance: none;
+  /* Standard syntax */
+  border: #e0e0e0 1px solid;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.tableSelectEntries {
+  // -webkit-appearance: none; /* For Chrome, Safari, Edge */
+  // -moz-appearance: none; /* For Firefox */
+  text-align: center;
+  appearance: none;
+  /* Standard syntax */
+  border: #e0e0e0 1px solid;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+.show,
+.entries {
+  font-size: small;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.timelineButton {
+  border: 1px solid #2956a8;
+  color: #2956a8;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  gap: 2px;
+  align-items: center;
+  font-family: "SF Pro Display";
+  font-weight: 600;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 14px;
+  cursor: pointer;
+  transition: all 1s ease;
+  height: fit-content;
+
+  * {
+    transition: all 1s ease;
+  }
+
+  &:hover {
+    background-color: #2956a8;
+    color: #fff;
+    transition: 0.6s ease;
+  }
+}
+
+.blurBackground {
+  filter: blur(3px);
+}
+
+.optionsModal {
+  position: absolute;
+  top: 90px;
+  right: 50px;
+  background: #fff;
+  color: #b22828;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: start;
+  justify-content: start;
+  width: max-content;
+  z-index: 9999;
+  padding: 8px 20px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  .reject {
+    text-align: start;
+  }
+}
+
+.telmailtofnc {
+  color: black;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+
+  }
+}
+
+.overlay {
+  opacity: 0.5;
+}
+
+
+.lastEditText {
+  position: absolute;
+  top: 20%;
+  right: 5%;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 400;
+
+}
+
+.notAvailable {
+  color: #9a9fa7;
+  font-size: 13px;
+  line-height: 17.71px;
+  font-family: "SF Pro Text", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+// .rewardBox {
+//   display: flex;
+//   position: absolute;
+//   height: 300px;
+//   width: 300px;
+//   flex-direction: column;
+//   gap: 1rem;
+//   padding: 1rem;
+//   border-radius: 16px;
+//   background-color: #fff;
+//   width: 100%;
+// }
+.reward {
+  display: flex;
+  flex-direction: row;
+  padding: 0 1.6rem 0 1.6rem;
+  gap: 0.8rem;
+  align-items: center;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+
+  .levelImg {
+    width: 50px;
+    aspect-ratio: 1;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .rewardColumn {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .incoming {
+    color: white;
+    font-size: 1rem;
+    line-height: 1.4rem;
+  }
+
+  .rewardName {
+    display: flex;
+    flex-direction: row;
+    color: white;
+    line-height: 1.8rem;
+    font-size: 1.3rem;
+    white-space: nowrap;
+    gap: 0.5rem;
+    align-items: center;
+
+    img {
+      filter: invert(1);
+    }
+  }
+}

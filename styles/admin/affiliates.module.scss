@@ -1,0 +1,122 @@
+.main {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  padding: 20px;
+
+  .headTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .titleBox {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-direction: column;
+      padding-left: 2rem;
+      align-items: start;
+    }
+
+    .back {
+      font-family: "SF Pro Display", sans-serif;
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 17.71px;
+      color: var(--primary);
+      cursor: pointer;
+      // &:hover{
+      //  color: 105%;
+      // }
+    }
+
+    .pageTitle {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .addButton {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1rem 1.6rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--darkerPrimary) 100%);
+      color: white;
+      border: none;
+      border-radius: 0.8rem;
+      font-size: 1.4rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'League Spartan', sans-serif;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.2);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .belowContainer {
+    padding: 20px;
+    
+    .counterCards {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+
+      .card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        flex: 1;
+        
+        .cardTitle {
+          font-size: 14px;
+          color: #666;
+          margin-bottom: 8px;
+        }
+        
+        .cardValue {
+          font-size: 24px;
+          font-weight: 600;
+          color: #333;
+        }
+      }
+    }
+
+    .tableWrapper {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+  }
+}
+
+.filtersContainer {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .statusFilter {
+    display: flex;
+    gap: 10px;
+  }
+}
+
+.customRow {
+  border-bottom: 1px solid #eee;
+  
+  &:hover {
+    background-color: #f9f9f9;
+  }
+}

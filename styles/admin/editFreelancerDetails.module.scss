@@ -1,0 +1,186 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 16px;
+  width: 100%;
+
+  .headTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    .titleBox {
+      display: flex;
+      flex-direction: column;
+      padding: 18px 0;
+
+      .back {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 17.71px;
+        color: var(--primary);
+        cursor: pointer;
+      }
+
+      .pageTitle {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 600;
+        font-size: calc(var(--variable) * 3.1);
+        line-height: calc(var(--variable) * 4.22);
+        line-height: 32px;
+        color: #2c323f;
+
+        @media (max-width: 768px) {
+          font-size: 3.1rem;
+          line-height: 4.22rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        padding: 4px 0;
+      }
+    }
+
+    .addEmployee {
+      display: flex;
+      flex-direction: row;
+      border-radius: 8px;
+      background-color: var(--primary);
+      padding: 10px 12px;
+      gap: 8px;
+      cursor: pointer;
+
+      .addText {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16.41px;
+        color: #fff;
+      }
+
+      @media (max-width: 768px) {
+        padding: 8px 16px;
+      }
+
+      &:hover {
+        background: #1e56bc;
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  }
+
+  .belowContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    width: 100%;
+
+    .details {
+      display: flex;
+      flex-direction: column;
+      border-radius: 16px;
+      width: 100%;
+      gap: 10px;
+      background: none;
+
+      .personalDetails {
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        border-radius: 16px;
+        padding: 16px;
+        gap: 16px;
+
+        .headerDet {
+          font-family: "SF Pro Text", sans-serif;
+          font-weight: 600;
+          font-size: 13px;
+          line-height: 17.71px;
+          color: #766d6d;
+        }
+
+        .personalDetailsBox {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+
+          .personalDetailsInput {
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            width: 100%;
+            // margin-bottom: 6px;
+
+            > div {
+              width: 100%;
+            }
+
+            @media (max-width: 768px) {
+              flex-direction: column;
+            }
+          }
+        }
+      }
+
+      @media (max-width: 1000px) {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 1000px) {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 768px) {
+    top: calc(16rem + 6px);
+    position: relative;
+    min-width: -webkit-fill-available;
+  }
+}
+
+.required {
+  color: #ff4d4f;
+  margin-left: 4px;
+}
+
+.error {
+  border-color: #ff4d4f !important;
+}
+
+.errorMessage {
+  color: #ff4d4f;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.SelectStyle {
+  font-family: "SF Pro Text", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17.71px;
+  color: #828282;
+}
+
+.roleInputBox {
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  padding: 4px 8px;
+  background-color: #fff;
+  gap: 2px;
+  cursor: pointer;
+
+  &.open {
+    .arrowImg {
+      transform: rotate(180deg);
+    }
+  }
+}

@@ -1,0 +1,376 @@
+//css
+
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: "SF Pro Text", sans-serif;
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 2rem;
+  }
+
+  .headTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    .titleBox {
+      display: flex;
+      flex-direction: column;
+      padding: 18px 0;
+
+      .back {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 17.71px;
+        color: var(--primary);
+        cursor: pointer;
+      }
+
+      .pageTitle {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 600;
+        font-size: calc(var(--variable) * 3.1);
+        line-height: calc(var(--variable) * 4.22);
+        line-height: 32px;
+        color: #2c323f;
+
+        @media (max-width: 768px) {
+          font-size: 3.1rem;
+          line-height: 4.22rem;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    top: calc(16rem + 6px);
+    position: relative;
+    min-width: -webkit-fill-available;
+  }
+
+  .formcontainer {
+    height: fit-content;
+    background-color: #fff;
+    border-radius: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      padding: 2rem;
+    }
+
+    .borderForInout {
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 1rem;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .inputBox {
+      display: flex;
+      flex-direction: column;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0;
+      padding: 4px 8px;
+      background-color: #fff;
+      cursor: text;
+      gap: 5px;
+      flex: 1;
+
+      .inputLabel {
+        font-family: "SF Pro Text", sans-serif;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 17.71px;
+        color: #828282;
+      }
+
+      .input {
+        font-family: "SF Pro Text", sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 17px;
+        color: #1d1d1d;
+        border: none;
+        width: 100%;
+        height: 2rem;
+        outline: none;
+
+        &::placeholder {
+          font-weight: 300;
+          // font-size: 14px;
+          color: gray;
+        }
+      }
+
+      input:focus::placeholder {
+        color: transparent;
+      }
+    }
+
+    .addEmployee {
+      display: flex;
+      flex-direction: row;
+      border-radius: 8px;
+      background-color: var(--primary);
+      padding: 10px 12px;
+      gap: 8px;
+      cursor: pointer;
+      width: fit-content;
+
+      .addText {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16.41px;
+        color: #fff;
+      }
+
+      @media (max-width: 768px) {
+        padding: 8px 16px;
+      }
+
+      &:hover {
+        background: #1e56bc;
+      }
+    }
+
+    .formRowAlign {
+      display: flex;
+      gap: 2rem;
+      flex: 1;
+      // justify-content: space-between;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        flex: 1;
+      }
+    }
+
+    .formColAlign {
+      display: flex;
+      flex-direction: column;
+      // flex: 1;
+      width: 100%;
+      align-items: normal;
+
+      .roleInputBox {
+        display: flex;
+        flex-direction: row;
+        border-radius: 4px;
+        border: 1px solid #e0e0e0;
+        padding: 1px;
+        background-color: #fff;
+        gap: 5px;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        position: relative;
+        width: 100%;
+        flex: 1;
+      }
+    }
+  }
+}
+
+.titleNForm {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.footer {
+  margin-top: 2rem;
+}
+
+.roleInputBox {
+  display: flex;
+  flex-direction: row;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  padding: 4px 8px;
+  background-color: #fff;
+  gap: 5px;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  flex: 1;
+
+  &.open {
+    .arrowImg {
+      transform: rotate(180deg);
+    }
+  }
+
+  .dropText {
+    display: flex;
+    flex-direction: column;
+
+    .selectDrop {
+      font-family: "SF Pro Text", sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 17px;
+      color: #1d1d1d;
+    }
+  }
+
+  .dropLabel {
+    font-family: "SF Pro Text", sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 17.71px;
+    color: #828282;
+  }
+
+  .dropdownOptions {
+    position: absolute;
+    top: 105%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 0.3rem;
+    z-index: 10;
+    color: #444444;
+    max-height: 300px;
+    overflow-y: auto;
+
+    li {
+      padding: 8px 16px;
+      font-family: "SF Pro text", sans-serif;
+      font-size: calc(var(--variable) * 1.4);
+      line-height: calc(var(--variable) * 1.7);
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f0f0f0;
+        border-radius: 4px;
+      }
+
+      @media (max-width: 768px) {
+        font-size: 1.8rem;
+        line-height: 2rem;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    // padding: 5rem;
+  }
+}
+
+.formDateNtype {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.required {
+  color: #ff4d4f;
+  margin-left: 4px;
+}
+
+// ------------------upload function styling ------------------------------
+.file {
+  border: dotted 3px #afafaf;
+  border-radius: 10px;
+  padding: 32px;
+  cursor: pointer;
+}
+
+.fileRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.fileCol {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.header {
+  font-size: 18px;
+  line-height: 21.6px;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 500;
+  color: #2956a8;
+}
+
+.title {
+  color: #828282;
+  font-size: 14px;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 400;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+}
+
+.headerDet {
+  font-family: "SF Pro Text", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 17.71px;
+  color: #766d6d;
+}
+
+.SelectStyle {
+  font-family: "SF Pro Text", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17.71px;
+  color: #828282;
+}
+
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.selectorPillLabel {
+  font-family: "SF Pro Text", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 17.71px;
+  color: #828282;
+  padding-bottom: 0.4rem;
+}

@@ -1,0 +1,204 @@
+.marker{
+    display: flex;
+    // margin: 30px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.text {
+    flex: 7;
+}
+
+.col{
+    display: flex;
+    flex-direction: column !important;
+    gap: 10;
+}
+
+// .img{
+//     flex: 3;
+//     align-items: flex-end;
+//     display: flex;
+//     justify-content: flex-end;
+// }
+
+.title{
+    font-size: 24px;
+    color: #766D6D;
+    line-height: 28.8px;
+    // font-weight: 800;
+}
+
+.desc{
+    font-size: 30px;
+    line-height: 43.2px;
+    font-weight: 500;
+}
+
+.grid1 {
+    display: flex;
+    gap: 10px;
+}
+
+.researchcard{
+    flex: 4;
+    background-color: #231F20;
+    color: white;
+    border-radius: 20px;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.researchrow{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.researchimg, .dissertationimg, .codingimg, .sopimg{
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: end !important;
+    align-items: end !important;
+}
+
+.researchcontent{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+
+.dissertationcard{
+    flex: 6;
+    background-color: #F8D881;
+    color: black;
+    border-radius: 20px;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px; 
+}
+
+.cardtitle{
+    font-size: 24px;
+    white-space: initial;
+}
+
+.carddesc{
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 100px;
+}
+
+.grid2 {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.logocard{
+    flex: 1;
+    display: flex;
+    background-color: #EBEBEB;
+    border-radius: 20px;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 30px;
+}
+
+// .logoimg{
+// display: flex;
+// justify-content: center;
+// align-items: center;
+// }
+
+.codingcard{
+    flex: 5;
+    border-radius: 20px;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #2956A8;
+    color: white;
+}
+
+.codingrow{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.codingcontent{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+
+.sopcard{
+    flex: 4;
+    border-radius: 20px;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #6EC9F1;
+    color: black;
+}
+
+.soprow{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: space-between;
+}
+
+.sopcontent{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+
+
+@media (max-width: 768px) {
+    .grid1, .grid2 {
+        flex-direction: column;
+    }
+
+    .logocard {
+        display: none;
+    }
+
+    .title {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .desc {
+        font-size: 20px;
+        line-height: 36px;
+    }
+
+    .cardtitle {
+        font-size: 20px;
+    }
+
+    .carddesc {
+        font-size: 16px;
+        margin-bottom: 50px;
+    }
+    .codingrow, .researchrow, .dissertationrow, .soprow{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .researchcard, .dissertationcard, .codingcard, .sopcard {
+        margin-bottom: 10px;
+    }
+
+}

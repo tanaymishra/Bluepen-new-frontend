@@ -1,0 +1,82 @@
+.assignmentsGrid {
+  width: 100%;
+  height: 470px;
+  font-family: "SF Pro Text", sans-serif;
+  border-radius: 8px;
+}
+
+.tableHeader {
+  padding: 8px;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 14px;
+  color: #5b5b5b;
+  margin-bottom: 16px;
+
+  .searchAndFilters {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+
+    .topControls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: stretch;
+
+      }
+    }
+  }
+}
+
+.filtersContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.selectedPMList {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 8px;
+
+  .selectedPMItem {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    padding: 6px 16px;
+    border-radius: 30px;
+    border: 1px solid #c2c2c2;
+    background-color: #fff;
+
+    .pmName {
+      font-family: "SF Pro Display", sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 18px;
+      color: var(--primary);
+    }
+
+    .removePM {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+.searchContainer {
+    position: relative;
+    width: 100%;
+    max-width: 275px;
+    background-color: white;
+    border-radius: 32px;
+    padding: 12px 24px 12px 24px;
+    gap: 12;
+    // margin-top: 2rem;
+}
+
+.searchInput {
+    border: none;
+    border-radius: 32px;
+    font-size: 14px;
+    line-height: 16.8px;
+    outline: none;
+    padding-left: 14%;
+
+    &::placeholder {
+        color: #4C4546;
+        opacity: 50%;
+    }
+}
+
+.searchIcon {
+    position: absolute;
+    left: 12%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    opacity: 50%;
+    color: #4C4546;
+}
