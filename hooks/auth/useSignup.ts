@@ -9,6 +9,7 @@ interface SignupState {
     firstname: string;
     lastname: string;
     email: string;
+    countryCode: string;
     phone: string;
     password: string;
     confirmPassword: string;
@@ -27,6 +28,7 @@ export function useSignup() {
         firstname: "",
         lastname: "",
         email: "",
+        countryCode: "+91",
         phone: "",
         password: "",
         confirmPassword: "",
@@ -41,7 +43,7 @@ export function useSignup() {
         (
             field: keyof Pick<
                 SignupState,
-                "firstname" | "lastname" | "email" | "phone" | "password" | "confirmPassword"
+                "firstname" | "lastname" | "email" | "countryCode" | "phone" | "password" | "confirmPassword"
             >,
             value: string
         ) => {
@@ -157,7 +159,7 @@ export function useSignup() {
                 firstname: state.firstname,
                 lastname: state.lastname,
                 email: state.email,
-                phone: state.phone,
+                phone: `${state.countryCode} ${state.phone}`,
                 password: state.password,
             });
 

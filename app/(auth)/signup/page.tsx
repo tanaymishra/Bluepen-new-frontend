@@ -8,7 +8,6 @@ import {
     User,
     Mail,
     Lock,
-    Phone,
     Eye,
     EyeOff,
     ArrowRight,
@@ -20,12 +19,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { PhoneInput } from "@/components/ui/phone-input";
 
 export default function SignupPage() {
     const {
         firstname,
         lastname,
         email,
+        countryCode,
         phone,
         password,
         confirmPassword,
@@ -173,14 +174,14 @@ export default function SignupPage() {
                     className="space-y-2"
                 >
                     <Label htmlFor="signup-phone">Phone number</Label>
-                    <Input
+                    <PhoneInput
                         id="signup-phone"
-                        type="tel"
                         value={phone}
                         onChange={(e) => setField("phone", e.target.value)}
-                        placeholder="+91 98765 43210"
+                        onCountryChange={(code) => setField("countryCode", code)}
+                        defaultCountry={countryCode === "+91" ? "in" : undefined} // diligent default
+                        placeholder="98765 43210"
                         autoComplete="tel"
-                        icon={<Phone className="w-[18px] h-[18px]" />}
                     />
                 </motion.div>
 
