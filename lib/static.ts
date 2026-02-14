@@ -355,3 +355,59 @@ export const MOCK_ASSIGNMENTS: MockAssignment[] = [
         price: 3200,
     },
 ];
+
+/* ──────────────────────────────────────────────────────────
+   Mock Wallet Data
+   ────────────────────────────────────────────────────────── */
+
+export interface WalletTransaction {
+    id: string;
+    type: "payment" | "refund" | "topup";
+    amount: number;
+    description: string;
+    date: string;
+    assignmentId?: string;
+    status: "completed" | "pending" | "failed";
+}
+
+export const MOCK_WALLET: {
+    balance: number;
+    transactions: WalletTransaction[];
+} = {
+    balance: 12450,
+    transactions: [
+        { id: "TXN-001", type: "payment", amount: -4500, description: "Payment for ASG-1001", date: "2026-02-10T14:35:00", assignmentId: "ASG-1001", status: "completed" },
+        { id: "TXN-002", type: "topup", amount: 10000, description: "Wallet top-up via UPI", date: "2026-02-08T10:00:00", status: "completed" },
+        { id: "TXN-003", type: "payment", amount: -2800, description: "Payment for ASG-1005", date: "2026-01-30T08:25:00", assignmentId: "ASG-1005", status: "completed" },
+        { id: "TXN-004", type: "payment", amount: -1500, description: "Payment for ASG-1006", date: "2026-02-08T13:15:00", assignmentId: "ASG-1006", status: "completed" },
+        { id: "TXN-005", type: "refund", amount: 1200, description: "Partial refund — price adjustment", date: "2026-02-05T16:00:00", assignmentId: "ASG-1003", status: "completed" },
+        { id: "TXN-006", type: "topup", amount: 15000, description: "Wallet top-up via Net Banking", date: "2026-01-25T11:30:00", status: "completed" },
+        { id: "TXN-007", type: "payment", amount: -3200, description: "Payment for ASG-1010", date: "2026-01-28T12:05:00", assignmentId: "ASG-1010", status: "completed" },
+        { id: "TXN-008", type: "payment", amount: -1800, description: "Payment for ASG-1008", date: "2026-02-01T15:05:00", assignmentId: "ASG-1008", status: "completed" },
+    ],
+};
+
+/* ──────────────────────────────────────────────────────────
+   Mock Notifications
+   ────────────────────────────────────────────────────────── */
+
+export interface AppNotification {
+    id: string;
+    type: "assignment" | "payment" | "system" | "deadline";
+    title: string;
+    message: string;
+    timestamp: string;
+    read: boolean;
+    link?: string;
+}
+
+export const MOCK_NOTIFICATIONS: AppNotification[] = [
+    { id: "N-001", type: "assignment", title: "Expert Assigned", message: "Dr. Li Wei has been assigned to your assignment 'Neural Networks for NLP'.", timestamp: "2026-02-12T10:00:00", read: false, link: "/students/assignments/ASG-1009" },
+    { id: "N-002", type: "deadline", title: "Deadline Approaching", message: "Your assignment 'Climate Change Effects on Coastal Biodiversity' is due in 4 days.", timestamp: "2026-02-14T08:00:00", read: false, link: "/students/assignments/ASG-1003" },
+    { id: "N-003", type: "assignment", title: "Assignment Completed", message: "Your assignment 'Financial Risk Assessment in Emerging Markets' has been completed.", timestamp: "2026-02-10T11:30:00", read: true, link: "/students/assignments/ASG-1005" },
+    { id: "N-004", type: "payment", title: "Payment Confirmed", message: "Payment of ₹4,500 for ASG-1001 has been processed successfully.", timestamp: "2026-02-10T14:36:00", read: true },
+    { id: "N-005", type: "system", title: "Welcome to Bluepen", message: "Your account has been created. Start by posting your first assignment!", timestamp: "2026-01-20T09:00:00", read: true },
+    { id: "N-006", type: "assignment", title: "Revision Requested", message: "Changes have been requested for 'Consumer Behaviour in E-Commerce Platforms'.", timestamp: "2026-02-11T16:05:00", read: false, link: "/students/assignments/ASG-1008" },
+    { id: "N-007", type: "assignment", title: "Under Review", message: "Your assignment 'Climate Change Effects on Coastal Biodiversity' is now under quality review.", timestamp: "2026-02-12T15:32:00", read: true, link: "/students/assignments/ASG-1003" },
+    { id: "N-008", type: "payment", title: "Refund Processed", message: "A refund of ₹1,200 has been credited to your wallet.", timestamp: "2026-02-05T16:02:00", read: true },
+];
