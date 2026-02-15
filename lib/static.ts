@@ -798,3 +798,289 @@ export const ADMIN_WRITER_WORKLOADS: WriterWorkload[] = [
     { name: "Misha Gupta", assigned: 36, completed: 34, avgTurnaround: 32 },
     { name: "Aryan Das", assigned: 25, completed: 24, avgTurnaround: 46 },
 ];
+
+/* ═══════════════════════ Admin Assignments ═══════════════════════ */
+
+export const ADMIN_STATUS_STEPS = [
+    "Posted",
+    "Processing",
+    "Assigned to PM",
+    "Assigned to Freelancer",
+    "In Progress",
+    "Completed (Marks Pending)",
+    "Completed",
+    "Review Received",
+] as const;
+
+export const ADMIN_STREAMS = [
+    "Business & Management",
+    "Engineering",
+    "Medical & Health Sciences",
+    "Law",
+    "Computer Science",
+    "Arts & Humanities",
+    "Commerce & Accounting",
+    "Science",
+] as const;
+
+export const ADMIN_PM_LIST = [
+    "Arjun Mehta",
+    "Sneha Reddy",
+    "Kunal Bhatia",
+    "Ritu Kapoor",
+] as const;
+
+export interface AdminAssignment {
+    id: string;
+    title: string;
+    description: string;
+    type: string;
+    subtype: string;
+    subject: string;
+    stream: string;
+    academicLevel: string;
+    wordCount: number;
+    deadline: string;
+    submittedAt: string;
+    stage: AssignmentStageKey;
+    freelancerAmount: number;
+    totalAmount: number;
+    referencingStyle: string;
+    marks: number | null;
+    studentName: string;
+    studentEmail: string;
+    studentPhone: string;
+    pmName: string;
+    pmPhone: string;
+    freelancerName: string;
+    freelancerPhone: string;
+    currentStep: number;
+}
+
+export const ADMIN_ASSIGNMENTS: AdminAssignment[] = [
+    {
+        id: "ASG-2001",
+        title: "Impact of AI on Supply Chain Management",
+        description: "A comprehensive research paper analyzing how artificial intelligence technologies—machine learning, predictive analytics, and robotic process automation—are transforming supply chain operations across global enterprises.",
+        type: "Research Paper", subtype: "Analytical",
+        subject: "Supply Chain Management", stream: "Business & Management",
+        academicLevel: "Postgraduate", wordCount: 5000,
+        deadline: "2025-02-28T23:59:00", submittedAt: "2025-02-10T14:30:00",
+        stage: "completed", freelancerAmount: 3500, totalAmount: 5200,
+        referencingStyle: "APA 7th", marks: 82,
+        studentName: "Aarav Gupta", studentEmail: "aarav.gupta@university.edu", studentPhone: "+919812345001",
+        pmName: "Arjun Mehta", pmPhone: "+919812300001",
+        freelancerName: "Ananya Verma", freelancerPhone: "+919812400001",
+        currentStep: 7,
+    },
+    {
+        id: "ASG-2002",
+        title: "Structural Analysis of Reinforced Concrete Beams",
+        description: "Detailed structural analysis examining the load-bearing capacity and failure modes of reinforced concrete beams under varying stress conditions. Include FEM simulations and compare with analytical solutions.",
+        type: "Technical Report", subtype: "Experimental",
+        subject: "Structural Engineering", stream: "Engineering",
+        academicLevel: "Undergraduate", wordCount: 3500,
+        deadline: "2025-03-15T23:59:00", submittedAt: "2025-02-20T09:15:00",
+        stage: "in_progress", freelancerAmount: 2800, totalAmount: 4200,
+        referencingStyle: "IEEE", marks: null,
+        studentName: "Meera Iyer", studentEmail: "meera.iyer@college.edu", studentPhone: "+919812345002",
+        pmName: "Sneha Reddy", pmPhone: "+919812300002",
+        freelancerName: "Deepak Joshi", freelancerPhone: "+919812400002",
+        currentStep: 4,
+    },
+    {
+        id: "ASG-2003",
+        title: "Clinical Pathways in Diabetic Patient Management",
+        description: "Evaluate current clinical pathways for managing Type 2 diabetes in Indian healthcare settings. Review evidence-based guidelines and propose improvements for resource-limited primary care centers.",
+        type: "Case Study", subtype: "Clinical",
+        subject: "Internal Medicine", stream: "Medical & Health Sciences",
+        academicLevel: "Postgraduate", wordCount: 4000,
+        deadline: "2025-03-20T23:59:00", submittedAt: "2025-02-25T11:00:00",
+        stage: "assigned", freelancerAmount: 3200, totalAmount: 4800,
+        referencingStyle: "Vancouver", marks: null,
+        studentName: "Arjun Nair", studentEmail: "arjun.nair@university.edu", studentPhone: "+919812345003",
+        pmName: "Kunal Bhatia", pmPhone: "+919812300003",
+        freelancerName: "Priya Patel", freelancerPhone: "+919812400003",
+        currentStep: 3,
+    },
+    {
+        id: "ASG-2004",
+        title: "Constitutional Validity of Sedition Laws",
+        description: "A critical legal analysis of Section 124A of the Indian Penal Code examining its constitutional validity under Article 19(1)(a). Include landmark Supreme Court judgments and comparative analysis with UK and US sedition laws.",
+        type: "Dissertation", subtype: "Legal Analysis",
+        subject: "Constitutional Law", stream: "Law",
+        academicLevel: "Postgraduate", wordCount: 8000,
+        deadline: "2025-02-20T23:59:00", submittedAt: "2025-01-15T16:45:00",
+        stage: "completed", freelancerAmount: 6000, totalAmount: 9500,
+        referencingStyle: "OSCOLA", marks: 91,
+        studentName: "Diya Banerjee", studentEmail: "diya.banerjee@college.edu", studentPhone: "+919812345004",
+        pmName: "Ritu Kapoor", pmPhone: "+919812300004",
+        freelancerName: "Kavita Rao", freelancerPhone: "+919812400004",
+        currentStep: 6,
+    },
+    {
+        id: "ASG-2005",
+        title: "Machine Learning Approaches to Sentiment Analysis",
+        description: "Implement and compare NLP-based sentiment analysis models (LSTM, BERT, and traditional ML classifiers) on a custom-scraped social media dataset. Include accuracy metrics and confusion matrices.",
+        type: "Project Report", subtype: "Implementation",
+        subject: "Natural Language Processing", stream: "Computer Science",
+        academicLevel: "Undergraduate", wordCount: 4500,
+        deadline: "2025-03-10T23:59:00", submittedAt: "2025-02-15T08:30:00",
+        stage: "under_review", freelancerAmount: 3800, totalAmount: 5500,
+        referencingStyle: "APA 7th", marks: null,
+        studentName: "Ishaan Tiwari", studentEmail: "ishaan.tiwari@university.edu", studentPhone: "+919812345005",
+        pmName: "Arjun Mehta", pmPhone: "+919812300001",
+        freelancerName: "Vikram Singh", freelancerPhone: "+919812400005",
+        currentStep: 5,
+    },
+    {
+        id: "ASG-2006",
+        title: "Postcolonial Themes in Arundhati Roy's Fiction",
+        description: "Analyze postcolonial narratives in Arundhati Roy's major novels, examining themes of caste, class, gender, and environmental justice. Apply frameworks from Said, Spivak, and Bhabha.",
+        type: "Essay", subtype: "Literary Analysis",
+        subject: "English Literature", stream: "Arts & Humanities",
+        academicLevel: "Undergraduate", wordCount: 3000,
+        deadline: "2025-03-25T23:59:00", submittedAt: "2025-03-05T10:20:00",
+        stage: "submitted", freelancerAmount: 2000, totalAmount: 3200,
+        referencingStyle: "MLA 9th", marks: null,
+        studentName: "Kavya Menon", studentEmail: "kavya.menon@college.edu", studentPhone: "+919812345006",
+        pmName: "Sneha Reddy", pmPhone: "+919812300002",
+        freelancerName: "Neha Sharma", freelancerPhone: "+919812400006",
+        currentStep: 1,
+    },
+    {
+        id: "ASG-2007",
+        title: "GST Impact on Small & Medium Enterprises",
+        description: "Evaluate the impact of Goods and Services Tax implementation on SME operations in India. Analyze compliance costs, input tax credit utilization, and working capital challenges using primary survey data.",
+        type: "Research Paper", subtype: "Empirical",
+        subject: "Taxation", stream: "Commerce & Accounting",
+        academicLevel: "Postgraduate", wordCount: 5500,
+        deadline: "2025-03-08T23:59:00", submittedAt: "2025-02-12T13:00:00",
+        stage: "revision", freelancerAmount: 4000, totalAmount: 6200,
+        referencingStyle: "Harvard", marks: null,
+        studentName: "Nikhil Reddy", studentEmail: "nikhil.reddy@university.edu", studentPhone: "+919812345007",
+        pmName: "Kunal Bhatia", pmPhone: "+919812300003",
+        freelancerName: "Rohit Agarwal", freelancerPhone: "+919812400007",
+        currentStep: 4,
+    },
+    {
+        id: "ASG-2008",
+        title: "Quantum Entanglement and Teleportation Protocols",
+        description: "Review the theoretical foundations of quantum entanglement and its application in quantum teleportation protocols. Discuss experimental confirmations and implications for quantum computing.",
+        type: "Literature Review", subtype: "Theoretical",
+        subject: "Quantum Physics", stream: "Science",
+        academicLevel: "Postgraduate", wordCount: 4000,
+        deadline: "2025-02-15T23:59:00", submittedAt: "2025-01-20T15:30:00",
+        stage: "completed", freelancerAmount: 3400, totalAmount: 5000,
+        referencingStyle: "APA 7th", marks: 75,
+        studentName: "Pooja Mehta", studentEmail: "pooja.mehta@college.edu", studentPhone: "+919812345008",
+        pmName: "Ritu Kapoor", pmPhone: "+919812300004",
+        freelancerName: "Ananya Verma", freelancerPhone: "+919812400001",
+        currentStep: 7,
+    },
+    {
+        id: "ASG-2009",
+        title: "Autonomous Vehicle Navigation Using LiDAR",
+        description: "Design and simulate a LiDAR-based obstacle detection and path planning system for autonomous vehicles. Implement SLAM algorithms and test in simulated urban environments.",
+        type: "Project Report", subtype: "Implementation",
+        subject: "Robotics & Automation", stream: "Engineering",
+        academicLevel: "Postgraduate", wordCount: 6000,
+        deadline: "2025-03-30T23:59:00", submittedAt: "2025-03-01T07:45:00",
+        stage: "in_progress", freelancerAmount: 5000, totalAmount: 7500,
+        referencingStyle: "IEEE", marks: null,
+        studentName: "Riya Singh", studentEmail: "riya.singh@university.edu", studentPhone: "+919812345009",
+        pmName: "Arjun Mehta", pmPhone: "+919812300001",
+        freelancerName: "Deepak Joshi", freelancerPhone: "+919812400002",
+        currentStep: 4,
+    },
+    {
+        id: "ASG-2010",
+        title: "Brand Loyalty in Indian FMCG Sector",
+        description: "Investigate factors influencing brand loyalty among Indian consumers in the FMCG sector. Conduct a quantitative study using structured questionnaires and analyze using SEM-PLS methodology.",
+        type: "Dissertation", subtype: "Empirical",
+        subject: "Marketing Management", stream: "Business & Management",
+        academicLevel: "Postgraduate", wordCount: 10000,
+        deadline: "2025-02-25T23:59:00", submittedAt: "2025-01-10T12:00:00",
+        stage: "completed", freelancerAmount: 7500, totalAmount: 12000,
+        referencingStyle: "APA 7th", marks: 88,
+        studentName: "Siddharth Roy", studentEmail: "siddharth.roy@college.edu", studentPhone: "+919812345010",
+        pmName: "Sneha Reddy", pmPhone: "+919812300002",
+        freelancerName: "Kavita Rao", freelancerPhone: "+919812400004",
+        currentStep: 6,
+    },
+    {
+        id: "ASG-2011",
+        title: "Epidemiology of Antibiotic Resistance in India",
+        description: "Map the epidemiological landscape of antimicrobial resistance across Indian tertiary care hospitals. Analyze resistance patterns for key pathogen groups and discuss public health interventions.",
+        type: "Research Paper", subtype: "Epidemiological",
+        subject: "Microbiology", stream: "Medical & Health Sciences",
+        academicLevel: "Postgraduate", wordCount: 5500,
+        deadline: "2025-04-05T23:59:00", submittedAt: "2025-03-10T09:00:00",
+        stage: "submitted", freelancerAmount: 4200, totalAmount: 6500,
+        referencingStyle: "Vancouver", marks: null,
+        studentName: "Tanvi Desai", studentEmail: "tanvi.desai@university.edu", studentPhone: "+919812345011",
+        pmName: "Kunal Bhatia", pmPhone: "+919812300003",
+        freelancerName: "Priya Patel", freelancerPhone: "+919812400003",
+        currentStep: 0,
+    },
+    {
+        id: "ASG-2012",
+        title: "Cybersecurity Framework for Banking Systems",
+        description: "Design a comprehensive cybersecurity framework for Indian banking systems addressing threats from phishing, ransomware, and insider attacks. Include risk assessment matrices and incident response protocols.",
+        type: "Technical Report", subtype: "Framework Design",
+        subject: "Information Security", stream: "Computer Science",
+        academicLevel: "Undergraduate", wordCount: 4000,
+        deadline: "2025-03-18T23:59:00", submittedAt: "2025-02-28T14:20:00",
+        stage: "assigned", freelancerAmount: 3000, totalAmount: 4500,
+        referencingStyle: "IEEE", marks: null,
+        studentName: "Varun Joshi", studentEmail: "varun.joshi@college.edu", studentPhone: "+919812345012",
+        pmName: "Ritu Kapoor", pmPhone: "+919812300004",
+        freelancerName: "Vikram Singh", freelancerPhone: "+919812400005",
+        currentStep: 2,
+    },
+    {
+        id: "ASG-2013",
+        title: "Environmental Law and Corporate Accountability",
+        description: "Examine the efficacy of Indian environmental legislation in holding corporations accountable for ecological damage. Analyze the National Green Tribunal's role and landmark environmental judgments.",
+        type: "Research Paper", subtype: "Legal Analysis",
+        subject: "Environmental Law", stream: "Law",
+        academicLevel: "Undergraduate", wordCount: 3500,
+        deadline: "2025-02-10T23:59:00", submittedAt: "2025-01-05T11:30:00",
+        stage: "completed", freelancerAmount: 2500, totalAmount: 3800,
+        referencingStyle: "OSCOLA", marks: 67,
+        studentName: "Anisha Kapoor", studentEmail: "anisha.kapoor@university.edu", studentPhone: "+919812345013",
+        pmName: "Arjun Mehta", pmPhone: "+919812300001",
+        freelancerName: "Neha Sharma", freelancerPhone: "+919812400006",
+        currentStep: 7,
+    },
+    {
+        id: "ASG-2014",
+        title: "Heat Transfer Analysis in Solar Collectors",
+        description: "Perform numerical analysis of heat transfer characteristics in flat-plate and evacuated tube solar collectors. Model using CFD and validate against experimental data from literature.",
+        type: "Technical Report", subtype: "Computational",
+        subject: "Thermal Engineering", stream: "Engineering",
+        academicLevel: "Postgraduate", wordCount: 4500,
+        deadline: "2025-03-01T23:59:00", submittedAt: "2025-02-05T16:00:00",
+        stage: "cancelled", freelancerAmount: 3200, totalAmount: 4800,
+        referencingStyle: "IEEE", marks: null,
+        studentName: "Karthik Subramanian", studentEmail: "karthik.s@college.edu", studentPhone: "+919812345014",
+        pmName: "Sneha Reddy", pmPhone: "+919812300002",
+        freelancerName: "Vikram Singh", freelancerPhone: "+919812400005",
+        currentStep: 1,
+    },
+    {
+        id: "ASG-2015",
+        title: "Renaissance Art and Religious Symbolism",
+        description: "Explore the interplay between religious symbolism and artistic innovation in Italian Renaissance art. Focus on works by Botticelli, Michelangelo, and Raphael, analyzing commission contexts and theological implications.",
+        type: "Essay", subtype: "Art Historical",
+        subject: "Art History", stream: "Arts & Humanities",
+        academicLevel: "Undergraduate", wordCount: 2500,
+        deadline: "2025-03-22T23:59:00", submittedAt: "2025-03-02T08:00:00",
+        stage: "in_progress", freelancerAmount: 1800, totalAmount: 2800,
+        referencingStyle: "Chicago", marks: null,
+        studentName: "Nandini Sharma", studentEmail: "nandini.sharma@university.edu", studentPhone: "+919812345015",
+        pmName: "Kunal Bhatia", pmPhone: "+919812300003",
+        freelancerName: "Rohit Agarwal", freelancerPhone: "+919812400007",
+        currentStep: 3,
+    },
+];
