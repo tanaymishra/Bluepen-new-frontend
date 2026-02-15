@@ -830,6 +830,17 @@ export const ADMIN_PM_LIST = [
     "Ritu Kapoor",
 ] as const;
 
+export const ADMIN_FREELANCER_LIST = [
+    "Ananya Verma",
+    "Deepak Joshi",
+    "Priya Patel",
+    "Kavita Rao",
+    "Vikram Singh",
+    "Neha Sharma",
+    "Rohit Agarwal",
+    "Misha Gupta",
+] as const;
+
 export interface AdminAssignment {
     id: string;
     title: string;
