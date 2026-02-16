@@ -1106,7 +1106,11 @@ export interface AdminStudent {
     email: string;
     phone: string;
     university: string;
+    course: string;
     stream: string;
+    intakeMonth: string;
+    intakeYear: number;
+    referralCode: string;
     totalAssignments: number;
     activeAssignments: number;
     totalSpent: number;
@@ -1115,21 +1119,21 @@ export interface AdminStudent {
 }
 
 export const ADMIN_STUDENTS: AdminStudent[] = [
-    { id: "STU-001", name: "Aarav Gupta", email: "aarav.gupta@university.edu", phone: "+919812345001", university: "Delhi University", stream: "Business & Management", totalAssignments: 8, activeAssignments: 1, totalSpent: 42000, joinedAt: "2024-06-15", status: "active" },
-    { id: "STU-002", name: "Meera Iyer", email: "meera.iyer@college.edu", phone: "+919812345002", university: "IIT Madras", stream: "Engineering", totalAssignments: 5, activeAssignments: 2, totalSpent: 28500, joinedAt: "2024-08-22", status: "active" },
-    { id: "STU-003", name: "Arjun Nair", email: "arjun.nair@university.edu", phone: "+919812345003", university: "AIIMS Delhi", stream: "Medical & Health Sciences", totalAssignments: 3, activeAssignments: 1, totalSpent: 14400, joinedAt: "2024-09-10", status: "active" },
-    { id: "STU-004", name: "Diya Banerjee", email: "diya.banerjee@college.edu", phone: "+919812345004", university: "NLU Delhi", stream: "Law", totalAssignments: 6, activeAssignments: 0, totalSpent: 38000, joinedAt: "2024-05-01", status: "active" },
-    { id: "STU-005", name: "Ishaan Tiwari", email: "ishaan.tiwari@university.edu", phone: "+919812345005", university: "BITS Pilani", stream: "Computer Science", totalAssignments: 4, activeAssignments: 1, totalSpent: 22000, joinedAt: "2024-07-18", status: "active" },
-    { id: "STU-006", name: "Kavya Menon", email: "kavya.menon@college.edu", phone: "+919812345006", university: "JNU", stream: "Arts & Humanities", totalAssignments: 7, activeAssignments: 1, totalSpent: 19600, joinedAt: "2024-04-12", status: "active" },
-    { id: "STU-007", name: "Nikhil Reddy", email: "nikhil.reddy@university.edu", phone: "+919812345007", university: "SRCC", stream: "Commerce & Accounting", totalAssignments: 9, activeAssignments: 2, totalSpent: 55800, joinedAt: "2024-03-08", status: "active" },
-    { id: "STU-008", name: "Pooja Mehta", email: "pooja.mehta@college.edu", phone: "+919812345008", university: "IISc Bangalore", stream: "Science", totalAssignments: 4, activeAssignments: 0, totalSpent: 20000, joinedAt: "2024-10-05", status: "inactive" },
-    { id: "STU-009", name: "Riya Singh", email: "riya.singh@university.edu", phone: "+919812345009", university: "IIT Bombay", stream: "Engineering", totalAssignments: 3, activeAssignments: 1, totalSpent: 22500, joinedAt: "2024-11-20", status: "active" },
-    { id: "STU-010", name: "Siddharth Roy", email: "siddharth.roy@college.edu", phone: "+919812345010", university: "IIM Ahmedabad", stream: "Business & Management", totalAssignments: 2, activeAssignments: 0, totalSpent: 24000, joinedAt: "2024-12-01", status: "active" },
-    { id: "STU-011", name: "Tanvi Desai", email: "tanvi.desai@university.edu", phone: "+919812345011", university: "CMC Vellore", stream: "Medical & Health Sciences", totalAssignments: 1, activeAssignments: 1, totalSpent: 6500, joinedAt: "2025-01-10", status: "active" },
-    { id: "STU-012", name: "Varun Joshi", email: "varun.joshi@college.edu", phone: "+919812345012", university: "NIT Trichy", stream: "Computer Science", totalAssignments: 2, activeAssignments: 1, totalSpent: 9000, joinedAt: "2025-01-25", status: "active" },
-    { id: "STU-013", name: "Anisha Kapoor", email: "anisha.kapoor@university.edu", phone: "+919812345013", university: "NLSIU Bangalore", stream: "Law", totalAssignments: 4, activeAssignments: 0, totalSpent: 15200, joinedAt: "2024-07-05", status: "blocked" },
-    { id: "STU-014", name: "Karthik Subramanian", email: "karthik.s@college.edu", phone: "+919812345014", university: "IIT Delhi", stream: "Engineering", totalAssignments: 1, activeAssignments: 0, totalSpent: 4800, joinedAt: "2024-11-15", status: "inactive" },
-    { id: "STU-015", name: "Nandini Sharma", email: "nandini.sharma@university.edu", phone: "+919812345015", university: "BHU", stream: "Arts & Humanities", totalAssignments: 3, activeAssignments: 1, totalSpent: 8400, joinedAt: "2025-02-01", status: "active" },
+    { id: "STU-001", name: "Aarav Gupta", email: "aarav.gupta@university.edu", phone: "+919812345001", university: "Delhi University", course: "MBA", stream: "Business & Management", intakeMonth: "August", intakeYear: 2024, referralCode: "REF-DIYA04", totalAssignments: 8, activeAssignments: 1, totalSpent: 42000, joinedAt: "2024-06-15", status: "active" },
+    { id: "STU-002", name: "Meera Iyer", email: "meera.iyer@college.edu", phone: "+919812345002", university: "IIT Madras", course: "B.Tech Mechanical", stream: "Engineering", intakeMonth: "July", intakeYear: 2023, referralCode: "", totalAssignments: 5, activeAssignments: 2, totalSpent: 28500, joinedAt: "2024-08-22", status: "active" },
+    { id: "STU-003", name: "Arjun Nair", email: "arjun.nair@university.edu", phone: "+919812345003", university: "AIIMS Delhi", course: "MBBS", stream: "Medical & Health Sciences", intakeMonth: "September", intakeYear: 2022, referralCode: "WELCOME20", totalAssignments: 3, activeAssignments: 1, totalSpent: 14400, joinedAt: "2024-09-10", status: "active" },
+    { id: "STU-004", name: "Diya Banerjee", email: "diya.banerjee@college.edu", phone: "+919812345004", university: "NLU Delhi", course: "BA LLB", stream: "Law", intakeMonth: "July", intakeYear: 2021, referralCode: "", totalAssignments: 6, activeAssignments: 0, totalSpent: 38000, joinedAt: "2024-05-01", status: "active" },
+    { id: "STU-005", name: "Ishaan Tiwari", email: "ishaan.tiwari@university.edu", phone: "+919812345005", university: "BITS Pilani", course: "B.E. Computer Science", stream: "Computer Science", intakeMonth: "August", intakeYear: 2023, referralCode: "REF-NIKHIL07", totalAssignments: 4, activeAssignments: 1, totalSpent: 22000, joinedAt: "2024-07-18", status: "active" },
+    { id: "STU-006", name: "Kavya Menon", email: "kavya.menon@college.edu", phone: "+919812345006", university: "JNU", course: "MA English", stream: "Arts & Humanities", intakeMonth: "January", intakeYear: 2024, referralCode: "", totalAssignments: 7, activeAssignments: 1, totalSpent: 19600, joinedAt: "2024-04-12", status: "active" },
+    { id: "STU-007", name: "Nikhil Reddy", email: "nikhil.reddy@university.edu", phone: "+919812345007", university: "SRCC", course: "B.Com (Hons)", stream: "Commerce & Accounting", intakeMonth: "July", intakeYear: 2022, referralCode: "REF-AARAV01", totalAssignments: 9, activeAssignments: 2, totalSpent: 55800, joinedAt: "2024-03-08", status: "active" },
+    { id: "STU-008", name: "Pooja Mehta", email: "pooja.mehta@college.edu", phone: "+919812345008", university: "IISc Bangalore", course: "M.Sc Physics", stream: "Science", intakeMonth: "August", intakeYear: 2023, referralCode: "", totalAssignments: 4, activeAssignments: 0, totalSpent: 20000, joinedAt: "2024-10-05", status: "inactive" },
+    { id: "STU-009", name: "Riya Singh", email: "riya.singh@university.edu", phone: "+919812345009", university: "IIT Bombay", course: "M.Tech AI", stream: "Engineering", intakeMonth: "July", intakeYear: 2024, referralCode: "NEWYEAR25", totalAssignments: 3, activeAssignments: 1, totalSpent: 22500, joinedAt: "2024-11-20", status: "active" },
+    { id: "STU-010", name: "Siddharth Roy", email: "siddharth.roy@college.edu", phone: "+919812345010", university: "IIM Ahmedabad", course: "PGP Management", stream: "Business & Management", intakeMonth: "June", intakeYear: 2024, referralCode: "", totalAssignments: 2, activeAssignments: 0, totalSpent: 24000, joinedAt: "2024-12-01", status: "active" },
+    { id: "STU-011", name: "Tanvi Desai", email: "tanvi.desai@university.edu", phone: "+919812345011", university: "CMC Vellore", course: "MD Pathology", stream: "Medical & Health Sciences", intakeMonth: "January", intakeYear: 2025, referralCode: "REF-ARJUN03", totalAssignments: 1, activeAssignments: 1, totalSpent: 6500, joinedAt: "2025-01-10", status: "active" },
+    { id: "STU-012", name: "Varun Joshi", email: "varun.joshi@college.edu", phone: "+919812345012", university: "NIT Trichy", course: "B.Tech CSE", stream: "Computer Science", intakeMonth: "August", intakeYear: 2024, referralCode: "", totalAssignments: 2, activeAssignments: 1, totalSpent: 9000, joinedAt: "2025-01-25", status: "active" },
+    { id: "STU-013", name: "Anisha Kapoor", email: "anisha.kapoor@university.edu", phone: "+919812345013", university: "NLSIU Bangalore", course: "LLM Corporate", stream: "Law", intakeMonth: "July", intakeYear: 2023, referralCode: "REFER10", totalAssignments: 4, activeAssignments: 0, totalSpent: 15200, joinedAt: "2024-07-05", status: "blocked" },
+    { id: "STU-014", name: "Karthik Subramanian", email: "karthik.s@college.edu", phone: "+919812345014", university: "IIT Delhi", course: "B.Tech EE", stream: "Engineering", intakeMonth: "July", intakeYear: 2022, referralCode: "", totalAssignments: 1, activeAssignments: 0, totalSpent: 4800, joinedAt: "2024-11-15", status: "inactive" },
+    { id: "STU-015", name: "Nandini Sharma", email: "nandini.sharma@university.edu", phone: "+919812345015", university: "BHU", course: "BA History", stream: "Arts & Humanities", intakeMonth: "August", intakeYear: 2024, referralCode: "REF-KAVYA06", totalAssignments: 3, activeAssignments: 1, totalSpent: 8400, joinedAt: "2025-02-01", status: "active" },
 ];
 
 /* ─────────────────────────────────────────────
