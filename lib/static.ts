@@ -1216,3 +1216,157 @@ export const ADMIN_COUPONS: AdminCoupon[] = [
     { id: "CPN-007", code: "REFER10", discountType: "percentage", discountValue: 10, maxUses: 0, usedCount: 128, minOrder: 0, validFrom: "2024-01-01", validUntil: "2026-12-31", status: "active", createdAt: "2024-01-01" },
     { id: "CPN-008", code: "BULK2K", discountType: "flat", discountValue: 2000, maxUses: 50, usedCount: 12, minOrder: 10000, validFrom: "2025-01-15", validUntil: "2025-06-30", status: "active", createdAt: "2025-01-15" },
 ];
+
+/* ─────────────────────────────────────────────
+   Admin – Invoice Data
+   ───────────────────────────────────────────── */
+
+export interface InvoiceLineItem {
+    assignmentId: string;
+    title: string;
+    completionDate: string;
+    amount: number;
+}
+
+export interface AdminInvoice {
+    id: string;
+    freelancerId: string;
+    freelancerName: string;
+    freelancerEmail: string;
+    raisedAt: string;
+    dueDate: string;
+    lineItems: InvoiceLineItem[];
+    totalAmount: number;
+    status: "pending" | "settled" | "partially_paid" | "disputed";
+    settledAt: string | null;
+    notes: string;
+}
+
+export const ADMIN_INVOICES: AdminInvoice[] = [
+    {
+        id: "INV-1001",
+        freelancerId: "FRL-001",
+        freelancerName: "Ananya Verma",
+        freelancerEmail: "ananya.v@freelance.com",
+        raisedAt: "2025-02-01",
+        dueDate: "2025-02-15",
+        lineItems: [
+            { assignmentId: "ASG-2001", title: "Impact of AI on Supply Chain Management", completionDate: "2025-01-28", amount: 3500 },
+            { assignmentId: "ASG-2008", title: "Quantum Entanglement and Teleportation Protocols", completionDate: "2025-01-25", amount: 3400 },
+        ],
+        totalAmount: 6900,
+        status: "settled",
+        settledAt: "2025-02-10",
+        notes: "Payment via NEFT",
+    },
+    {
+        id: "INV-1002",
+        freelancerId: "FRL-002",
+        freelancerName: "Deepak Joshi",
+        freelancerEmail: "deepak.j@freelance.com",
+        raisedAt: "2025-02-05",
+        dueDate: "2025-02-20",
+        lineItems: [
+            { assignmentId: "ASG-2002", title: "Structural Analysis of Reinforced Concrete Beams", completionDate: "2025-02-03", amount: 2800 },
+            { assignmentId: "ASG-2009", title: "Autonomous Vehicle Navigation Using LiDAR", completionDate: "2025-02-01", amount: 5000 },
+        ],
+        totalAmount: 7800,
+        status: "pending",
+        settledAt: null,
+        notes: "",
+    },
+    {
+        id: "INV-1003",
+        freelancerId: "FRL-003",
+        freelancerName: "Priya Patel",
+        freelancerEmail: "priya.p@freelance.com",
+        raisedAt: "2025-01-20",
+        dueDate: "2025-02-03",
+        lineItems: [
+            { assignmentId: "ASG-2003", title: "Clinical Pathways in Diabetic Patient Management", completionDate: "2025-01-18", amount: 3200 },
+            { assignmentId: "ASG-2011", title: "Epidemiology of Antibiotic Resistance in India", completionDate: "2025-01-15", amount: 4200 },
+        ],
+        totalAmount: 7400,
+        status: "settled",
+        settledAt: "2025-02-01",
+        notes: "Settled via UPI",
+    },
+    {
+        id: "INV-1004",
+        freelancerId: "FRL-004",
+        freelancerName: "Kavita Rao",
+        freelancerEmail: "kavita.r@freelance.com",
+        raisedAt: "2025-02-08",
+        dueDate: "2025-02-22",
+        lineItems: [
+            { assignmentId: "ASG-2004", title: "Constitutional Validity of Sedition Laws", completionDate: "2025-02-06", amount: 6000 },
+            { assignmentId: "ASG-2010", title: "Brand Loyalty in Indian FMCG Sector", completionDate: "2025-02-04", amount: 7500 },
+        ],
+        totalAmount: 13500,
+        status: "pending",
+        settledAt: null,
+        notes: "High-value invoice — awaiting finance approval",
+    },
+    {
+        id: "INV-1005",
+        freelancerId: "FRL-005",
+        freelancerName: "Vikram Singh",
+        freelancerEmail: "vikram.s@freelance.com",
+        raisedAt: "2025-01-25",
+        dueDate: "2025-02-08",
+        lineItems: [
+            { assignmentId: "ASG-2005", title: "Machine Learning Approaches to Sentiment Analysis", completionDate: "2025-01-22", amount: 3800 },
+        ],
+        totalAmount: 3800,
+        status: "settled",
+        settledAt: "2025-02-06",
+        notes: "",
+    },
+    {
+        id: "INV-1006",
+        freelancerId: "FRL-006",
+        freelancerName: "Neha Sharma",
+        freelancerEmail: "neha.s@freelance.com",
+        raisedAt: "2025-02-10",
+        dueDate: "2025-02-24",
+        lineItems: [
+            { assignmentId: "ASG-2006", title: "Postcolonial Themes in Arundhati Roy's Fiction", completionDate: "2025-02-08", amount: 2000 },
+            { assignmentId: "ASG-2013", title: "Environmental Law and Corporate Accountability", completionDate: "2025-02-05", amount: 2500 },
+        ],
+        totalAmount: 4500,
+        status: "disputed",
+        settledAt: null,
+        notes: "Freelancer disputes amount for ASG-2013",
+    },
+    {
+        id: "INV-1007",
+        freelancerId: "FRL-007",
+        freelancerName: "Rohit Agarwal",
+        freelancerEmail: "rohit.a@freelance.com",
+        raisedAt: "2025-02-12",
+        dueDate: "2025-02-26",
+        lineItems: [
+            { assignmentId: "ASG-2007", title: "GST Impact on Small & Medium Enterprises", completionDate: "2025-02-10", amount: 4000 },
+            { assignmentId: "ASG-2015", title: "Renaissance Art and Religious Symbolism", completionDate: "2025-02-09", amount: 1800 },
+        ],
+        totalAmount: 5800,
+        status: "partially_paid",
+        settledAt: null,
+        notes: "₹4,000 paid for ASG-2007; ASG-2015 pending",
+    },
+    {
+        id: "INV-1008",
+        freelancerId: "FRL-001",
+        freelancerName: "Ananya Verma",
+        freelancerEmail: "ananya.v@freelance.com",
+        raisedAt: "2025-02-14",
+        dueDate: "2025-02-28",
+        lineItems: [
+            { assignmentId: "ASG-2001", title: "Impact of AI on Supply Chain Management — Revision", completionDate: "2025-02-13", amount: 1200 },
+        ],
+        totalAmount: 1200,
+        status: "pending",
+        settledAt: null,
+        notes: "Revision charges — additional scope",
+    },
+];
