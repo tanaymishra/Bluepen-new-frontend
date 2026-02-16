@@ -1095,3 +1095,120 @@ export const ADMIN_ASSIGNMENTS: AdminAssignment[] = [
         currentStep: 3,
     },
 ];
+
+/* ─────────────────────────────────────────────
+   Admin – Students Table Data
+   ───────────────────────────────────────────── */
+
+export interface AdminStudent {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    university: string;
+    stream: string;
+    totalAssignments: number;
+    activeAssignments: number;
+    totalSpent: number;
+    joinedAt: string;
+    status: "active" | "inactive" | "blocked";
+}
+
+export const ADMIN_STUDENTS: AdminStudent[] = [
+    { id: "STU-001", name: "Aarav Gupta", email: "aarav.gupta@university.edu", phone: "+919812345001", university: "Delhi University", stream: "Business & Management", totalAssignments: 8, activeAssignments: 1, totalSpent: 42000, joinedAt: "2024-06-15", status: "active" },
+    { id: "STU-002", name: "Meera Iyer", email: "meera.iyer@college.edu", phone: "+919812345002", university: "IIT Madras", stream: "Engineering", totalAssignments: 5, activeAssignments: 2, totalSpent: 28500, joinedAt: "2024-08-22", status: "active" },
+    { id: "STU-003", name: "Arjun Nair", email: "arjun.nair@university.edu", phone: "+919812345003", university: "AIIMS Delhi", stream: "Medical & Health Sciences", totalAssignments: 3, activeAssignments: 1, totalSpent: 14400, joinedAt: "2024-09-10", status: "active" },
+    { id: "STU-004", name: "Diya Banerjee", email: "diya.banerjee@college.edu", phone: "+919812345004", university: "NLU Delhi", stream: "Law", totalAssignments: 6, activeAssignments: 0, totalSpent: 38000, joinedAt: "2024-05-01", status: "active" },
+    { id: "STU-005", name: "Ishaan Tiwari", email: "ishaan.tiwari@university.edu", phone: "+919812345005", university: "BITS Pilani", stream: "Computer Science", totalAssignments: 4, activeAssignments: 1, totalSpent: 22000, joinedAt: "2024-07-18", status: "active" },
+    { id: "STU-006", name: "Kavya Menon", email: "kavya.menon@college.edu", phone: "+919812345006", university: "JNU", stream: "Arts & Humanities", totalAssignments: 7, activeAssignments: 1, totalSpent: 19600, joinedAt: "2024-04-12", status: "active" },
+    { id: "STU-007", name: "Nikhil Reddy", email: "nikhil.reddy@university.edu", phone: "+919812345007", university: "SRCC", stream: "Commerce & Accounting", totalAssignments: 9, activeAssignments: 2, totalSpent: 55800, joinedAt: "2024-03-08", status: "active" },
+    { id: "STU-008", name: "Pooja Mehta", email: "pooja.mehta@college.edu", phone: "+919812345008", university: "IISc Bangalore", stream: "Science", totalAssignments: 4, activeAssignments: 0, totalSpent: 20000, joinedAt: "2024-10-05", status: "inactive" },
+    { id: "STU-009", name: "Riya Singh", email: "riya.singh@university.edu", phone: "+919812345009", university: "IIT Bombay", stream: "Engineering", totalAssignments: 3, activeAssignments: 1, totalSpent: 22500, joinedAt: "2024-11-20", status: "active" },
+    { id: "STU-010", name: "Siddharth Roy", email: "siddharth.roy@college.edu", phone: "+919812345010", university: "IIM Ahmedabad", stream: "Business & Management", totalAssignments: 2, activeAssignments: 0, totalSpent: 24000, joinedAt: "2024-12-01", status: "active" },
+    { id: "STU-011", name: "Tanvi Desai", email: "tanvi.desai@university.edu", phone: "+919812345011", university: "CMC Vellore", stream: "Medical & Health Sciences", totalAssignments: 1, activeAssignments: 1, totalSpent: 6500, joinedAt: "2025-01-10", status: "active" },
+    { id: "STU-012", name: "Varun Joshi", email: "varun.joshi@college.edu", phone: "+919812345012", university: "NIT Trichy", stream: "Computer Science", totalAssignments: 2, activeAssignments: 1, totalSpent: 9000, joinedAt: "2025-01-25", status: "active" },
+    { id: "STU-013", name: "Anisha Kapoor", email: "anisha.kapoor@university.edu", phone: "+919812345013", university: "NLSIU Bangalore", stream: "Law", totalAssignments: 4, activeAssignments: 0, totalSpent: 15200, joinedAt: "2024-07-05", status: "blocked" },
+    { id: "STU-014", name: "Karthik Subramanian", email: "karthik.s@college.edu", phone: "+919812345014", university: "IIT Delhi", stream: "Engineering", totalAssignments: 1, activeAssignments: 0, totalSpent: 4800, joinedAt: "2024-11-15", status: "inactive" },
+    { id: "STU-015", name: "Nandini Sharma", email: "nandini.sharma@university.edu", phone: "+919812345015", university: "BHU", stream: "Arts & Humanities", totalAssignments: 3, activeAssignments: 1, totalSpent: 8400, joinedAt: "2025-02-01", status: "active" },
+];
+
+/* ─────────────────────────────────────────────
+   Admin – Freelancers Table Data
+   ───────────────────────────────────────────── */
+
+export interface AdminFreelancer {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    expertise: string[];
+    totalCompleted: number;
+    activeAssignments: number;
+    totalEarned: number;
+    rating: number;
+    joinedAt: string;
+    status: "active" | "inactive" | "on-hold";
+}
+
+export const ADMIN_FREELANCERS: AdminFreelancer[] = [
+    { id: "FRL-001", name: "Ananya Verma", email: "ananya.v@freelance.com", phone: "+919812400001", expertise: ["Business & Management", "Science"], totalCompleted: 42, activeAssignments: 2, totalEarned: 147000, rating: 4.8, joinedAt: "2023-06-10", status: "active" },
+    { id: "FRL-002", name: "Deepak Joshi", email: "deepak.j@freelance.com", phone: "+919812400002", expertise: ["Engineering"], totalCompleted: 38, activeAssignments: 2, totalEarned: 133000, rating: 4.6, joinedAt: "2023-08-15", status: "active" },
+    { id: "FRL-003", name: "Priya Patel", email: "priya.p@freelance.com", phone: "+919812400003", expertise: ["Medical & Health Sciences"], totalCompleted: 29, activeAssignments: 1, totalEarned: 101500, rating: 4.9, joinedAt: "2023-09-20", status: "active" },
+    { id: "FRL-004", name: "Kavita Rao", email: "kavita.r@freelance.com", phone: "+919812400004", expertise: ["Law", "Arts & Humanities"], totalCompleted: 35, activeAssignments: 0, totalEarned: 122500, rating: 4.7, joinedAt: "2023-05-01", status: "active" },
+    { id: "FRL-005", name: "Vikram Singh", email: "vikram.s@freelance.com", phone: "+919812400005", expertise: ["Computer Science", "Engineering"], totalCompleted: 31, activeAssignments: 1, totalEarned: 108500, rating: 4.5, joinedAt: "2023-11-08", status: "active" },
+    { id: "FRL-006", name: "Neha Sharma", email: "neha.s@freelance.com", phone: "+919812400006", expertise: ["Arts & Humanities", "Law"], totalCompleted: 26, activeAssignments: 0, totalEarned: 78000, rating: 4.4, joinedAt: "2024-01-15", status: "inactive" },
+    { id: "FRL-007", name: "Rohit Agarwal", email: "rohit.a@freelance.com", phone: "+919812400007", expertise: ["Commerce & Accounting", "Business & Management"], totalCompleted: 44, activeAssignments: 1, totalEarned: 176000, rating: 4.8, joinedAt: "2023-03-22", status: "active" },
+    { id: "FRL-008", name: "Misha Gupta", email: "misha.g@freelance.com", phone: "+919812400008", expertise: ["Science", "Medical & Health Sciences"], totalCompleted: 18, activeAssignments: 0, totalEarned: 54000, rating: 4.3, joinedAt: "2024-04-10", status: "on-hold" },
+];
+
+/* ─────────────────────────────────────────────
+   Admin – PMs Table Data
+   ───────────────────────────────────────────── */
+
+export interface AdminPM {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    managedStreams: string[];
+    totalManaged: number;
+    activeAssignments: number;
+    joinedAt: string;
+    status: "active" | "inactive";
+}
+
+export const ADMIN_PMS: AdminPM[] = [
+    { id: "PM-001", name: "Arjun Mehta", email: "arjun.m@bluepen.co.in", phone: "+919812300001", managedStreams: ["Computer Science", "Engineering", "Law"], totalManaged: 62, activeAssignments: 4, joinedAt: "2023-01-15", status: "active" },
+    { id: "PM-002", name: "Sneha Reddy", email: "sneha.r@bluepen.co.in", phone: "+919812300002", managedStreams: ["Engineering", "Business & Management", "Arts & Humanities"], totalManaged: 55, activeAssignments: 3, joinedAt: "2023-03-10", status: "active" },
+    { id: "PM-003", name: "Kunal Bhatia", email: "kunal.b@bluepen.co.in", phone: "+919812300003", managedStreams: ["Commerce & Accounting", "Medical & Health Sciences", "Arts & Humanities"], totalManaged: 48, activeAssignments: 3, joinedAt: "2023-05-20", status: "active" },
+    { id: "PM-004", name: "Ritu Kapoor", email: "ritu.k@bluepen.co.in", phone: "+919812300004", managedStreams: ["Law", "Science", "Computer Science"], totalManaged: 41, activeAssignments: 2, joinedAt: "2023-07-08", status: "active" },
+];
+
+/* ─────────────────────────────────────────────
+   Admin – Coupons Data
+   ───────────────────────────────────────────── */
+
+export interface AdminCoupon {
+    id: string;
+    code: string;
+    discountType: "percentage" | "flat";
+    discountValue: number;
+    maxUses: number;
+    usedCount: number;
+    minOrder: number;
+    validFrom: string;
+    validUntil: string;
+    status: "active" | "expired" | "disabled";
+    createdAt: string;
+}
+
+export const ADMIN_COUPONS: AdminCoupon[] = [
+    { id: "CPN-001", code: "WELCOME20", discountType: "percentage", discountValue: 20, maxUses: 500, usedCount: 312, minOrder: 1000, validFrom: "2024-01-01", validUntil: "2025-12-31", status: "active", createdAt: "2024-01-01" },
+    { id: "CPN-002", code: "FLAT500", discountType: "flat", discountValue: 500, maxUses: 200, usedCount: 200, minOrder: 3000, validFrom: "2024-06-01", validUntil: "2024-12-31", status: "expired", createdAt: "2024-06-01" },
+    { id: "CPN-003", code: "NEWYEAR25", discountType: "percentage", discountValue: 25, maxUses: 300, usedCount: 87, minOrder: 2000, validFrom: "2025-01-01", validUntil: "2025-03-31", status: "active", createdAt: "2025-01-01" },
+    { id: "CPN-004", code: "SUMMER15", discountType: "percentage", discountValue: 15, maxUses: 1000, usedCount: 0, minOrder: 500, validFrom: "2025-04-01", validUntil: "2025-06-30", status: "active", createdAt: "2025-02-10" },
+    { id: "CPN-005", code: "FLAT1000", discountType: "flat", discountValue: 1000, maxUses: 100, usedCount: 45, minOrder: 5000, validFrom: "2024-09-01", validUntil: "2025-02-28", status: "active", createdAt: "2024-09-01" },
+    { id: "CPN-006", code: "DIWALI30", discountType: "percentage", discountValue: 30, maxUses: 250, usedCount: 250, minOrder: 2000, validFrom: "2024-10-15", validUntil: "2024-11-15", status: "expired", createdAt: "2024-10-10" },
+    { id: "CPN-007", code: "REFER10", discountType: "percentage", discountValue: 10, maxUses: 0, usedCount: 128, minOrder: 0, validFrom: "2024-01-01", validUntil: "2026-12-31", status: "active", createdAt: "2024-01-01" },
+    { id: "CPN-008", code: "BULK2K", discountType: "flat", discountValue: 2000, maxUses: 50, usedCount: 12, minOrder: 10000, validFrom: "2025-01-15", validUntil: "2025-06-30", status: "active", createdAt: "2025-01-15" },
+];

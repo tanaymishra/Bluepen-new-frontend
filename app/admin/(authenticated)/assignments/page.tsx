@@ -4,6 +4,7 @@ import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import DatePicker from "react-datepicker";
+// @ts-ignore
 import "react-datepicker/dist/react-datepicker.css";
 import { cn } from "@/lib/utils";
 import {
@@ -218,7 +219,7 @@ export default function AdminAssignmentsPage() {
                         <CalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none z-10" />
                         <DatePicker
                             selected={dateFrom}
-                            onChange={(d) => setDateFrom(d)}
+                            onChange={(d: Date | null) => setDateFrom(d)}
                             placeholderText="From"
                             dateFormat="dd MMM yyyy"
                             isClearable
@@ -230,7 +231,7 @@ export default function AdminAssignmentsPage() {
                         <CalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 pointer-events-none z-10" />
                         <DatePicker
                             selected={dateTo}
-                            onChange={(d) => setDateTo(d)}
+                            onChange={(d: Date | null) => setDateTo(d)}
                             placeholderText="To"
                             dateFormat="dd MMM yyyy"
                             isClearable
