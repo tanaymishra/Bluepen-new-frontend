@@ -6,7 +6,7 @@ type UserRole = 'admin' | 'student' | 'freelancer' | 'PM' | 'HR' | 'Admin' | "Te
 interface StoreUserParams {
     role: UserRole;
     userObject: any;
-    token: string;
+    token?: string; // optional — token now lives in HttpOnly cookie set by the server
 }
 
 interface AuthState {
@@ -45,11 +45,10 @@ export const useAuthStore = create<AuthState>()(
             user: null,
             isHydrated: false,
 
-            storeUser: ({ role, userObject, token }: StoreUserParams) => {
+            storeUser: ({ role, userObject }: StoreUserParams) => {
                 if (typeof window === 'undefined') return;
-                // Store token in cookie; rest in local storage
-                setCookie('token', token, 7);
-                const userData = { ...userObject, role, token };
+                // Token is stored as HttpOnly cookie by the server — no JS access needed
+                const userData = { ...userObject, role };
                 set({ user: userData, isHydrated: true });
             },
 

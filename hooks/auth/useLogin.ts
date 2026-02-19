@@ -3,7 +3,8 @@
 import { useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/authentication/authentication";
-import { validateCredentials } from "@/lib/static";
+
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
 
 interface LoginState {
     email: string;
@@ -42,63 +43,41 @@ export function useLogin() {
             e.preventDefault();
             setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
-            // Basic validation
             if (!state.email.trim()) {
-                setState((prev) => ({
-                    ...prev,
-                    isLoading: false,
-                    error: "Please enter your email address.",
-                }));
+                setState((prev) => ({ ...prev, isLoading: false, error: "Please enter your email address." }));
                 return;
             }
-
             if (!state.password) {
-                setState((prev) => ({
-                    ...prev,
-                    isLoading: false,
-                    error: "Please enter your password.",
-                }));
+                setState((prev) => ({ ...prev, isLoading: false, error: "Please enter your password." }));
                 return;
             }
 
-            // Simulate network delay
-            await new Promise((resolve) => setTimeout(resolve, 1200));
+            try {
+                const res = await fetch(`${API}/api/users/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: JSON.stringify({ email: state.email.trim(), password: state.password }),
+                });
 
-            const user = validateCredentials(state.email, state.password);
+                const json = await res.json();
 
-            if (!user) {
-                setState((prev) => ({
-                    ...prev,
-                    isLoading: false,
-                    error: "Invalid email or password. Please try again.",
-                }));
-                return;
-            }
+                if (!res.ok) {
+                    setState((prev) => ({ ...prev, isLoading: false, error: json.message ?? "Invalid email or password." }));
+                    return;
+                }
 
-            // Store user in auth store
-            storeUser({
-                role: user.role,
-                userObject: user,
-                token: user.token,
-            });
+                storeUser({ role: "student", userObject: json.data.user });
+                setState((prev) => ({ ...prev, isLoading: false }));
 
-            setState((prev) => ({ ...prev, isLoading: false }));
-
-            // Redirect to previous page or dashboard
-            const prevPath = searchParams.get("prev");
-            if (prevPath) {
-                router.push(prevPath);
-            } else {
-                router.push("/");
+                const prevPath = searchParams.get("prev");
+                router.push(prevPath ?? "/students/dashboard");
+            } catch {
+                setState((prev) => ({ ...prev, isLoading: false, error: "Network error. Please try again." }));
             }
         },
         [state.email, state.password, storeUser, router, searchParams]
     );
 
-    return {
-        ...state,
-        setField,
-        toggleShowPassword,
-        handleLogin,
-    };
+    return { ...state, setField, toggleShowPassword, handleLogin };
 }
