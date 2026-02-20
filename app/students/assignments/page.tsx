@@ -237,7 +237,7 @@ export default function AssignmentsPage() {
                                             {a.type} · {a.subtype}
                                         </span>
                                         <span className="text-gray-200">|</span>
-                                        <span>{a.wordCount.toLocaleString()} words</span>
+                                        <span>{a.wordCount || "—"}</span>
                                     </div>
                                     <div className="flex flex-wrap items-center gap-3">
                                         <StageBadge stageKey={a.stage} />

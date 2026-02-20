@@ -15,15 +15,15 @@ import {
     Hash,
     Copy,
     Check,
+    Loader2,
 } from "lucide-react";
 import {
-    MOCK_ASSIGNMENTS,
     getStageByKey,
-    getAssignmentHistory,
     ASSIGNMENT_STAGES,
     type AssignmentStageKey,
     type StageHistoryEvent,
 } from "@/lib/static";
+import { useAssignments } from "@/hooks/assignments/useAssignments";
 
 /* ──────────────────────────────────────────────────────── */
 
@@ -292,15 +292,23 @@ export default function AssignmentDetailPage() {
     const router = useRouter();
     const id = params.id as string;
 
+    const { assignments, loading } = useAssignments();
+
     const assignment = useMemo(
-        () => MOCK_ASSIGNMENTS.find((a) => a.id === id),
-        [id]
+        () => assignments.find((a) => a.id === id),
+        [assignments, id]
     );
 
-    const history = useMemo(
-        () => (assignment ? getAssignmentHistory(assignment.id) : null),
-        [assignment]
-    );
+    // History is always null until we build the backend timeline feature
+    const history: StageHistoryEvent[] | null = null;
+
+    if (loading) {
+        return (
+            <div className="max-w-[900px] mx-auto flex items-center justify-center py-24">
+                <Loader2 className="w-6 h-6 animate-spin text-primary" />
+            </div>
+        );
+    }
 
     if (!assignment) {
         return (
@@ -419,7 +427,7 @@ export default function AssignmentDetailPage() {
                         />
                         <DetailField
                             label="Word Count"
-                            value={`${assignment.wordCount.toLocaleString()} words`}
+                            value={assignment.wordCount || "—"}
                             icon={Hash}
                         />
                         <DetailField

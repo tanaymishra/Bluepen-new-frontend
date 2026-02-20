@@ -10,7 +10,7 @@ export interface ApiAssignment {
     subtype: string;
     subject: string;
     academicLevel: string;
-    wordCount: number;
+    wordCount: string;
     deadline: string;
     submittedAt: string;
     stage: AssignmentStageKey;
