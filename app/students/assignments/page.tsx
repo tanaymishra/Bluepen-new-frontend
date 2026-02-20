@@ -9,13 +9,14 @@ import {
     ArrowUpRight,
     Plus,
     X,
+    Loader2,
 } from "lucide-react";
 import {
-    MOCK_ASSIGNMENTS,
     ASSIGNMENT_STAGES,
     getStageByKey,
     type AssignmentStageKey,
 } from "@/lib/static";
+import { useAssignments } from "@/hooks/assignments/useAssignments";
 
 /* ────────────────────────────────────────── helpers */
 
@@ -61,12 +62,13 @@ function StageBadge({ stageKey }: { stageKey: AssignmentStageKey }) {
 /* ────────────────────────────────────────── page */
 
 export default function AssignmentsPage() {
+    const { assignments, loading } = useAssignments();
     const [activeFilter, setActiveFilter] = useState<AssignmentStageKey | "all">("all");
     const [searchQuery, setSearchQuery] = useState("");
     const [sortBy, setSortBy] = useState<"newest" | "deadline">("newest");
 
     const filtered = useMemo(() => {
-        let result = [...MOCK_ASSIGNMENTS];
+        let result = [...assignments];
         if (activeFilter !== "all") {
             result = result.filter((a) => a.stage === activeFilter);
         }
@@ -88,12 +90,12 @@ export default function AssignmentsPage() {
     }, [activeFilter, searchQuery, sortBy]);
 
     const stageCounts = useMemo(() => {
-        const counts: Record<string, number> = { all: MOCK_ASSIGNMENTS.length };
+        const counts: Record<string, number> = { all: assignments.length };
         ASSIGNMENT_STAGES.forEach((s) => {
-            counts[s.key] = MOCK_ASSIGNMENTS.filter((a) => a.stage === s.key).length;
+            counts[s.key] = assignments.filter((a) => a.stage === s.key).length;
         });
         return counts;
-    }, []);
+    }, [assignments]);
 
     return (
         <div className="max-w-[1140px] mx-auto">
@@ -108,7 +110,7 @@ export default function AssignmentsPage() {
                         My Assignments
                     </h1>
                     <p className="text-[13px] text-gray-400 font-poppins mt-0.5">
-                        {MOCK_ASSIGNMENTS.length} total assignments
+                        {loading ? "Loading…" : `${assignments.length} total assignment${assignments.length !== 1 ? "s" : ""}`}
                     </p>
                 </motion.div>
                 <motion.div
@@ -197,7 +199,11 @@ export default function AssignmentsPage() {
 
             {/* Assignment Cards */}
             <div className="space-y-3">
-                {filtered.length > 0 ? (
+                {loading ? (
+                    <div className="py-20 flex items-center justify-center bg-white rounded-2xl border border-gray-100/80">
+                        <Loader2 className="w-5 h-5 animate-spin text-primary" />
+                    </div>
+                ) : filtered.length > 0 ? (
                     filtered.map((a, i) => (
                         <motion.div
                             key={a.id}
@@ -256,12 +262,14 @@ export default function AssignmentsPage() {
                 ) : (
                     <div className="py-20 text-center bg-white rounded-2xl border border-gray-100/80">
                         <p className="text-[14px] font-medium text-gray-500 font-poppins mb-1">
-                            No assignments found
+                            {assignments.length === 0 ? "No assignments yet" : "No assignments found"}
                         </p>
                         <p className="text-[12.5px] text-gray-400 font-poppins">
                             {searchQuery
                                 ? "Try a different search term"
-                                : "Post your first assignment to get started"}
+                                : assignments.length === 0
+                                ? "Post your first assignment to get started"
+                                : "Try a different filter"}
                         </p>
                     </div>
                 )}

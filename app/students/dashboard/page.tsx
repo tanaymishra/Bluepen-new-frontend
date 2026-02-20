@@ -10,13 +10,13 @@ import {
     Search,
     ArrowUpRight,
     Plus,
+    Loader2,
 } from "lucide-react";
 import {
-    MOCK_ASSIGNMENTS,
     getStageByKey,
     type AssignmentStageKey,
-    type MockAssignment,
 } from "@/lib/static";
+import { useAssignments, type ApiAssignment } from "@/hooks/assignments/useAssignments";
 
 /* ──────────────────────────────────────────────────────── */
 
@@ -54,7 +54,7 @@ function getGreeting() {
     return "Good evening";
 }
 
-function getMetrics(assignments: MockAssignment[]) {
+function getMetrics(assignments: ApiAssignment[]) {
     return {
         total: assignments.length,
         active: assignments.filter(
@@ -85,7 +85,7 @@ function StageBadge({ stageKey }: { stageKey: AssignmentStageKey }) {
 
 /* ──────────────────────────────────────────────────────── */
 
-function AssignmentRow({ a, index }: { a: MockAssignment; index: number }) {
+function AssignmentRow({ a, index }: { a: ApiAssignment; index: number }) {
     return (
         <motion.div
             initial={{ opacity: 0, x: -8 }}
@@ -155,14 +155,15 @@ function AssignmentRow({ a, index }: { a: MockAssignment; index: number }) {
 
 export default function StudentDashboard() {
     const { user, isHydrated } = useAuth();
+    const { assignments, loading: assignmentsLoading } = useAssignments();
     const [activeTab, setActiveTab] = useState<AssignmentStageKey | "all">("all");
     const [searchQuery, setSearchQuery] = useState("");
     const [searchOpen, setSearchOpen] = useState(false);
 
-    const metrics = useMemo(() => getMetrics(MOCK_ASSIGNMENTS), []);
+    const metrics = useMemo(() => getMetrics(assignments), [assignments]);
 
     const filteredAssignments = useMemo(() => {
-        let result = [...MOCK_ASSIGNMENTS];
+        let result = [...assignments];
         if (activeTab !== "all") {
             result = result.filter((a) => a.stage === activeTab);
         }
@@ -184,7 +185,9 @@ export default function StudentDashboard() {
     }, [activeTab, searchQuery]);
 
     const firstName =
-        isHydrated && user?.firstname ? user.firstname : "there";
+        isHydrated && user?.full_name
+            ? user.full_name.trim().split(/\s+/)[0]
+            : "there";
 
     const completionRate = metrics.total
         ? Math.round((metrics.completed / metrics.total) * 100)
@@ -337,9 +340,9 @@ export default function StudentDashboard() {
                     <div className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-0.5 overflow-x-auto no-scrollbar -mb-px">
                             {[
-                                { key: "all" as const, label: "All", count: MOCK_ASSIGNMENTS.length },
+                                { key: "all" as const, label: "All", count: assignments.length },
                                 { key: "submitted" as const, label: "Submitted", count: metrics.pending },
-                                { key: "in_progress" as const, label: "In Progress", count: MOCK_ASSIGNMENTS.filter((a) => a.stage === "in_progress").length },
+                                { key: "in_progress" as const, label: "In Progress", count: assignments.filter((a) => a.stage === "in_progress").length },
                                 { key: "completed" as const, label: "Completed", count: metrics.completed },
                             ].map((tab) => (
                                 <button
@@ -417,18 +420,24 @@ export default function StudentDashboard() {
 
                 {/* Rows */}
                 <div className="px-5 sm:px-6 divide-y divide-gray-50/80">
-                    {filteredAssignments.length > 0 ? (
+                    {assignmentsLoading ? (
+                        <div className="py-16 flex items-center justify-center">
+                            <Loader2 className="w-5 h-5 animate-spin text-primary" />
+                        </div>
+                    ) : filteredAssignments.length > 0 ? (
                         filteredAssignments.map((a, i) => (
                             <AssignmentRow key={a.id} a={a} index={i} />
                         ))
                     ) : (
                         <div className="py-16 text-center">
                             <p className="text-[14px] font-medium text-gray-500 font-poppins mb-1">
-                                No assignments match your criteria
+                                {assignments.length === 0 ? "No assignments yet" : "No assignments match your criteria"}
                             </p>
                             <p className="text-[12.5px] text-gray-400 font-poppins">
                                 {searchQuery
                                     ? "Try a different search term"
+                                    : assignments.length === 0
+                                    ? "Post your first assignment to get started"
                                     : "Switch tabs or post a new assignment"}
                             </p>
                         </div>
@@ -439,7 +448,7 @@ export default function StudentDashboard() {
                 {filteredAssignments.length > 0 && (
                     <div className="border-t border-gray-50 px-5 sm:px-6 py-3 flex items-center justify-between">
                         <p className="text-[11.5px] text-gray-400 font-poppins">
-                            {filteredAssignments.length} of {MOCK_ASSIGNMENTS.length} assignments
+                            {filteredAssignments.length} of {assignments.length} assignments
                         </p>
                         <Link
                             href="/students/assignments"
