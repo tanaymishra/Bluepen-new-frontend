@@ -218,7 +218,7 @@ const Navbar: React.FC = () => {
             {isLoggedInStudent ? (
               <>
                 <Link
-                  href="/newPost/post"
+                  href="/students/post-assignment"
                   className="hidden md:flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-primary via-[#3b6dbf] to-primary bg-[length:200%_100%] hover:bg-[100%_0] text-white text-[13px] font-semibold font-poppins shadow-[0_4px_14px_rgba(41,86,168,0.25)] hover:shadow-[0_6px_20px_rgba(41,86,168,0.35)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-300"
                 >
                   <span className="tracking-wide">Post Assignment</span>

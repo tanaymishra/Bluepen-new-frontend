@@ -1,7 +1,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Paperclip } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, Paperclip } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { guarantees } from "../constants";
 import SummaryRow from "./SummaryRow";
@@ -11,6 +11,8 @@ interface StepThreeProps {
     formData: any;
     back: () => void;
     submit: () => void;
+    submitting?: boolean;
+    submitError?: string | null;
     variants: any;
 }
 
@@ -19,6 +21,8 @@ export default function StepThree({
     formData,
     back,
     submit,
+    submitting = false,
+    submitError,
     variants,
 }: StepThreeProps) {
     if (!selectedTypeData) return null;
@@ -135,13 +139,25 @@ export default function StepThree({
 
             {/* nav */}
             <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 mt-8">
-                <Button variant="ghost" onClick={back} size="lg" className="w-full sm:w-auto">
+                <Button variant="ghost" onClick={back} size="lg" className="w-full sm:w-auto" disabled={submitting}>
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Edit details
                 </Button>
-                <Button onClick={submit} size="lg" className="w-full sm:w-auto min-w-[180px]">
-                    Submit Assignment
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                {submitError && (
+                    <p className="text-[13px] text-red-500 font-poppins self-center">{submitError}</p>
+                )}
+                <Button onClick={submit} size="lg" className="w-full sm:w-auto min-w-[180px]" disabled={submitting}>
+                    {submitting ? (
+                        <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Submitting…
+                        </>
+                    ) : (
+                        <>
+                            Submit Assignment
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                        </>
+                    )}
                 </Button>
             </div>
         </motion.div>

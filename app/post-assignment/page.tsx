@@ -12,6 +12,7 @@ import HeroSection from "./components/HeroSection";
 import StepOne from "./components/StepOne";
 import StepTwo from "./components/StepTwo";
 import StepThree from "./components/StepThree";
+import { usePostAssignment } from "@/hooks/assignments/usePostAssignment";
 
 export default function PostAssignmentPage() {
     const [step, setStep] = useState(1);
@@ -77,6 +78,8 @@ export default function PostAssignmentPage() {
         return !Object.keys(e).length;
     };
 
+    const { submitting, error: submitError, submit: postAssignment } = usePostAssignment();
+
     const next = () => {
         if (step === 1 && selectedType) setStep(2);
         else if (step === 2 && validate()) setStep(3);
@@ -84,7 +87,19 @@ export default function PostAssignmentPage() {
     const back = () => step > 1 && setStep(step - 1);
 
     const submit = () => {
-        alert("Assignment submitted! We'll match you with an expert shortly.");
+        if (submitting) return;
+        postAssignment({
+            type:             selectedType ?? '',
+            subtype:          formData.subtype,
+            title:            formData.title,
+            academicLevel:    formData.academicLevel,
+            subject:          formData.subject,
+            wordCount:        formData.wordCount,
+            deadline:         formData.deadline,
+            referencingStyle: formData.referencingStyle,
+            instructions:     formData.instructions,
+            files:            formData.files,
+        });
     };
 
     const variants = {
@@ -142,6 +157,8 @@ export default function PostAssignmentPage() {
                                     formData={formData}
                                     back={back}
                                     submit={submit}
+                                    submitting={submitting}
+                                    submitError={submitError}
                                     variants={variants}
                                 />
                             )}
