@@ -50,8 +50,12 @@ const Navbar: React.FC = () => {
   const productsRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  const getInitials = (firstname: string, lastname: string) =>
-    `${firstname?.charAt(0).toUpperCase()}${lastname?.charAt(0).toUpperCase()}`;
+  const getInitials = (fullName: string) => {
+    const parts = (fullName ?? '').trim().split(/\s+/).filter(Boolean);
+    if (parts.length === 0) return '?';
+    if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+    return `${parts[0].charAt(0).toUpperCase()}${parts[parts.length - 1].charAt(0).toUpperCase()}`;
+  };
 
   const handleLogout = () => {
     clearUser();
@@ -227,7 +231,7 @@ const Navbar: React.FC = () => {
                     className="w-10 h-10 rounded-full bg-gradient-to-br from-white to-gray-50 p-0.5 ring-1 ring-black/5 shadow-sm transition-transform duration-200 hover:scale-105 active:scale-95"
                   >
                     <div className="w-full h-full rounded-full bg-gradient-to-br from-primary to-primary-dark text-white text-[13px] font-bold font-montserrat flex items-center justify-center shadow-inner">
-                      {getInitials(user!.firstname, user!.lastname)}
+                      {getInitials(user!.full_name)}
                     </div>
                   </button>
 
@@ -243,11 +247,11 @@ const Navbar: React.FC = () => {
                         <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-4 mb-2 ring-1 ring-black/[0.03]">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary-dark text-white text-sm font-bold flex items-center justify-center font-montserrat shadow-md">
-                              {getInitials(user!.firstname, user!.lastname)}
+                              {getInitials(user!.full_name)}
                             </div>
                             <div className="flex-1 min-w-0">
                               <p className="text-[14px] font-bold text-gray-900 truncate font-montserrat leading-tight">
-                                {user!.firstname} {user!.lastname}
+                                {user!.full_name}
                               </p>
                               <p className="text-[11px] font-medium text-primary uppercase tracking-wider mt-0.5 font-poppins bg-primary/10 inline-block px-1.5 py-0.5 rounded-md">
                                 Student
