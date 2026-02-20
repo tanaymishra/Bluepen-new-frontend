@@ -182,7 +182,7 @@ export default function StudentDashboard() {
                 new Date(a.submittedAt).getTime()
         );
         return result;
-    }, [activeTab, searchQuery]);
+    }, [activeTab, searchQuery, assignments]);
 
     const firstName =
         isHydrated && user?.full_name

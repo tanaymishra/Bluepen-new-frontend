@@ -87,7 +87,7 @@ export default function AssignmentsPage() {
                 : new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
         );
         return result;
-    }, [activeFilter, searchQuery, sortBy]);
+    }, [activeFilter, searchQuery, sortBy, assignments]);
 
     const stageCounts = useMemo(() => {
         const counts: Record<string, number> = { all: assignments.length };
