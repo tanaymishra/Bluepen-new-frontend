@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/authentication/authentication";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -87,11 +87,26 @@ export default function AdminAuthenticatedLayout({
     children: React.ReactNode;
 }) {
     const pathname = usePathname();
+    const router = useRouter();
     const { user, clearUser, isHydrated } = useAuth();
     const [collapsed, setCollapsed] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
 
-    const handleLogout = () => {
+    /* ── Auth guard ── */
+    useEffect(() => {
+        if (!isHydrated) return;
+        if (!user || user.role !== "admin") {
+            router.replace("/admin/login");
+        }
+    }, [isHydrated, user, router]);
+
+    const handleLogout = async () => {
+        try {
+            await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000"}/api/admin/logout`,
+                { method: "POST", credentials: "include" },
+            );
+        } catch { /* ignore */ }
         clearUser();
         window.location.href = "/admin/login";
     };

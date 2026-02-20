@@ -3,7 +3,8 @@
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/authentication/authentication";
-import { validateCredentials } from "@/lib/static";
+
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
 
 interface AdminLoginState {
     email: string;
@@ -42,53 +43,35 @@ export function useAdminLogin() {
             setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
             if (!state.email.trim()) {
-                setState((prev) => ({
-                    ...prev,
-                    isLoading: false,
-                    error: "Please enter your email address.",
-                }));
+                setState((prev) => ({ ...prev, isLoading: false, error: "Please enter your email address." }));
                 return;
             }
-
             if (!state.password) {
-                setState((prev) => ({
-                    ...prev,
-                    isLoading: false,
-                    error: "Please enter your password.",
-                }));
+                setState((prev) => ({ ...prev, isLoading: false, error: "Please enter your password." }));
                 return;
             }
 
-            await new Promise((resolve) => setTimeout(resolve, 1200));
+            try {
+                const res = await fetch(`${API}/api/admin/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: JSON.stringify({ email: state.email.trim(), password: state.password }),
+                });
 
-            const user = validateCredentials(state.email, state.password);
+                const json = await res.json();
 
-            if (!user) {
-                setState((prev) => ({
-                    ...prev,
-                    isLoading: false,
-                    error: "Invalid email or password. Please try again.",
-                }));
-                return;
+                if (!res.ok) {
+                    setState((prev) => ({ ...prev, isLoading: false, error: json.message ?? "Invalid email or password." }));
+                    return;
+                }
+
+                storeUser({ role: "admin", userObject: json.data.user });
+                setState((prev) => ({ ...prev, isLoading: false }));
+                router.push("/admin/dashboard");
+            } catch {
+                setState((prev) => ({ ...prev, isLoading: false, error: "Network error. Please try again." }));
             }
-
-            if (user.role !== "admin") {
-                setState((prev) => ({
-                    ...prev,
-                    isLoading: false,
-                    error: "Access denied. Admin credentials required.",
-                }));
-                return;
-            }
-
-            storeUser({
-                role: user.role,
-                userObject: user,
-                token: user.token,
-            });
-
-            setState((prev) => ({ ...prev, isLoading: false }));
-            router.push("/admin/dashboard");
         },
         [state.email, state.password, storeUser, router]
     );
