@@ -10,8 +10,13 @@ import {
     Clock,
     CheckCircle,
     XCircle,
+    AlertCircle,
 } from "lucide-react";
-import { MOCK_COUPONS, type Coupon } from "@/lib/static";
+import { useCoupons, type Coupon } from "@/hooks/coupons/useCoupons";
+
+function Skeleton({ className }: { className?: string }) {
+    return <div className={cn("rounded-lg bg-gray-100 animate-pulse", className)} />;
+}
 
 /* ────────────────────────────────────────── helpers */
 
@@ -39,9 +44,9 @@ function CouponCard({ coupon, index }: { coupon: Coupon; index: number }) {
         setTimeout(() => setCopied(false), 1500);
     };
 
-    const isActive = coupon.status === "active";
-    const isUsed = coupon.status === "used";
-    const remaining = daysUntil(coupon.validUntil);
+    const isActive  = coupon.status === "active";
+    const isUsed    = coupon.status === "used";
+    const remaining = coupon.validUntil ? daysUntil(coupon.validUntil) : null;
 
     return (
         <motion.div
@@ -132,7 +137,7 @@ function CouponCard({ coupon, index }: { coupon: Coupon; index: number }) {
                     {coupon.maxDiscount && (
                         <span>Max discount: ₹{coupon.maxDiscount.toLocaleString()}</span>
                     )}
-                    {isActive && remaining > 0 && (
+                    {isActive && remaining !== null && remaining > 0 && (
                         <span className="text-primary font-medium">
                             {remaining}d remaining
                         </span>
@@ -140,7 +145,7 @@ function CouponCard({ coupon, index }: { coupon: Coupon; index: number }) {
                     {isUsed && coupon.usedAt && (
                         <span>Used on {formatDate(coupon.usedAt)}</span>
                     )}
-                    {coupon.status === "expired" && (
+                    {coupon.status === "expired" && coupon.validUntil && (
                         <span>Expired {formatDate(coupon.validUntil)}</span>
                     )}
                 </div>
@@ -152,14 +157,15 @@ function CouponCard({ coupon, index }: { coupon: Coupon; index: number }) {
 /* ────────────────────────────────────────── page */
 
 export default function CouponsPage() {
+    const { coupons, isLoading, error } = useCoupons();
     const [filter, setFilter] = useState<"all" | "active" | "used" | "expired">("all");
 
     const filtered = useMemo(() => {
-        if (filter === "all") return MOCK_COUPONS;
-        return MOCK_COUPONS.filter((c) => c.status === filter);
-    }, [filter]);
+        if (filter === "all") return coupons;
+        return coupons.filter((c) => c.status === filter);
+    }, [filter, coupons]);
 
-    const activeCoupons = MOCK_COUPONS.filter((c) => c.status === "active").length;
+    const activeCoupons = coupons.filter((c) => c.status === "active").length;
 
     return (
         <div className="max-w-[1140px] mx-auto">
@@ -174,16 +180,24 @@ export default function CouponsPage() {
                     Coupons
                 </h1>
                 <p className="text-[13px] text-gray-400 font-poppins mt-0.5">
-                    {activeCoupons} active coupon{activeCoupons !== 1 ? "s" : ""} available
+                    {isLoading ? "Loading..." : `${activeCoupons} active coupon${activeCoupons !== 1 ? "s" : ""} available`}
                 </p>
             </motion.div>
+
+            {/* Error */}
+            {error && (
+                <div className="flex items-center gap-2 bg-red-50 border border-red-100 rounded-xl px-4 py-3 mb-5">
+                    <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+                    <p className="text-[13px] text-red-500 font-poppins">{error}</p>
+                </div>
+            )}
 
             {/* Filter */}
             <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.25, delay: 0.05 }}
-                className="flex items-center gap-2 mb-5"
+                className="flex items-center gap-2 mb-5 flex-wrap"
             >
                 {(["all", "active", "used", "expired"] as const).map((f) => (
                     <button
@@ -196,22 +210,38 @@ export default function CouponsPage() {
                                 : "bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:text-gray-700"
                         )}
                     >
-                        {f === "active" && <CheckCircle className="w-3.5 h-3.5" />}
-                        {f === "used" && <Clock className="w-3.5 h-3.5" />}
+                        {f === "active"  && <CheckCircle className="w-3.5 h-3.5" />}
+                        {f === "used"    && <Clock className="w-3.5 h-3.5" />}
                         {f === "expired" && <XCircle className="w-3.5 h-3.5" />}
                         {f}
                     </button>
                 ))}
             </motion.div>
 
+            {/* Skeleton */}
+            {isLoading && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[...Array(4)].map((_, i) => (
+                        <div key={i} className="bg-white rounded-2xl border border-gray-100/80 p-5">
+                            <Skeleton className="h-7 w-24 mb-3" />
+                            <Skeleton className="h-4 w-40 mb-6" />
+                            <Skeleton className="h-10 w-full" />
+                        </div>
+                    ))}
+                </div>
+            )}
+
             {/* Coupon Grid */}
-            {filtered.length > 0 ? (
+            {!isLoading && filtered.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {filtered.map((coupon, i) => (
                         <CouponCard key={coupon.id} coupon={coupon} index={i} />
                     ))}
                 </div>
-            ) : (
+            )}
+
+            {/* Empty */}
+            {!isLoading && filtered.length === 0 && !error && (
                 <div className="py-20 text-center bg-white rounded-2xl border border-gray-100/80">
                     <Ticket className="w-8 h-8 text-gray-300 mx-auto mb-3" />
                     <p className="text-[14px] font-medium text-gray-500 font-poppins mb-1">

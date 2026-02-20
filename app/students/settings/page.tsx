@@ -3,14 +3,15 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/authentication/authentication";
+import { useSettings } from "@/hooks/settings/useSettings";
+import { useToast } from "@/context/toastContext";
 import {
-    User,
     Bell,
     Shield,
     Eye,
     EyeOff,
     Save,
+    Loader2,
 } from "lucide-react";
 
 /* ────────────────────────────────────────── toggle */
@@ -43,19 +44,40 @@ function Toggle({
 /* ────────────────────────────────────────── page */
 
 export default function SettingsPage() {
-    const { user } = useAuth();
-    const [showPassword, setShowPassword] = useState(false);
+    const { prefs, isLoading, isSaving, updatePref, changePassword } = useSettings();
+    const { showToast } = useToast();
+    const [showCurrent, setShowCurrent]     = useState(false);
+    const [showNew, setShowNew]             = useState(false);
+    const [showConfirm, setShowConfirm]     = useState(false);
+    const [currentPw, setCurrentPw]         = useState("");
+    const [newPw, setNewPw]                 = useState("");
+    const [confirmPw, setConfirmPw]         = useState("");
+    const [pwLoading, setPwLoading]         = useState(false);
 
-    const [notifSettings, setNotifSettings] = useState({
-        emailUpdates: true,
-        emailPromotions: false,
-        smsUpdates: true,
-        pushNotifications: true,
-        deadlineReminders: true,
-    });
-
-    const toggleNotif = (key: keyof typeof notifSettings) =>
-        setNotifSettings((s) => ({ ...s, [key]: !s[key] }));
+    const handlePasswordSave = async () => {
+        if (!currentPw || !newPw || !confirmPw) {
+            showToast("Please fill in all password fields", "warning");
+            return;
+        }
+        if (newPw !== confirmPw) {
+            showToast("New passwords do not match", "error");
+            return;
+        }
+        if (newPw.length < 8) {
+            showToast("Password must be at least 8 characters", "warning");
+            return;
+        }
+        setPwLoading(true);
+        try {
+            await changePassword(currentPw, newPw);
+            showToast("Password updated successfully", "success");
+            setCurrentPw(""); setNewPw(""); setConfirmPw("");
+        } catch (e: unknown) {
+            showToast(e instanceof Error ? e.message : "Failed to update password", "error");
+        } finally {
+            setPwLoading(false);
+        }
+    };
 
     return (
         <div className="max-w-[860px] mx-auto">
@@ -74,92 +96,39 @@ export default function SettingsPage() {
                 </p>
             </motion.div>
 
-            {/* Account */}
+            {/* Notifications */}
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.05 }}
                 className="bg-white rounded-2xl border border-gray-100/80 p-5 sm:p-6 mb-4"
             >
-                <div className="flex items-center gap-3 mb-5">
-                    <div className="w-8 h-8 rounded-lg bg-primary/[0.06] flex items-center justify-center">
-                        <User className="w-4 h-4 text-primary" />
+                <div className="flex items-center justify-between gap-3 mb-5">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-primary/[0.06] flex items-center justify-center">
+                            <Bell className="w-4 h-4 text-primary" />
+                        </div>
+                        <p className="text-[13.5px] font-semibold text-gray-800 font-poppins">
+                            Notifications
+                        </p>
                     </div>
-                    <p className="text-[13.5px] font-semibold text-gray-800 font-poppins">
-                        Account
-                    </p>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label className="text-[11px] uppercase tracking-widest text-gray-400 font-poppins font-semibold mb-1.5 block">
-                            Email Address
-                        </label>
-                        <input
-                            type="email"
-                            defaultValue={user?.email ?? ""}
-                            className="w-full h-10 px-3.5 rounded-xl border border-gray-200 bg-gray-50/50 text-[13px] font-poppins text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/15 focus:border-primary/30"
-                        />
-                    </div>
-                    <div>
-                        <label className="text-[11px] uppercase tracking-widest text-gray-400 font-poppins font-semibold mb-1.5 block">
-                            Phone Number
-                        </label>
-                        <input
-                            type="tel"
-                            defaultValue={user?.phone ?? ""}
-                            className="w-full h-10 px-3.5 rounded-xl border border-gray-200 bg-gray-50/50 text-[13px] font-poppins text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/15 focus:border-primary/30"
-                        />
-                    </div>
-                </div>
-            </motion.div>
-
-            {/* Notifications */}
-            <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-                className="bg-white rounded-2xl border border-gray-100/80 p-5 sm:p-6 mb-4"
-            >
-                <div className="flex items-center gap-3 mb-5">
-                    <div className="w-8 h-8 rounded-lg bg-primary/[0.06] flex items-center justify-center">
-                        <Bell className="w-4 h-4 text-primary" />
-                    </div>
-                    <p className="text-[13.5px] font-semibold text-gray-800 font-poppins">
-                        Notifications
-                    </p>
+                    {isSaving && <Loader2 className="w-4 h-4 text-primary animate-spin" />}
                 </div>
 
                 <div className="space-y-0 divide-y divide-gray-50">
-                    {(
-                        [
-                            {
-                                key: "emailUpdates" as const,
-                                label: "Email Updates",
-                                desc: "Receive assignment status updates via email",
-                            },
-                            {
-                                key: "emailPromotions" as const,
-                                label: "Promotional Emails",
-                                desc: "Offers, discounts, and newsletter",
-                            },
-                            {
-                                key: "smsUpdates" as const,
-                                label: "SMS Notifications",
-                                desc: "Important alerts via text message",
-                            },
-                            {
-                                key: "pushNotifications" as const,
-                                label: "Push Notifications",
-                                desc: "Browser push notifications",
-                            },
-                            {
-                                key: "deadlineReminders" as const,
-                                label: "Deadline Reminders",
-                                desc: "Get reminded before assignment deadlines",
-                            },
-                        ] as const
-                    ).map((item) => (
+                    {(isLoading ? [
+                        { key: "emailUpdates" as const,      label: "Email Updates",       desc: "Receive assignment status updates via email" },
+                        { key: "emailPromotions" as const,   label: "Promotional Emails",  desc: "Offers, discounts, and newsletter" },
+                        { key: "smsUpdates" as const,        label: "SMS Notifications",   desc: "Important alerts via text message" },
+                        { key: "pushNotifications" as const, label: "Push Notifications",  desc: "Browser push notifications" },
+                        { key: "deadlineReminders" as const, label: "Deadline Reminders",  desc: "Get reminded before assignment deadlines" },
+                    ] : [
+                        { key: "emailUpdates" as const,      label: "Email Updates",       desc: "Receive assignment status updates via email" },
+                        { key: "emailPromotions" as const,   label: "Promotional Emails",  desc: "Offers, discounts, and newsletter" },
+                        { key: "smsUpdates" as const,        label: "SMS Notifications",   desc: "Important alerts via text message" },
+                        { key: "pushNotifications" as const, label: "Push Notifications",  desc: "Browser push notifications" },
+                        { key: "deadlineReminders" as const, label: "Deadline Reminders",  desc: "Get reminded before assignment deadlines" },
+                    ] as const).map((item) => (
                         <div
                             key={item.key}
                             className="flex items-center justify-between py-3.5"
@@ -172,10 +141,14 @@ export default function SettingsPage() {
                                     {item.desc}
                                 </p>
                             </div>
-                            <Toggle
-                                enabled={notifSettings[item.key]}
-                                onChange={() => toggleNotif(item.key)}
-                            />
+                            {isLoading ? (
+                                <div className="w-10 h-[22px] rounded-full bg-gray-100 animate-pulse" />
+                            ) : (
+                                <Toggle
+                                    enabled={prefs[item.key]}
+                                    onChange={(v) => updatePref(item.key, v)}
+                                />
+                            )}
                         </div>
                     ))}
                 </div>
@@ -185,7 +158,7 @@ export default function SettingsPage() {
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.15 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
                 className="bg-white rounded-2xl border border-gray-100/80 p-5 sm:p-6 mb-4"
             >
                 <div className="flex items-center gap-3 mb-5">
@@ -193,7 +166,7 @@ export default function SettingsPage() {
                         <Shield className="w-4 h-4 text-primary" />
                     </div>
                     <p className="text-[13.5px] font-semibold text-gray-800 font-poppins">
-                        Security
+                        Change Password
                     </p>
                 </div>
 
@@ -204,19 +177,17 @@ export default function SettingsPage() {
                         </label>
                         <div className="relative">
                             <input
-                                type={showPassword ? "text" : "password"}
+                                type={showCurrent ? "text" : "password"}
                                 placeholder="Enter current password"
+                                value={currentPw}
+                                onChange={(e) => setCurrentPw(e.target.value)}
                                 className="w-full h-10 px-3.5 pr-10 rounded-xl border border-gray-200 bg-gray-50/50 text-[13px] font-poppins text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/15 focus:border-primary/30"
                             />
                             <button
-                                onClick={() => setShowPassword(!showPassword)}
+                                onClick={() => setShowCurrent(!showCurrent)}
                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                             >
-                                {showPassword ? (
-                                    <EyeOff className="w-4 h-4" />
-                                ) : (
-                                    <Eye className="w-4 h-4" />
-                                )}
+                                {showCurrent ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                             </button>
                         </div>
                     </div>
@@ -225,27 +196,55 @@ export default function SettingsPage() {
                             <label className="text-[11px] uppercase tracking-widest text-gray-400 font-poppins font-semibold mb-1.5 block">
                                 New Password
                             </label>
-                            <input
-                                type="password"
-                                placeholder="Enter new password"
-                                className="w-full h-10 px-3.5 rounded-xl border border-gray-200 bg-gray-50/50 text-[13px] font-poppins text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/15 focus:border-primary/30"
-                            />
+                            <div className="relative">
+                                <input
+                                    type={showNew ? "text" : "password"}
+                                    placeholder="Enter new password"
+                                    value={newPw}
+                                    onChange={(e) => setNewPw(e.target.value)}
+                                    className="w-full h-10 px-3.5 pr-10 rounded-xl border border-gray-200 bg-gray-50/50 text-[13px] font-poppins text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/15 focus:border-primary/30"
+                                />
+                                <button
+                                    onClick={() => setShowNew(!showNew)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                >
+                                    {showNew ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                </button>
+                            </div>
                         </div>
                         <div>
                             <label className="text-[11px] uppercase tracking-widest text-gray-400 font-poppins font-semibold mb-1.5 block">
                                 Confirm Password
                             </label>
-                            <input
-                                type="password"
-                                placeholder="Confirm new password"
-                                className="w-full h-10 px-3.5 rounded-xl border border-gray-200 bg-gray-50/50 text-[13px] font-poppins text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/15 focus:border-primary/30"
-                            />
+                            <div className="relative">
+                                <input
+                                    type={showConfirm ? "text" : "password"}
+                                    placeholder="Confirm new password"
+                                    value={confirmPw}
+                                    onChange={(e) => setConfirmPw(e.target.value)}
+                                    className="w-full h-10 px-3.5 pr-10 rounded-xl border border-gray-200 bg-gray-50/50 text-[13px] font-poppins text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/15 focus:border-primary/30"
+                                />
+                                <button
+                                    onClick={() => setShowConfirm(!showConfirm)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                >
+                                    {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div className="flex justify-end pt-2">
-                        <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-[13px] font-semibold font-poppins shadow-sm shadow-primary/20 hover:bg-primary-dark transition-all">
-                            <Save className="w-4 h-4" />
-                            Update Password
+                        <button
+                            onClick={handlePasswordSave}
+                            disabled={pwLoading}
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-[13px] font-semibold font-poppins shadow-sm shadow-primary/20 hover:bg-primary-dark transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                        >
+                            {pwLoading ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                                <Save className="w-4 h-4" />
+                            )}
+                            {pwLoading ? "Saving..." : "Update Password"}
                         </button>
                     </div>
                 </div>
@@ -255,7 +254,7 @@ export default function SettingsPage() {
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.2 }}
+                transition={{ duration: 0.3, delay: 0.15 }}
                 className="bg-white rounded-2xl border border-red-100 p-5 sm:p-6"
             >
                 <p className="text-[11px] uppercase tracking-widest text-red-400 font-poppins font-semibold mb-2">

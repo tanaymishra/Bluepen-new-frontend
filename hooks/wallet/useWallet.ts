@@ -74,7 +74,18 @@ export function useWallet(): UseWalletReturn {
                 return r.json();
             })
             .then((body) => {
-                if (!cancelled) setWallet(body.data);
+                if (!cancelled) {
+                    const d = body.data;
+                    setWallet({
+                        balance: Number(d.balance),
+                        currency: d.currency,
+                        transactions: (d.transactions ?? []).map((t: any) => ({
+                            ...t,
+                            amount:      Number(t.amount),
+                            balanceAfter: Number(t.balanceAfter),
+                        })),
+                    });
+                }
             })
             .catch((e) => {
                 if (!cancelled) setError(e.message ?? "Something went wrong");
@@ -146,7 +157,7 @@ export function useWallet(): UseWalletReturn {
                                 const { data: verifyData } = await verifyRes.json();
                                 setWallet((prev) => ({
                                     ...prev,
-                                    balance: verifyData.balance,
+                                    balance: Number(verifyData.balance),
                                 }));
                                 refresh();
                                 resolve();

@@ -3,12 +3,14 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/context/toastContext";
 import {
     Mail,
     Phone,
     MessageSquare,
     ChevronDown,
     Send,
+    Loader2,
 } from "lucide-react";
 
 /* ────────────────────────────────────────── FAQ data */
@@ -94,7 +96,38 @@ function FAQItem({
 
 /* ────────────────────────────────────────── page */
 
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+
 export default function SupportPage() {
+    const { showToast } = useToast();
+    const [subject, setSubject] = useState("");
+    const [message, setMessage] = useState("");
+    const [sending, setSending] = useState(false);
+
+    const handleSubmit = async () => {
+        if (!subject.trim() || !message.trim()) {
+            showToast("Please fill in both subject and message", "warning");
+            return;
+        }
+        setSending(true);
+        try {
+            const r = await fetch(`${API}/api/support/contact`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ subject: subject.trim(), message: message.trim() }),
+            });
+            const body = await r.json();
+            if (!r.ok) throw new Error(body.message ?? "Failed to send message");
+            showToast(body.message ?? "Message sent! We'll get back to you soon.", "success");
+            setSubject(""); setMessage("");
+        } catch (e: unknown) {
+            showToast(e instanceof Error ? e.message : "Failed to send message", "error");
+        } finally {
+            setSending(false);
+        }
+    };
+
     return (
         <div className="max-w-[860px] mx-auto">
             {/* Header */}
@@ -197,6 +230,8 @@ export default function SupportPage() {
                         <input
                             type="text"
                             placeholder="What do you need help with?"
+                            value={subject}
+                            onChange={(e) => setSubject(e.target.value)}
                             className="w-full h-10 px-3.5 rounded-xl border border-gray-200 bg-gray-50/50 text-[13px] font-poppins text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/15 focus:border-primary/30"
                         />
                     </div>
@@ -207,13 +242,23 @@ export default function SupportPage() {
                         <textarea
                             rows={4}
                             placeholder="Describe your issue in detail..."
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
                             className="w-full px-3.5 py-3 rounded-xl border border-gray-200 bg-gray-50/50 text-[13px] font-poppins text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/15 focus:border-primary/30 resize-none"
                         />
                     </div>
                     <div className="flex justify-end">
-                        <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-[13px] font-semibold font-poppins shadow-sm shadow-primary/20 hover:bg-primary-dark transition-all">
-                            <Send className="w-4 h-4" />
-                            Send Message
+                        <button
+                            onClick={handleSubmit}
+                            disabled={sending}
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-[13px] font-semibold font-poppins shadow-sm shadow-primary/20 hover:bg-primary-dark transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                        >
+                            {sending ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                                <Send className="w-4 h-4" />
+                            )}
+                            {sending ? "Sending..." : "Send Message"}
                         </button>
                     </div>
                 </div>

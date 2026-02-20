@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
@@ -8,12 +8,11 @@ import {
     Check,
     Users,
     Gift,
-    ArrowRight,
     Share2,
 } from "lucide-react";
-import { MOCK_REFERRAL_DATA } from "@/lib/static";
+import { useReferrals, type ReferralItem } from "@/hooks/referrals/useReferrals";
 
-/* ────────────────────────────────────────── helpers */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ helpers */
 
 function formatDate(iso: string) {
     return new Date(iso).toLocaleDateString("en-IN", {
@@ -23,18 +22,22 @@ function formatDate(iso: string) {
     });
 }
 
-const STATUS_MAP = {
-    pending: { label: "Invite Sent", color: "#6B7280", bg: "#F3F4F6" },
-    signed_up: { label: "Signed Up", color: "#2956A8", bg: "#DCE6F7" },
-    first_order: { label: "First Order", color: "#D97706", bg: "#FEF3C7" },
-    rewarded: { label: "Rewarded", color: "#16A34A", bg: "#CFF4E7" },
-} as const;
+const STATUS_MAP: Record<ReferralItem["status"], { label: string; color: string; bg: string }> = {
+    pending:     { label: "Invite Sent",   color: "#6B7280", bg: "#F3F4F6" },
+    signed_up:   { label: "Signed Up",     color: "#2956A8", bg: "#DCE6F7" },
+    first_order: { label: "First Order",   color: "#D97706", bg: "#FEF3C7" },
+    rewarded:    { label: "Rewarded",      color: "#16A34A", bg: "#CFF4E7" },
+};
 
-/* ────────────────────────────────────────── page */
+function Skeleton({ className }: { className?: string }) {
+    return <div className={cn("rounded-lg bg-gray-100 animate-pulse", className)} />;
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ page */
 
 export default function ReferralsPage() {
+    const { data, isLoading, error } = useReferrals();
     const [copied, setCopied] = useState<"code" | "link" | null>(null);
-    const data = MOCK_REFERRAL_DATA;
 
     const handleCopy = (text: string, type: "code" | "link") => {
         navigator.clipboard.writeText(text);
@@ -85,31 +88,36 @@ export default function ReferralsPage() {
                     </p>
 
                     {/* Referral Code */}
-                    <div className="flex flex-col sm:flex-row gap-3">
-                        <div className="flex items-center gap-2 bg-white/[0.08] border border-white/10 rounded-xl px-4 py-2.5 flex-1">
-                            <span className="text-[14px] font-bold text-white font-montserrat tracking-wider flex-1">
-                                {data.code}
-                            </span>
+                    {isLoading ? (
+                        <div className="flex gap-3">
+                            <Skeleton className="h-10 flex-1 rounded-xl bg-white/10" />
+                            <Skeleton className="h-10 w-32 rounded-xl bg-white/10" />
+                        </div>
+                    ) : error || !data ? (
+                        <p className="text-[13px] text-white/40 font-poppins">Unable to load referral code.</p>
+                    ) : (
+                        <div className="flex flex-col sm:flex-row gap-3">
+                            <div className="flex items-center gap-2 bg-white/[0.08] border border-white/10 rounded-xl px-4 py-2.5 flex-1">
+                                <span className="text-[14px] font-bold text-white font-montserrat tracking-wider flex-1">
+                                    {data.code}
+                                </span>
+                                <button
+                                    onClick={() => handleCopy(data.code, "code")}
+                                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-[11.5px] font-semibold text-white/80 font-poppins transition-colors"
+                                >
+                                    {copied === "code" ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                                    {copied === "code" ? "Copied" : "Copy"}
+                                </button>
+                            </div>
                             <button
-                                onClick={() => handleCopy(data.code, "code")}
-                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-[11.5px] font-semibold text-white/80 font-poppins transition-colors"
+                                onClick={() => handleCopy(data.link, "link")}
+                                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white text-primary-dark text-[13px] font-semibold font-poppins hover:bg-gray-50 transition-colors"
                             >
-                                {copied === "code" ? (
-                                    <Check className="w-3.5 h-3.5" />
-                                ) : (
-                                    <Copy className="w-3.5 h-3.5" />
-                                )}
-                                {copied === "code" ? "Copied" : "Copy"}
+                                <Share2 className="w-4 h-4" />
+                                {copied === "link" ? "Link Copied!" : "Share Link"}
                             </button>
                         </div>
-                        <button
-                            onClick={() => handleCopy(data.link, "link")}
-                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white text-primary-dark text-[13px] font-semibold font-poppins hover:bg-gray-50 transition-colors"
-                        >
-                            <Share2 className="w-4 h-4" />
-                            {copied === "link" ? "Link Copied!" : "Share Link"}
-                        </button>
-                    </div>
+                    )}
                 </div>
             </motion.div>
 
@@ -120,42 +128,41 @@ export default function ReferralsPage() {
                 transition={{ duration: 0.3, delay: 0.08 }}
                 className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6"
             >
-                <div className="relative bg-white rounded-2xl border border-gray-100/80 p-5 overflow-hidden hover:shadow-[0_2px_16px_rgba(0,0,0,0.04)] transition-shadow">
-                    <div className="absolute -top-6 -right-6 w-24 h-24 bg-primary/[0.03] rounded-full blur-md" />
-                    <p className="text-[11px] uppercase tracking-widest text-gray-400 font-poppins font-semibold mb-3">
-                        Total Referred
-                    </p>
-                    <p className="text-[28px] font-extrabold text-gray-900 font-montserrat leading-none tracking-tight">
-                        {data.totalReferred}
-                    </p>
-                    <p className="text-[11.5px] text-gray-400 font-poppins mt-1.5">
-                        people invited
-                    </p>
-                </div>
-                <div className="relative bg-white rounded-2xl border border-gray-100/80 p-5 overflow-hidden hover:shadow-[0_2px_16px_rgba(0,0,0,0.04)] transition-shadow">
-                    <div className="absolute -top-6 -right-6 w-24 h-24 bg-primary/[0.03] rounded-full blur-md" />
-                    <p className="text-[11px] uppercase tracking-widest text-gray-400 font-poppins font-semibold mb-3">
-                        Successful
-                    </p>
-                    <p className="text-[28px] font-extrabold text-gray-900 font-montserrat leading-none tracking-tight">
-                        {data.successfulReferrals}
-                    </p>
-                    <p className="text-[11.5px] text-gray-400 font-poppins mt-1.5">
-                        completed &amp; rewarded
-                    </p>
-                </div>
-                <div className="relative bg-white rounded-2xl border border-gray-100/80 p-5 overflow-hidden hover:shadow-[0_2px_16px_rgba(0,0,0,0.04)] transition-shadow">
-                    <div className="absolute -top-6 -right-6 w-24 h-24 bg-primary/[0.03] rounded-full blur-md" />
-                    <p className="text-[11px] uppercase tracking-widest text-gray-400 font-poppins font-semibold mb-3">
-                        Total Earned
-                    </p>
-                    <p className="text-[28px] font-extrabold text-gray-900 font-montserrat leading-none tracking-tight">
-                        ₹{data.totalEarnings.toLocaleString()}
-                    </p>
-                    <p className="text-[11.5px] text-gray-400 font-poppins mt-1.5">
-                        from referrals
-                    </p>
-                </div>
+                {[
+                    {
+                        label: "Total Referred",
+                        value: isLoading ? null : data?.totalReferred ?? 0,
+                        sub: "people invited",
+                        fmt: (v: number) => v.toString(),
+                    },
+                    {
+                        label: "Successful",
+                        value: isLoading ? null : data?.successfulReferrals ?? 0,
+                        sub: "completed & rewarded",
+                        fmt: (v: number) => v.toString(),
+                    },
+                    {
+                        label: "Total Earned",
+                        value: isLoading ? null : data?.totalEarnings ?? 0,
+                        sub: "from referrals",
+                        fmt: (v: number) => `₹${v.toLocaleString()}`,
+                    },
+                ].map((card) => (
+                    <div key={card.label} className="relative bg-white rounded-2xl border border-gray-100/80 p-5 overflow-hidden hover:shadow-[0_2px_16px_rgba(0,0,0,0.04)] transition-shadow">
+                        <div className="absolute -top-6 -right-6 w-24 h-24 bg-primary/[0.03] rounded-full blur-md" />
+                        <p className="text-[11px] uppercase tracking-widest text-gray-400 font-poppins font-semibold mb-3">
+                            {card.label}
+                        </p>
+                        {card.value === null ? (
+                            <Skeleton className="h-8 w-20" />
+                        ) : (
+                            <p className="text-[28px] font-extrabold text-gray-900 font-montserrat leading-none tracking-tight">
+                                {card.fmt(card.value)}
+                            </p>
+                        )}
+                        <p className="text-[11.5px] text-gray-400 font-poppins mt-1.5">{card.sub}</p>
+                    </div>
+                ))}
             </motion.div>
 
             {/* Referral List */}
@@ -172,47 +179,90 @@ export default function ReferralsPage() {
                     </p>
                 </div>
 
-                <div className="divide-y divide-gray-50/80">
-                    {data.referrals.map((referral, i) => {
-                        const status = STATUS_MAP[referral.status];
-                        return (
-                            <motion.div
-                                key={referral.id}
-                                initial={{ opacity: 0, x: -6 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.15, delay: i * 0.03 }}
-                                className="flex items-center gap-4 px-5 sm:px-6 py-4 hover:bg-gray-50/40 transition-colors"
-                            >
-                                <div className="w-10 h-10 rounded-full bg-primary/[0.06] flex items-center justify-center text-primary text-[12px] font-bold font-montserrat shrink-0">
-                                    {referral.name.split(" ").map((n) => n[0]).join("")}
+                {/* Loading skeleton */}
+                {isLoading && (
+                    <div className="divide-y divide-gray-50/80">
+                        {[...Array(3)].map((_, i) => (
+                            <div key={i} className="flex items-center gap-4 px-5 sm:px-6 py-4">
+                                <Skeleton className="w-10 h-10 rounded-full" />
+                                <div className="flex-1 space-y-1.5">
+                                    <Skeleton className="h-3.5 w-36" />
+                                    <Skeleton className="h-3 w-52" />
                                 </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-[13.5px] font-semibold text-gray-800 font-poppins truncate">
-                                        {referral.name}
-                                    </p>
-                                    <p className="text-[11.5px] text-gray-400 font-poppins mt-0.5 truncate">
-                                        {referral.email}
-                                        <span className="text-gray-200 mx-1.5">|</span>
-                                        Invited {formatDate(referral.invitedAt)}
-                                    </p>
-                                </div>
-                                <div className="flex items-center gap-3 shrink-0">
-                                    <span
-                                        className="px-2 py-[3px] rounded-md text-[10.5px] font-semibold font-poppins tracking-wide uppercase whitespace-nowrap"
-                                        style={{ backgroundColor: status.bg, color: status.color }}
-                                    >
-                                        {status.label}
-                                    </span>
-                                    {referral.rewardAmount && (
-                                        <span className="text-[13px] font-bold text-primary font-montserrat tabular-nums hidden sm:block">
-                                            +₹{referral.rewardAmount}
+                                <Skeleton className="h-5 w-20 rounded-md" />
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Error */}
+                {!isLoading && error && (
+                    <p className="text-center text-[13px] text-gray-400 font-poppins py-10">{error}</p>
+                )}
+
+                {/* Empty */}
+                {!isLoading && !error && (!data?.referrals || data.referrals.length === 0) && (
+                    <div className="flex flex-col items-center py-14 gap-3">
+                        <div className="w-12 h-12 rounded-2xl bg-primary/[0.06] flex items-center justify-center">
+                            <Users className="w-5 h-5 text-primary/40" />
+                        </div>
+                        <p className="text-[13px] font-semibold text-gray-600 font-poppins">No referrals yet</p>
+                        <p className="text-[12px] text-gray-400 font-poppins text-center max-w-xs leading-relaxed">
+                            Share your referral code with friends and they&apos;ll appear here once they sign up.
+                        </p>
+                    </div>
+                )}
+
+                {/* Referral rows */}
+                {!isLoading && !error && data?.referrals && data.referrals.length > 0 && (
+                    <div className="divide-y divide-gray-50/80">
+                        {data.referrals.map((referral, i) => {
+                            const status = STATUS_MAP[referral.status] ?? STATUS_MAP.pending;
+                            const initials = referral.name
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")
+                                .slice(0, 2)
+                                .toUpperCase();
+                            return (
+                                <motion.div
+                                    key={referral.id}
+                                    initial={{ opacity: 0, x: -6 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.15, delay: i * 0.03 }}
+                                    className="flex items-center gap-4 px-5 sm:px-6 py-4 hover:bg-gray-50/40 transition-colors"
+                                >
+                                    <div className="w-10 h-10 rounded-full bg-primary/[0.06] flex items-center justify-center text-primary text-[12px] font-bold font-montserrat shrink-0">
+                                        {initials}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-[13.5px] font-semibold text-gray-800 font-poppins truncate">
+                                            {referral.name}
+                                        </p>
+                                        <p className="text-[11.5px] text-gray-400 font-poppins mt-0.5 truncate">
+                                            {referral.email}
+                                            <span className="text-gray-200 mx-1.5">|</span>
+                                            Invited {formatDate(referral.invitedAt)}
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center gap-3 shrink-0">
+                                        <span
+                                            className="px-2 py-[3px] rounded-md text-[10.5px] font-semibold font-poppins tracking-wide uppercase whitespace-nowrap"
+                                            style={{ backgroundColor: status.bg, color: status.color }}
+                                        >
+                                            {status.label}
                                         </span>
-                                    )}
-                                </div>
-                            </motion.div>
-                        );
-                    })}
-                </div>
+                                        {referral.rewardAmount != null && (
+                                            <span className="text-[13px] font-bold text-primary font-montserrat tabular-nums hidden sm:block">
+                                                +₹{Number(referral.rewardAmount).toLocaleString()}
+                                            </span>
+                                        )}
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+                )}
             </motion.div>
 
             {/* How It Works */}
