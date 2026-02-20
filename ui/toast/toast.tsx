@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AlertCircle, CheckCircle, Info, AlertTriangle, X } from 'lucide-react';
+import { CheckCircle2, XCircle, Info, AlertTriangle, X } from 'lucide-react';
 import styles from "@/styles/ui/toast.module.scss";
 
 interface ToastProps {
@@ -10,98 +10,102 @@ interface ToastProps {
 }
 
 const iconMap = {
-    success: <CheckCircle size={20} strokeWidth={2.5} />,
-    error: <AlertCircle size={20} strokeWidth={2.5} />,
-    info: <Info size={20} strokeWidth={2.5} />,
-    warning: <AlertTriangle size={20} strokeWidth={2.5} />
+    success:  <CheckCircle2  size={17} strokeWidth={2.5} />,
+    error:    <XCircle       size={17} strokeWidth={2.5} />,
+    info:     <Info          size={17} strokeWidth={2.5} />,
+    warning:  <AlertTriangle size={17} strokeWidth={2.5} />,
 };
 
 const Toast: React.FC<ToastProps> = ({ message, onClose, duration = 4000, type }) => {
-    const [mounted, setMounted] = useState(false);
-    const [exiting, setExiting] = useState(false);
-    const timerRef = useRef<NodeJS.Timeout>(undefined);
-    const progressRef = useRef<number>(100);
-    const animationFrameRef = useRef<number>(undefined);
-    const startTimeRef = useRef<number>(undefined);
+    const [visible, setVisible]   = useState(false);
+    const [exiting, setExiting]   = useState(false);
+    const [progress, setProgress] = useState(100);
 
-    const startProgress = () => {
-        startTimeRef.current = Date.now();
-        const animate = () => {
-            const elapsed = Date.now() - (startTimeRef.current || 0);
-            progressRef.current = Math.max(0, 100 * (1 - elapsed / duration));
+    const timerRef  = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const rafRef    = useRef<number | null>(null);
+    const startRef  = useRef<number>(0);
+    const pausedAt  = useRef<number>(0); // remaining ms when paused
 
-            if (progressRef.current > 0) {
-                animationFrameRef.current = requestAnimationFrame(animate);
-            }
-        };
-        animationFrameRef.current = requestAnimationFrame(animate);
+    const clearAll = () => {
+        if (timerRef.current)  clearTimeout(timerRef.current);
+        if (rafRef.current)    cancelAnimationFrame(rafRef.current);
     };
 
-    const cleanupTimers = () => {
-        if (timerRef.current) clearTimeout(timerRef.current);
-        if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
-    };
-
-    const handleClose = () => {
-        cleanupTimers();
+    const dismiss = () => {
+        clearAll();
         setExiting(true);
-        setTimeout(onClose, 300); // Match CSS animation duration
+        setTimeout(onClose, 260);
+    };
+
+    const startCountdown = (remaining: number) => {
+        startRef.current = performance.now();
+        const startPct   = (remaining / duration) * 100;
+
+        const tick = (now: number) => {
+            const elapsed = now - startRef.current;
+            const pct     = Math.max(0, startPct - (elapsed / duration) * 100);
+            setProgress(pct);
+            if (pct > 0) rafRef.current = requestAnimationFrame(tick);
+        };
+        rafRef.current = requestAnimationFrame(tick);
+
+        timerRef.current = setTimeout(dismiss, remaining);
     };
 
     useEffect(() => {
-        // Mount animation
-        setMounted(true);
-
-        // Start progress and auto-close timer
-        startProgress();
-        timerRef.current = setTimeout(handleClose, duration);
-
-        return () => cleanupTimers();
-    }, [duration]);
+        // tiny delay so CSS transition fires
+        const t = setTimeout(() => setVisible(true), 16);
+        pausedAt.current = duration;
+        startCountdown(duration);
+        return () => { clearAll(); clearTimeout(t); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleMouseEnter = () => {
-        cleanupTimers();
-        startTimeRef.current = Date.now() - (duration * (1 - progressRef.current / 100));
+        clearAll();
+        // snapshot remaining time
+        const elapsed  = performance.now() - startRef.current;
+        const startPct = (pausedAt.current / duration) * 100;
+        const usedPct  = (elapsed / duration) * 100;
+        const pct      = Math.max(0, startPct - usedPct);
+        pausedAt.current = (pct / 100) * duration;
     };
 
     const handleMouseLeave = () => {
-        startProgress();
-        const remainingTime = duration * (progressRef.current / 100);
-        timerRef.current = setTimeout(handleClose, remainingTime);
+        startCountdown(pausedAt.current);
     };
 
-    const toastClassName = `${styles.toastContainer} ${
-        mounted ? styles.visible : ''
-    } ${exiting ? styles.hidden : ''}`;
-
     return (
-        <div 
-            className={toastClassName}
+        <div
+            className={[
+                styles.toast,
+                visible  ? styles.visible  : '',
+                exiting  ? styles.exiting  : '',
+                styles[type],
+            ].join(' ').trim()}
             role="alert"
+            aria-live="polite"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
-            <div className={`${styles.toastContent} ${styles[type]}`}>
-                <div 
-                    className={styles.progressLine} 
-                    style={{ transform: `scaleX(${progressRef.current / 100})` }} 
-                />
-                <div className={styles.icon}>
-                    {iconMap[type]}
-                </div>
-                <p className="spartan-500">{message}</p>
-                <button 
-                    type="button"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        handleClose();
-                    }} 
-                    className={styles.closeButton}
-                    aria-label="Close notification"
-                >
-                    <X size={18} strokeWidth={2.5} />
-                </button>
-            </div>
+            <span className={styles.icon}>{iconMap[type]}</span>
+
+            <p className={styles.message}>{message}</p>
+
+            <button
+                type="button"
+                onClick={dismiss}
+                className={styles.close}
+                aria-label="Dismiss"
+            >
+                <X size={14} strokeWidth={2.5} />
+            </button>
+
+            {/* progress bar */}
+            <span
+                className={styles.progress}
+                style={{ transform: `scaleX(${progress / 100})` }}
+            />
         </div>
     );
 };

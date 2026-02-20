@@ -168,6 +168,7 @@ export function useWallet(): UseWalletReturn {
             } catch (e: any) {
                 const msg: string = e?.message ?? "Payment failed";
                 if (msg !== "Payment cancelled") setError(msg);
+                throw e; // rethrow so caller knows payment did not succeed
             } finally {
                 setIsProcessing(false);
             }
