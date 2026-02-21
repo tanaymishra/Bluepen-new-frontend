@@ -47,6 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${poppins.variable} ${nunito.variable} ${montserrat.variable}`}
     >
       <meta name="referrer" content="strict-origin-when-cross-origin" />

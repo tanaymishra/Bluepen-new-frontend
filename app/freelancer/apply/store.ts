@@ -1,8 +1,8 @@
 import { create } from "zustand";
+import { uploadFile } from "@/lib/upload";
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
-const UPLOAD_URL = process.env.NEXT_PUBLIC_FILES_UPLOAD_URL!;
-const UPLOAD_FOLDER = "/freelancer/resumes";
+const RESUME_FOLDER = "/freelancer/resumes";
 
 /* ──────────────────── Types ──────────────────── */
 
@@ -154,15 +154,8 @@ export const useFreelancerApplyStore = create<FreelancerApplyState>()((set, get)
         if (!resumeFile || !applicationId) return;
         set({ resumeUploading: true, error: "" });
         try {
-            // 1) Upload file to the file service
-            const fd = new FormData();
-            fd.append("folder", UPLOAD_FOLDER);
-            fd.append("file", resumeFile);
-            const uploadRes = await fetch(UPLOAD_URL, { method: "POST", body: fd });
-            if (!uploadRes.ok) throw new Error("File upload failed");
-            const uploadData = await uploadRes.json();
-            const savedAs: string = uploadData?.files?.[0]?.savedAs;
-            if (!savedAs) throw new Error("Upload response missing file info");
+            // 1) Upload file via shared utility
+            const savedAs = await uploadFile(resumeFile, RESUME_FOLDER);
 
             // 2) Save filename to backend
             await apiCall(`/api/freelancer/apply/${applicationId}/step3`, {
