@@ -87,7 +87,7 @@ export default function FreelancerApplyPage() {
     return (
         <div className="min-h-[100dvh] bg-[#F5F7FA] flex flex-col">
             {/* ── Top bar ── */}
-            <header className="bg-white border-b border-gray-100 px-5 py-3 flex items-center justify-between shrink-0 z-20">
+            <header className="sticky top-0 bg-white border-b border-gray-100 px-5 py-3 flex items-center justify-between shrink-0 z-20">
                 <Link href="/" className="relative w-28 h-8">
                     <Image
                         src="/assets/logo/bluepenonly.svg"
@@ -107,7 +107,7 @@ export default function FreelancerApplyPage() {
             {/* ── Main content: left graphic + right form ── */}
             <div className="flex-1 flex flex-col lg:flex-row min-h-0">
                 {/* LEFT — animated SVG panel (hidden on mobile) */}
-                <div className="hidden lg:flex lg:w-[45%] xl:w-[48%] sticky top-[56px] h-[calc(100vh-56px)] bg-white border-r border-gray-100">
+                <div className="hidden lg:flex lg:w-[45%] xl:w-[48%] sticky top-[57px] h-[calc(100dvh-57px)] bg-white border-r border-gray-100">
                     <StepGraphic step={step} />
                 </div>
 
