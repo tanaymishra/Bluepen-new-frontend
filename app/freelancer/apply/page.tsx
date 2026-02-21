@@ -107,7 +107,7 @@ export default function FreelancerApplyPage() {
             {/* ── Main content: left graphic + right form ── */}
             <div className="flex-1 flex flex-col lg:flex-row min-h-0">
                 {/* LEFT — animated SVG panel (hidden on mobile) */}
-                <div className="hidden lg:flex lg:w-[45%] xl:w-[48%] sticky top-0 h-screen bg-white border-r border-gray-100">
+                <div className="hidden lg:flex lg:w-[45%] xl:w-[48%] sticky top-[56px] h-[calc(100vh-56px)] bg-white border-r border-gray-100">
                     <StepGraphic step={step} />
                 </div>
 
