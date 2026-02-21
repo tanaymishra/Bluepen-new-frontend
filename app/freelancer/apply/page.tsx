@@ -9,6 +9,14 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PhoneInput } from "@/components/ui/phone-input";
+import {
+    Select,
+    SelectTrigger,
+    SelectValue,
+    SelectContent,
+    SelectItem,
+} from "@/components/ui/select";
 import {
     Briefcase,
     ChevronRight,
@@ -20,7 +28,6 @@ import {
     X,
     Upload,
     Mail,
-    Phone,
     User,
     MapPin,
 } from "lucide-react";
@@ -83,6 +90,7 @@ export default function FreelancerApplyPage() {
     const [fullName, setFullName] = useState("");
     const [gender, setGender] = useState("");
     const [phone, setPhone] = useState("");
+    const [countryCode, setCountryCode] = useState("+91");
     const [country, setCountry] = useState("India");
     const [stateProv, setStateProv] = useState("");
     const [city, setCity] = useState("");
@@ -225,7 +233,7 @@ export default function FreelancerApplyPage() {
                 method: "PUT",
                 body: JSON.stringify({
                     fullName, gender: gender || null,
-                    phone_number: phone || null,
+                    phone_number: phone.trim() ? countryCode + phone.trim() : null,
                     country: country || null, state: stateProv || null,
                     city: city || null, pinCode: pinCode || null, streetAddress: street || null,
                 }),
@@ -518,19 +526,24 @@ export default function FreelancerApplyPage() {
                                             </div>
                                             <div className="space-y-1.5">
                                                 <Label className="text-[13px] font-semibold text-gray-700 font-poppins">Gender</Label>
-                                                <select value={gender} onChange={(e) => setGender(e.target.value)}
-                                                    className="w-full h-10 rounded-xl border border-gray-200 bg-white px-3 text-[14px] text-gray-800 font-poppins focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                                                >
-                                                    <option value="">Select</option>
-                                                    {GENDERS.map((g) => <option key={g} value={g}>{g}</option>)}
-                                                </select>
+                                                <Select value={gender} onValueChange={(v) => setGender(v)}>
+                                                    <SelectTrigger className="w-full"><SelectValue placeholder="Select gender" /></SelectTrigger>
+                                                    <SelectContent>
+                                                        {GENDERS.map((g) => <SelectItem key={g} value={g}>{g}</SelectItem>)}
+                                                    </SelectContent>
+                                                </Select>
                                             </div>
                                         </div>
 
                                         <div className="space-y-1.5">
                                             <Label className="text-[13px] font-semibold text-gray-700 font-poppins">Phone Number</Label>
-                                            <Input placeholder="+91 98765 43210" value={phone} onChange={(e) => setPhone(e.target.value)}
-                                                icon={<Phone className="w-[18px] h-[18px]" />} />
+                                            <PhoneInput
+                                                value={phone}
+                                                onChange={(e) => setPhone(e.target.value)}
+                                                onCountryChange={(code) => setCountryCode(code)}
+                                                defaultCountry="in"
+                                                placeholder="98123 00001"
+                                            />
                                         </div>
 
                                         <div className="h-px bg-gray-100" />
