@@ -403,7 +403,7 @@ export default function AdminAssignmentsPage() {
                                             </td>
                                             <td className="px-5 py-3.5 max-w-[260px]">
                                                 <Link
-                                                    href={`/admin/assignments/${a.id}`}
+                                                    href={`/admin/assignments/${a.id}/view`}
                                                     className="text-[13px] font-medium text-gray-800 hover:text-primary transition-colors line-clamp-1"
                                                 >
                                                     {a.title || "Untitled Assignment"}
@@ -437,7 +437,7 @@ export default function AdminAssignmentsPage() {
                                             </td>
                                             <td className="px-5 py-3.5">
                                                 <Link
-                                                    href={`/admin/assignments/${a.id}`}
+                                                    href={`/admin/assignments/${a.id}/view`}
                                                     className="w-7 h-7 rounded-lg flex items-center justify-center text-gray-300 group-hover:text-primary group-hover:bg-primary/5 transition-all"
                                                 >
                                                     <ArrowUpRight className="w-4 h-4" />
