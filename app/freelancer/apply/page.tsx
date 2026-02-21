@@ -100,6 +100,12 @@ export default function FreelancerApplyPage() {
     /* Success state */
     const [submitted, setSubmitted] = useState(false);
 
+    /* Resume dialog */
+    const [showResumeDialog, setShowResumeDialog] = useState(false);
+    const [existingAppInfo, setExistingAppInfo] = useState<{
+        applicationId: string; currentStep: number; specialisations: string[]; createdAt: string;
+    } | null>(null);
+
     const wordCount = pastExperience.trim().split(/\s+/).filter(Boolean).length;
 
     const toggleSpec = (s: string) => {
@@ -131,28 +137,63 @@ export default function FreelancerApplyPage() {
                 method: "POST",
                 body: JSON.stringify({ email, specialisations: selected }),
             });
-            setApplicationId(data.data.applicationId);
 
-            // If resuming, jump to the right step
-            if (data.data.currentStep > 1) {
-                const appData = await apiCall(`/api/freelancer/apply/${data.data.applicationId}`, { method: "GET" });
-                const d = appData.data;
-                if (d.wordsPerDay) setWordsPerDay(String(d.wordsPerDay));
-                if (d.linkedin) setLinkedin(d.linkedin);
-                if (d.publishedWorkLinks?.length) setWorkLinks(d.publishedWorkLinks);
-                if (d.pastExperience) setPastExperience(d.pastExperience);
-                if (d.resumeUrl) setResumeUrl(d.resumeUrl);
-                if (d.emailVerified) setEmailVerified(true);
-                if (d.fullName) setFullName(d.fullName);
-                if (d.gender) setGender(d.gender);
-                if (d.phoneNumber) setPhone(d.phoneNumber);
-                if (d.country) setCountry(d.country);
-                if (d.state) setStateProv(d.state);
-                if (d.city) setCity(d.city);
-                if (d.pinCode) setPinCode(d.pinCode);
-                if (d.streetAddress) setStreet(d.streetAddress);
+            // Existing application found — show dialog
+            if (data.data.existingApplication) {
+                setExistingAppInfo(data.data);
+                setShowResumeDialog(true);
+                return;
             }
 
+            // New application created
+            setApplicationId(data.data.applicationId);
+            setStep(2);
+        } catch (e: unknown) {
+            setError(e instanceof Error ? e.message : "Failed");
+        } finally { setLoading(false); }
+    };
+
+    /* Resume existing application */
+    const resumeExisting = async () => {
+        if (!existingAppInfo) return;
+        setShowResumeDialog(false);
+        setLoading(true); setError("");
+        try {
+            setApplicationId(existingAppInfo.applicationId);
+            // Hydrate form state from existing data
+            const appData = await apiCall(`/api/freelancer/apply/${existingAppInfo.applicationId}`, { method: "GET" });
+            const d = appData.data;
+            if (d.specialisations?.length) setSelected(d.specialisations);
+            if (d.wordsPerDay) setWordsPerDay(String(d.wordsPerDay));
+            if (d.linkedin) setLinkedin(d.linkedin);
+            if (d.publishedWorkLinks?.length) setWorkLinks(d.publishedWorkLinks);
+            if (d.pastExperience) setPastExperience(d.pastExperience);
+            if (d.resumeUrl) setResumeUrl(d.resumeUrl);
+            if (d.emailVerified) setEmailVerified(true);
+            if (d.fullName) setFullName(d.fullName);
+            if (d.gender) setGender(d.gender);
+            if (d.phoneNumber) setPhone(d.phoneNumber);
+            if (d.country) setCountry(d.country);
+            if (d.state) setStateProv(d.state);
+            if (d.city) setCity(d.city);
+            if (d.pinCode) setPinCode(d.pinCode);
+            if (d.streetAddress) setStreet(d.streetAddress);
+            setStep(Math.min(existingAppInfo.currentStep + 1, 4));
+        } catch (e: unknown) {
+            setError(e instanceof Error ? e.message : "Failed to resume");
+        } finally { setLoading(false); }
+    };
+
+    /* Start fresh — delete old and create new */
+    const startFresh = async () => {
+        setShowResumeDialog(false);
+        setLoading(true); setError("");
+        try {
+            const data = await apiCall("/api/freelancer/apply/start", {
+                method: "POST",
+                body: JSON.stringify({ email, specialisations: selected, forceNew: true }),
+            });
+            setApplicationId(data.data.applicationId);
             setStep(2);
         } catch (e: unknown) {
             setError(e instanceof Error ? e.message : "Failed");
@@ -632,6 +673,48 @@ export default function FreelancerApplyPage() {
                     </AnimatePresence>
                 </div>
             </div>
+
+            {/* ═══ Resume Existing Application Dialog ═══ */}
+            {showResumeDialog && existingAppInfo && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+                    <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setShowResumeDialog(false)} />
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.15 }}
+                        className="relative bg-white rounded-2xl border border-gray-100 shadow-xl w-full max-w-[440px] p-6"
+                    >
+                        <div className="flex items-center justify-between mb-4">
+                            <h2 className="text-[18px] font-bold text-gray-900 font-montserrat">Existing Application Found</h2>
+                            <button onClick={() => setShowResumeDialog(false)} className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 text-gray-400 transition-colors">
+                                <X className="w-4 h-4" />
+                            </button>
+                        </div>
+
+                        <div className="bg-primary-light/40 rounded-xl p-4 mb-5">
+                            <p className="text-[13px] text-gray-600 font-poppins leading-relaxed">
+                                We found an application for <span className="font-semibold text-gray-800">{email}</span> started on{" "}
+                                <span className="font-semibold text-gray-800">
+                                    {new Date(existingAppInfo.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
+                                </span>.
+                            </p>
+                            <div className="flex items-center gap-2 mt-2">
+                                <span className="text-[12px] text-primary/70 font-poppins font-medium">Progress:</span>
+                                <span className="text-[12px] text-primary font-poppins font-semibold">
+                                    Step {existingAppInfo.currentStep} of 4 — {STEPS[existingAppInfo.currentStep - 1]?.label}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="space-y-2.5">
+                            <Button onClick={resumeExisting} className="w-full">
+                                <ChevronRight className="w-4 h-4 mr-1.5" />Continue Where I Left Off
+                            </Button>
+                            <Button variant="outline" onClick={startFresh} className="w-full">
+                                Start a New Application
+                            </Button>
+                        </div>
+                    </motion.div>
+                </div>
+            )}
         </div>
     );
 }
