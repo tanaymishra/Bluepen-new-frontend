@@ -277,23 +277,10 @@ export default function AdminFreelancersPage() {
                             )}
                         </div>
 
-                        <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-[12px] font-poppins">
-                            <div>
-                                <p className="text-gray-400 text-[10.5px] mb-0.5">
-                                    Step
-                                </p>
-                                <p className="text-gray-800 font-semibold">
-                                    {fl.currentStep} / 4
-                                </p>
-                            </div>
-                            <div>
-                                <p className="text-gray-400 text-[10.5px] mb-0.5">
-                                    Applied
-                                </p>
-                                <p className="text-gray-700">
-                                    {formatDate(fl.createdAt)}
-                                </p>
-                            </div>
+                        <div className="flex items-center justify-between text-[12px] font-poppins mt-1">
+                            <p className="text-gray-400 text-[10.5px]">
+                                Applied {formatDate(fl.createdAt)}
+                            </p>
                         </div>
                     </motion.div>
                 ))}
@@ -313,8 +300,6 @@ export default function AdminFreelancersPage() {
                                 {[
                                     "Applicant",
                                     "Specialisations",
-                                    "Step",
-                                    "Email Verified",
                                     "Applied",
                                     "Status",
                                     "",
@@ -367,21 +352,6 @@ export default function AdminFreelancersPage() {
                                                     </span>
                                                 )}
                                         </div>
-                                    </td>
-                                    <td className="px-4 py-3.5 text-[13px] text-gray-700 font-poppins tabular-nums">
-                                        {fl.currentStep}/4
-                                    </td>
-                                    <td className="px-4 py-3.5">
-                                        <span
-                                            className={cn(
-                                                "text-[12px] font-poppins font-medium",
-                                                fl.emailVerified
-                                                    ? "text-emerald-500"
-                                                    : "text-gray-400"
-                                            )}
-                                        >
-                                            {fl.emailVerified ? "Yes" : "No"}
-                                        </span>
                                     </td>
                                     <td className="px-4 py-3.5 text-[12.5px] text-gray-500 font-poppins whitespace-nowrap">
                                         {formatDate(fl.createdAt)}
@@ -448,3 +418,4 @@ export default function AdminFreelancersPage() {
         </div>
     );
 }
+

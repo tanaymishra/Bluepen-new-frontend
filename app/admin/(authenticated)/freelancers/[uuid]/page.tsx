@@ -268,12 +268,6 @@ export default function FreelancerDetailPage() {
                             <p className="text-[13px] text-gray-500 font-poppins mt-0.5 flex items-center gap-1.5">
                                 <Mail className="w-3.5 h-3.5" />
                                 {freelancer.email}
-                                {freelancer.emailVerified && (
-                                    <span className="inline-flex items-center gap-0.5 text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full font-medium">
-                                        <Check className="w-2.5 h-2.5" />
-                                        Verified
-                                    </span>
-                                )}
                             </p>
                         </div>
                     </div>
@@ -285,10 +279,6 @@ export default function FreelancerDetailPage() {
                     <div className="flex items-center gap-1.5 text-[12px] text-gray-500 font-poppins">
                         <Calendar className="w-3.5 h-3.5 text-gray-400" />
                         Applied: {formatDate(freelancer.createdAt)}
-                    </div>
-                    <div className="flex items-center gap-1.5 text-[12px] text-gray-500 font-poppins">
-                        <ClipboardList className="w-3.5 h-3.5 text-gray-400" />
-                        Step: {freelancer.currentStep}/4
                     </div>
                     {freelancer.phone && (
                         <div className="flex items-center gap-1.5 text-[12px] text-gray-500 font-poppins">
