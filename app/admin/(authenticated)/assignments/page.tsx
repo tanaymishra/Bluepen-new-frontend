@@ -1,16 +1,12 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import DatePicker from "react-datepicker";
-// @ts-ignore
 import "react-datepicker/dist/react-datepicker.css";
 import { cn } from "@/lib/utils";
 import {
-    ADMIN_ASSIGNMENTS,
-    ADMIN_STREAMS,
-    ADMIN_PM_LIST,
     ASSIGNMENT_STAGES,
     getStageByKey,
     type AssignmentStageKey,
@@ -29,11 +25,28 @@ import {
     ArrowUpRight,
     RotateCcw,
     CalendarDays,
+    Loader2,
+    FileText,
 } from "lucide-react";
+
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+
+interface Assignment {
+    id: string; // The uuid we get from DB
+    title: string;
+    studentName: string;
+    stream: string;
+    stage: AssignmentStageKey;
+    pmName: string;
+    submittedAt: string;
+    marks: number | null;
+}
 
 /* ─── Stage Badge ─── */
 function StageBadge({ stageKey }: { stageKey: AssignmentStageKey }) {
-    const stage = getStageByKey(stageKey);
+    const stage = getStageByKey(stageKey) || {
+        label: stageKey, color: "#gray", bgColor: "#f3f4f6"
+    };
     return (
         <span
             className="inline-flex items-center px-2.5 py-[3px] rounded-full text-[11px] font-semibold font-poppins whitespace-nowrap"
@@ -46,6 +59,7 @@ function StageBadge({ stageKey }: { stageKey: AssignmentStageKey }) {
 
 /* ─── Helpers ─── */
 function formatDate(iso: string) {
+    if (!iso) return "—";
     return new Date(iso).toLocaleDateString("en-IN", {
         day: "numeric",
         month: "short",
@@ -53,9 +67,18 @@ function formatDate(iso: string) {
     });
 }
 
+function shortId(uuid: string) {
+    if (!uuid) return "—";
+    return "ASN-" + uuid.slice(0, 6).toUpperCase();
+}
+
 /* ──────────────────────────────────────── */
 
 export default function AdminAssignmentsPage() {
+    const [assignments, setAssignments] = useState<Assignment[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
     const [search, setSearch] = useState("");
     const [statusFilter, setStatusFilter] = useState<AssignmentStageKey | "all">("all");
     const [pmFilter, setPmFilter] = useState("all");
@@ -64,20 +87,52 @@ export default function AdminAssignmentsPage() {
     const [dateFrom, setDateFrom] = useState<Date | null>(null);
     const [dateTo, setDateTo] = useState<Date | null>(null);
 
-    /* unique student names for filter */
+    useEffect(() => {
+        const fetchAssignments = async () => {
+            try {
+                const res = await fetch(`${API}/api/admin/assignments`, {
+                    credentials: "include",
+                });
+                if (!res.ok) {
+                    const errorData = await res.json().catch(() => ({}));
+                    throw new Error(errorData.message || "Failed to fetch assignments");
+                }
+                const data = await res.json();
+                setAssignments(data.data || []);
+            } catch (err: unknown) {
+                setError(err instanceof Error ? err.message : "Failed to load");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAssignments();
+    }, []);
+
+    /* unique options for filters */
     const studentNames = useMemo(
-        () => [...new Set(ADMIN_ASSIGNMENTS.map((a) => a.studentName))].sort(),
-        []
+        () => [...new Set(assignments.map((a) => a.studentName))].filter(Boolean).sort(),
+        [assignments]
+    );
+
+    const pmNames = useMemo(
+        () => [...new Set(assignments.map((a) => a.pmName))].filter(Boolean).filter(name => name !== "—").sort(),
+        [assignments]
+    );
+
+    const streams = useMemo(
+        () => [...new Set(assignments.map((a) => a.stream))].filter(Boolean).filter(s => s !== "—").sort(),
+        [assignments]
     );
 
     /* counts by stage */
     const stageCounts = useMemo(() => {
-        const counts: Record<string, number> = { all: ADMIN_ASSIGNMENTS.length };
+        const counts: Record<string, number> = { all: assignments.length };
         ASSIGNMENT_STAGES.forEach((s) => {
-            counts[s.key] = ADMIN_ASSIGNMENTS.filter((a) => a.stage === s.key).length;
+            counts[s.key] = assignments.filter((a) => a.stage === s.key).length;
         });
         return counts;
-    }, []);
+    }, [assignments]);
 
     /* active filter count */
     const activeFilterCount = [
@@ -90,14 +145,15 @@ export default function AdminAssignmentsPage() {
 
     /* filtered list */
     const filtered = useMemo(() => {
-        return ADMIN_ASSIGNMENTS.filter((a) => {
+        return assignments.filter((a) => {
             if (search) {
                 const q = search.toLowerCase();
+                const shortIdStr = shortId(a.id).toLowerCase();
                 if (
-                    !a.id.toLowerCase().includes(q) &&
-                    !a.title.toLowerCase().includes(q) &&
-                    !a.studentName.toLowerCase().includes(q) &&
-                    !a.subject.toLowerCase().includes(q)
+                    !shortIdStr.includes(q) &&
+                    !a.title?.toLowerCase().includes(q) &&
+                    !a.studentName?.toLowerCase().includes(q) &&
+                    !a.stream?.toLowerCase().includes(q)
                 )
                     return false;
             }
@@ -113,7 +169,7 @@ export default function AdminAssignmentsPage() {
             }
             return true;
         });
-    }, [search, statusFilter, pmFilter, streamFilter, studentFilter, dateFrom, dateTo]);
+    }, [assignments, search, statusFilter, pmFilter, streamFilter, studentFilter, dateFrom, dateTo]);
 
     const handleReset = () => {
         setSearch("");
@@ -139,7 +195,7 @@ export default function AdminAssignmentsPage() {
                         Assignments
                     </h1>
                     <p className="text-[13px] text-gray-400 font-poppins mt-0.5">
-                        {ADMIN_ASSIGNMENTS.length} total &middot; {filtered.length} shown
+                        {loading ? "..." : `${assignments.length} total \u00B7 ${filtered.length} shown`}
                     </p>
                 </div>
                 {activeFilterCount > 0 && (
@@ -175,7 +231,8 @@ export default function AdminAssignmentsPage() {
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="all">All PMs</SelectItem>
-                        {ADMIN_PM_LIST.map((pm) => (
+                        <SelectItem value="—">Unassigned</SelectItem>
+                        {pmNames.map((pm) => (
                             <SelectItem key={pm} value={pm}>
                                 {pm}
                             </SelectItem>
@@ -190,7 +247,8 @@ export default function AdminAssignmentsPage() {
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="all">All Streams</SelectItem>
-                        {ADMIN_STREAMS.map((s) => (
+                        <SelectItem value="—">No Stream</SelectItem>
+                        {streams.map((s) => (
                             <SelectItem key={s} value={s}>
                                 {s}
                             </SelectItem>
@@ -272,122 +330,139 @@ export default function AdminAssignmentsPage() {
                                     : "bg-gray-100 text-gray-400"
                             )}
                         >
-                            {stageCounts[filter.key]}
+                            {stageCounts[filter.key] ?? 0}
                         </span>
                     </button>
                 ))}
             </div>
 
+            {/* Loading */}
+            {loading && (
+                <div className="flex items-center justify-center py-20">
+                    <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                </div>
+            )}
+
+            {/* Error */}
+            {!loading && error && (
+                <div className="text-center py-16">
+                    <p className="text-[14px] font-medium text-red-500 font-poppins">{error}</p>
+                </div>
+            )}
+
             {/* ─── Table ─── */}
-            <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-                className="bg-white rounded-2xl border border-gray-100/80 overflow-hidden"
-            >
-                <div className="overflow-x-auto">
-                    <table className="w-full text-[13px] font-poppins">
-                        <thead>
-                            <tr className="border-b border-gray-100">
-                                <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5">
-                                    ID
-                                </th>
-                                <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5">
-                                    Title
-                                </th>
-                                <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5">
-                                    Student
-                                </th>
-                                <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5">
-                                    Stream
-                                </th>
-                                <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5">
-                                    Marks
-                                </th>
-                                <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5">
-                                    Status
-                                </th>
-                                <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5">
-                                    PM
-                                </th>
-                                <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5 hidden xl:table-cell">
-                                    Submitted
-                                </th>
-                                <th className="px-5 py-3.5 w-10" />
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filtered.length > 0 ? (
-                                filtered.map((a) => (
-                                    <tr
-                                        key={a.id}
-                                        className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors group"
-                                    >
-                                        <td className="px-5 py-3.5">
-                                            <span className="font-mono text-[11.5px] text-gray-500 tracking-tight">
-                                                {a.id}
-                                            </span>
-                                        </td>
-                                        <td className="px-5 py-3.5 max-w-[260px]">
-                                            <Link
-                                                href={`/admin/assignments/${a.id}`}
-                                                className="text-[13px] font-medium text-gray-800 hover:text-primary transition-colors line-clamp-1"
-                                            >
-                                                {a.title}
-                                            </Link>
-                                        </td>
-                                        <td className="px-5 py-3.5 text-gray-600 whitespace-nowrap">
-                                            {a.studentName}
-                                        </td>
-                                        <td className="px-5 py-3.5 text-gray-500 text-[12px] whitespace-nowrap">
-                                            {a.stream}
-                                        </td>
-                                        <td className="px-5 py-3.5 whitespace-nowrap">
-                                            {a.marks !== null ? (
-                                                <span className="font-semibold text-gray-800 tabular-nums">
-                                                    {a.marks}
+            {!loading && !error && (
+                <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                    className="bg-white rounded-2xl border border-gray-100/80 overflow-hidden"
+                >
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-[13px] font-poppins">
+                            <thead>
+                                <tr className="border-b border-gray-100">
+                                    <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5 whitespace-nowrap">
+                                        ID
+                                    </th>
+                                    <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5 whitespace-nowrap">
+                                        Title
+                                    </th>
+                                    <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5 whitespace-nowrap">
+                                        Student
+                                    </th>
+                                    <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5 whitespace-nowrap">
+                                        Stream
+                                    </th>
+                                    <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5 whitespace-nowrap">
+                                        Marks
+                                    </th>
+                                    <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5 whitespace-nowrap">
+                                        Status
+                                    </th>
+                                    <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5 whitespace-nowrap">
+                                        PM
+                                    </th>
+                                    <th className="text-left text-[11px] uppercase tracking-widest text-gray-400 font-semibold px-5 py-3.5 whitespace-nowrap hidden xl:table-cell">
+                                        Submitted
+                                    </th>
+                                    <th className="px-5 py-3.5 w-10" />
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filtered.length > 0 ? (
+                                    filtered.map((a) => (
+                                        <tr
+                                            key={a.id}
+                                            className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors group"
+                                        >
+                                            <td className="px-5 py-3.5">
+                                                <span className="font-mono text-[11.5px] text-gray-500 tracking-tight whitespace-nowrap">
+                                                    {shortId(a.id)}
                                                 </span>
-                                            ) : (
-                                                <span className="text-gray-300 text-[12px]">
-                                                    —
-                                                </span>
-                                            )}
-                                        </td>
-                                        <td className="px-5 py-3.5">
-                                            <StageBadge stageKey={a.stage} />
-                                        </td>
-                                        <td className="px-5 py-3.5 text-gray-500 text-[12px] whitespace-nowrap">
-                                            {a.pmName}
-                                        </td>
-                                        <td className="px-5 py-3.5 text-gray-400 text-[12px] whitespace-nowrap hidden xl:table-cell">
-                                            {formatDate(a.submittedAt)}
-                                        </td>
-                                        <td className="px-5 py-3.5">
-                                            <Link
-                                                href={`/admin/assignments/${a.id}`}
-                                                className="w-7 h-7 rounded-lg flex items-center justify-center text-gray-300 group-hover:text-primary group-hover:bg-primary/5 transition-all"
-                                            >
-                                                <ArrowUpRight className="w-4 h-4" />
-                                            </Link>
+                                            </td>
+                                            <td className="px-5 py-3.5 max-w-[260px]">
+                                                <Link
+                                                    href={`/admin/assignments/${a.id}`}
+                                                    className="text-[13px] font-medium text-gray-800 hover:text-primary transition-colors line-clamp-1"
+                                                >
+                                                    {a.title || "Untitled Assignment"}
+                                                </Link>
+                                            </td>
+                                            <td className="px-5 py-3.5 text-gray-600 whitespace-nowrap">
+                                                {a.studentName || "—"}
+                                            </td>
+                                            <td className="px-5 py-3.5 text-gray-500 text-[12px] whitespace-nowrap">
+                                                {a.stream || "—"}
+                                            </td>
+                                            <td className="px-5 py-3.5 whitespace-nowrap">
+                                                {a.marks !== null ? (
+                                                    <span className="font-semibold text-gray-800 tabular-nums">
+                                                        {a.marks}
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-gray-300 text-[12px]">
+                                                        —
+                                                    </span>
+                                                )}
+                                            </td>
+                                            <td className="px-5 py-3.5">
+                                                <StageBadge stageKey={a.stage} />
+                                            </td>
+                                            <td className="px-5 py-3.5 text-gray-500 text-[12px] whitespace-nowrap">
+                                                {a.pmName || "—"}
+                                            </td>
+                                            <td className="px-5 py-3.5 text-gray-400 text-[12px] whitespace-nowrap hidden xl:table-cell">
+                                                {formatDate(a.submittedAt)}
+                                            </td>
+                                            <td className="px-5 py-3.5">
+                                                <Link
+                                                    href={`/admin/assignments/${a.id}`}
+                                                    className="w-7 h-7 rounded-lg flex items-center justify-center text-gray-300 group-hover:text-primary group-hover:bg-primary/5 transition-all"
+                                                >
+                                                    <ArrowUpRight className="w-4 h-4" />
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan={9} className="py-16 text-center">
+                                            <FileText className="w-10 h-10 text-gray-200 mx-auto mb-3" />
+                                            <p className="text-[14px] font-medium text-gray-500 font-poppins mb-1">
+                                                No assignments found
+                                            </p>
+                                            <p className="text-[12.5px] text-gray-400 font-poppins">
+                                                Try adjusting your filters or search term
+                                            </p>
                                         </td>
                                     </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan={9} className="py-16 text-center">
-                                        <p className="text-[14px] font-medium text-gray-500 font-poppins mb-1">
-                                            No assignments found
-                                        </p>
-                                        <p className="text-[12.5px] text-gray-400 font-poppins">
-                                            Try adjusting your filters or search term
-                                        </p>
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </motion.div>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </motion.div>
+            )}
         </div>
     );
 }
