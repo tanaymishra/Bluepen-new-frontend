@@ -174,14 +174,22 @@ function FreelancerLoginForm() {
             </form>
 
             {/* Footer */}
-            <motion.p
+            <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.35, duration: 0.4 }}
-                className="text-center text-xs text-gray-400 font-poppins mt-10"
+                className="text-center mt-10 space-y-2"
             >
-                This portal is restricted to authorized freelancers only.
-            </motion.p>
+                <p className="text-xs text-gray-400 font-poppins">
+                    This portal is restricted to authorized freelancers only.
+                </p>
+                <p className="text-[13px] text-gray-500 font-poppins">
+                    Want to join?{" "}
+                    <Link href="/freelancer/apply" className="text-primary hover:text-primary-dark font-medium transition-colors">
+                        Apply as a Freelancer
+                    </Link>
+                </p>
+            </motion.div>
         </motion.div>
     );
 }
