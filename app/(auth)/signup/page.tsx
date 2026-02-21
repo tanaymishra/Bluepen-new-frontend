@@ -48,7 +48,7 @@ export default function SignupPage() {
 
     const signupWithGoogle = useGoogleLogin({
         onSuccess: (tokenResponse) => handleGoogleCredential(tokenResponse.access_token),
-        onError: () => {},
+        onError: () => { },
     });
 
     const combinedError = error ?? googleError;
@@ -137,7 +137,7 @@ export default function SignupPage() {
                             type="text"
                             value={firstname}
                             onChange={(e) => setField("firstname", e.target.value)}
-                            placeholder="Rahul"
+                            placeholder="James"
                             autoComplete="given-name"
                             icon={<User className="w-[18px] h-[18px]" />}
                         />
@@ -149,7 +149,7 @@ export default function SignupPage() {
                             type="text"
                             value={lastname}
                             onChange={(e) => setField("lastname", e.target.value)}
-                            placeholder="Sharma"
+                            placeholder="Wilson"
                             autoComplete="family-name"
                             icon={<User className="w-[18px] h-[18px]" />}
                         />
@@ -169,7 +169,7 @@ export default function SignupPage() {
                         type="email"
                         value={email}
                         onChange={(e) => setField("email", e.target.value)}
-                        placeholder="you@example.com"
+                        placeholder="you@example.co.uk"
                         autoComplete="email"
                         icon={<Mail className="w-[18px] h-[18px]" />}
                     />
@@ -188,8 +188,8 @@ export default function SignupPage() {
                         value={phone}
                         onChange={(e) => setField("phone", e.target.value)}
                         onCountryChange={(code) => setField("countryCode", code)}
-                        defaultCountry={countryCode === "+91" ? "in" : undefined} // diligent default
-                        placeholder="98765 43210"
+                        defaultCountry="gb"
+                        placeholder="7911 123456"
                         autoComplete="tel"
                     />
                 </motion.div>

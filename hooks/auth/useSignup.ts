@@ -29,7 +29,7 @@ export function useSignup() {
         firstname: "",
         lastname: "",
         email: "",
-        countryCode: "+91",
+        countryCode: "+44",
         phone: "",
         password: "",
         confirmPassword: "",
@@ -114,7 +114,7 @@ export function useSignup() {
             }
         },
         [state.firstname, state.lastname, state.email, state.countryCode, state.phone,
-         state.password, state.confirmPassword, state.agreedToTerms, storeUser, router]
+        state.password, state.confirmPassword, state.agreedToTerms, storeUser, router]
     );
 
     return { ...state, setField, toggleShowPassword, toggleShowConfirmPassword, toggleAgreedToTerms, handleSignup };
