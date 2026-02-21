@@ -108,9 +108,25 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
                 <Input
                     ref={ref}
                     type="tel"
+                    inputMode="numeric"
                     className="flex-1"
                     placeholder="98765 43210"
                     {...props}
+                    onChange={(e) => {
+                        e.target.value = e.target.value.replace(/\D/g, "")
+                        props.onChange?.(e)
+                    }}
+                    onKeyDown={(e) => {
+                        // Allow: backspace, delete, tab, escape, enter, arrows
+                        const allowed = ["Backspace", "Delete", "Tab", "Escape", "Enter", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"]
+                        if (allowed.includes(e.key)) return
+                        // Allow Ctrl/Cmd + A, C, V, X
+                        if ((e.ctrlKey || e.metaKey) && ["a", "c", "v", "x"].includes(e.key.toLowerCase())) return
+                        // Block non-digit keys
+                        if (!/^\d$/.test(e.key)) {
+                            e.preventDefault()
+                        }
+                    }}
                 />
             </div>
         )
