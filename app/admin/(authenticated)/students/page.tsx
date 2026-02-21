@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -66,6 +67,7 @@ function shortId(uuid: string) {
 /* ──────────────────────────────────────── */
 
 export default function AdminStudentsPage() {
+    const router = useRouter();
     const [students, setStudents] = useState<Student[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -203,7 +205,8 @@ export default function AdminStudentsPage() {
                             <motion.div
                                 key={student.uuid}
                                 initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, delay: i * 0.03 }}
-                                className="bg-white rounded-xl border border-gray-100/80 p-4"
+                                onClick={() => router.push(`/admin/students/${student.uuid}`)}
+                                className="bg-white rounded-xl border border-gray-100/80 p-4 cursor-pointer hover:border-primary/20 hover:shadow-sm transition-all"
                             >
                                 <div className="flex items-start justify-between gap-2 mb-3">
                                     <div className="min-w-0">
@@ -263,7 +266,7 @@ export default function AdminStudentsPage() {
                                 </thead>
                                 <tbody>
                                     {filtered.map((student) => (
-                                        <tr key={student.uuid} className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors">
+                                        <tr key={student.uuid} onClick={() => router.push(`/admin/students/${student.uuid}`)} className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors cursor-pointer">
                                             <td className="px-4 py-3.5">
                                                 <div>
                                                     <p className="text-[13.5px] font-semibold text-gray-900 font-poppins">{student.fullName}</p>
