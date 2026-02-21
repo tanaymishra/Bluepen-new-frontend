@@ -37,6 +37,7 @@ import {
     RotateCcw,
     ArrowLeft,
 } from "lucide-react";
+import AssignmentNotFound from "./sections/AssignmentNotFound";
 
 /* ─── Helpers ─── */
 
@@ -124,8 +125,8 @@ function StatusTimeline({
                                         status === "done"
                                             ? "border-emerald-500 bg-emerald-500"
                                             : status === "in-progress"
-                                            ? "border-primary bg-primary"
-                                            : "border-gray-200 bg-white"
+                                                ? "border-primary bg-primary"
+                                                : "border-gray-200 bg-white"
                                     )}
                                 >
                                     {status === "done" && (
@@ -146,8 +147,8 @@ function StatusTimeline({
                                             status === "done"
                                                 ? "text-gray-800"
                                                 : status === "in-progress"
-                                                ? "text-primary"
-                                                : "text-gray-400"
+                                                    ? "text-primary"
+                                                    : "text-gray-400"
                                         )}
                                     >
                                         {step}
@@ -158,8 +159,8 @@ function StatusTimeline({
                                             status === "done"
                                                 ? "text-gray-400"
                                                 : status === "in-progress"
-                                                ? "text-primary/60 italic"
-                                                : "text-gray-300"
+                                                    ? "text-primary/60 italic"
+                                                    : "text-gray-300"
                                         )}
                                     >
                                         {status === "done" && "13 Feb 2026, 06:31 PM"}
@@ -318,22 +319,7 @@ export default function AdminAssignmentDetailPage() {
 
     /* ─── Not Found ─── */
     if (!assignmentData) {
-        return (
-            <div className="max-w-[900px] mx-auto py-20 text-center">
-                <p className="text-[15px] font-medium text-gray-500 font-poppins mb-2">
-                    Assignment not found
-                </p>
-                <p className="text-[13px] text-gray-400 font-poppins mb-6">
-                    The assignment &ldquo;{id}&rdquo; does not exist.
-                </p>
-                <Button asChild>
-                    <Link href="/admin/assignments">
-                        <ArrowLeft className="w-4 h-4 mr-2" />
-                        Back to Assignments
-                    </Link>
-                </Button>
-            </div>
-        );
+        return <AssignmentNotFound id={id} />;
     }
 
     const assignment = assignmentData;
@@ -623,7 +609,7 @@ export default function AdminAssignmentDetailPage() {
                 >
                     <StatusTimeline
                         currentStep={assignment.currentStep}
-                        onReset={() => {}}
+                        onReset={() => { }}
                     />
                 </motion.div>
             </div>
