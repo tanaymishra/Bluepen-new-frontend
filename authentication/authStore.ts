@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, StateStorage, StorageValue } from 'zustand/middleware';
 
-type UserRole = 'admin' | 'super_admin' | 'pm' | 'student' | 'freelancer';
+type UserRole = 'admin' | 'pm' | 'student' | 'freelancer';
 
 interface StoreUserParams {
     role: UserRole;
@@ -104,7 +104,7 @@ export const useAuthStore = create<AuthState>()(
                 setItem: (name: string, value: StorageValue<AuthState>) => {
                     if (typeof window !== 'undefined') {
                         localStorage.setItem(name, JSON.stringify({
-                            state: { 
+                            state: {
                                 user: value.state.user,
                                 isHydrated: true // Include isHydrated in storage
                             },
