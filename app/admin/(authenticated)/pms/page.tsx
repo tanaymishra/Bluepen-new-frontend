@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useMemo, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -20,8 +20,10 @@ import {
     Mail,
     Phone,
     Loader2,
+    Power,
 } from "lucide-react";
 import Link from "next/link";
+import { useAuthStore } from "@/authentication/authStore";
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
 
@@ -48,6 +50,67 @@ function StatusBadge({ active }: { active: boolean }) {
     );
 }
 
+/* ─── Action Dropdown (admin only) ─── */
+function PMActionMenu({
+    pm,
+    onToggle,
+    toggling,
+}: {
+    pm: PM;
+    onToggle: (uuid: string) => void;
+    toggling: string | null;
+}) {
+    const [open, setOpen] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleClick = (e: MouseEvent) => {
+            if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+        };
+        document.addEventListener("mousedown", handleClick);
+        return () => document.removeEventListener("mousedown", handleClick);
+    }, []);
+
+    return (
+        <div className="relative" ref={ref}>
+            <button
+                onClick={(e) => { e.stopPropagation(); setOpen(!open); }}
+                className="w-7 h-7 rounded-lg flex items-center justify-center text-gray-400 hover:bg-gray-100 transition-colors"
+            >
+                <MoreVertical className="w-4 h-4" />
+            </button>
+            <AnimatePresence>
+                {open && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, y: -4 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                        transition={{ duration: 0.12 }}
+                        className="absolute right-0 top-9 z-30 bg-white rounded-xl border border-gray-100 shadow-lg shadow-black/5 py-1.5 min-w-[170px]"
+                    >
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onToggle(pm.uuid);
+                                setOpen(false);
+                            }}
+                            disabled={toggling === pm.uuid}
+                            className="w-full flex items-center gap-2.5 px-3.5 py-2 text-[13px] font-poppins text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
+                        >
+                            {toggling === pm.uuid ? (
+                                <Loader2 className="w-3.5 h-3.5 animate-spin text-gray-400" />
+                            ) : (
+                                <Power className="w-3.5 h-3.5 text-gray-400" />
+                            )}
+                            {pm.isActive ? "Make Inactive" : "Make Active"}
+                        </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+}
+
 function formatDate(iso: string) {
     return new Date(iso).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 }
@@ -64,6 +127,10 @@ export default function AdminPMsPage() {
     const [error, setError] = useState("");
     const [search, setSearch] = useState("");
     const [statusFilter, setStatusFilter] = useState<PMStatus | "all">("all");
+    const [toggling, setToggling] = useState<string | null>(null);
+
+    const userRole = useAuthStore((s) => s.getUserRole());
+    const isAdmin = userRole === "admin";
 
     useEffect(() => {
         const load = async () => {
@@ -80,6 +147,27 @@ export default function AdminPMsPage() {
         };
         load();
     }, []);
+
+    const handleToggle = async (uuid: string) => {
+        setToggling(uuid);
+        try {
+            const res = await fetch(`${API}/api/admin/pms/${uuid}/toggle-status`, {
+                method: "PUT",
+                credentials: "include",
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message ?? "Failed to toggle status");
+            setPms((prev) =>
+                prev.map((pm) =>
+                    pm.uuid === uuid ? { ...pm, isActive: data.data.isActive } : pm
+                )
+            );
+        } catch (e: unknown) {
+            alert(e instanceof Error ? e.message : "Failed to toggle status");
+        } finally {
+            setToggling(null);
+        }
+    };
 
     const filtered = useMemo(() => {
         return pms.filter((pm) => {
@@ -107,12 +195,14 @@ export default function AdminPMsPage() {
                     <p className="text-[11px] uppercase tracking-[0.12em] text-gray-400 font-poppins font-semibold mb-1">People</p>
                     <h1 className="text-[24px] sm:text-[28px] font-bold text-gray-900 font-montserrat">Project Managers</h1>
                 </div>
-                <Button asChild size="sm">
-                    <Link href="/admin/add-pm">
-                        <UserRoundPlus className="w-4 h-4 mr-1.5" />
-                        Add PM
-                    </Link>
-                </Button>
+                {isAdmin && (
+                    <Button asChild size="sm">
+                        <Link href="/admin/add-pm">
+                            <UserRoundPlus className="w-4 h-4 mr-1.5" />
+                            Add PM
+                        </Link>
+                    </Button>
+                )}
             </motion.div>
 
             {/* Stat cards */}
@@ -181,8 +271,8 @@ export default function AdminPMsPage() {
                         <table className="w-full text-left">
                             <thead>
                                 <tr className="border-b border-gray-100">
-                                    {["PM", "Contact", "Managed Streams", "Total Managed", "Active", "Joined", "Status", ""].map((h) => (
-                                        <th key={h} className="px-4 py-3 text-[11px] uppercase tracking-wider text-gray-400 font-poppins font-semibold whitespace-nowrap">{h}</th>
+                                    {["PM", "Contact", "Managed Streams", "Total Managed", "Active", "Joined", "Status", ...(isAdmin ? [""] : [])].map((h, i) => (
+                                        <th key={`${h}-${i}`} className="px-4 py-3 text-[11px] uppercase tracking-wider text-gray-400 font-poppins font-semibold whitespace-nowrap">{h}</th>
                                     ))}
                                 </tr>
                             </thead>
@@ -226,11 +316,11 @@ export default function AdminPMsPage() {
                                         <td className="px-4 py-3.5 text-[13px] text-gray-600 font-poppins tabular-nums">{pm.activeAssignments}</td>
                                         <td className="px-4 py-3.5 text-[12.5px] text-gray-500 font-poppins whitespace-nowrap">{formatDate(pm.createdAt)}</td>
                                         <td className="px-4 py-3.5"><StatusBadge active={pm.isActive} /></td>
-                                        <td className="px-4 py-3.5">
-                                            <button className="w-7 h-7 rounded-lg flex items-center justify-center text-gray-400 hover:bg-gray-100 transition-colors">
-                                                <MoreVertical className="w-4 h-4" />
-                                            </button>
-                                        </td>
+                                        {isAdmin && (
+                                            <td className="px-4 py-3.5">
+                                                <PMActionMenu pm={pm} onToggle={handleToggle} toggling={toggling} />
+                                            </td>
+                                        )}
                                     </tr>
                                 ))}
                             </tbody>
