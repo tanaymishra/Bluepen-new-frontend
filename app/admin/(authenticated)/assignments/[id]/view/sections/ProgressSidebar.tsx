@@ -70,7 +70,7 @@ export default function ProgressSidebar() {
                 initial={{ opacity: 0, x: 16 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.15 }}
-                className="bg-white rounded-2xl border border-gray-200 p-6 shadow-[0_2px_12px_rgba(0,0,0,0.04)] lg:sticky lg:top-6"
+                className="bg-white rounded-2xl border border-gray-200 p-6 shadow-[0_2px_12px_rgba(0,0,0,0.04)]  lg:top-6"
             >
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2">
