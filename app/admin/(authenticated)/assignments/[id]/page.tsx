@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { Loader2, UserCog, PenTool } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { ADMIN_PM_LIST, ADMIN_FREELANCER_LIST } from "@/lib/static";
 import { useAssignmentStore } from "./store/assignmentStore";
 import AssignmentHeader from "./sections/AssignmentHeader";
@@ -113,12 +113,11 @@ export default function AdminAssignmentDetailPage() {
             <PersonSheet
                 open={pmSheetOpen}
                 onOpenChange={setPmSheetOpen}
-                title={pmName ? "Update PM" : "Assign PM"}
-                description="Select a project manager for this assignment"
+                title={pmName ? "Update Project Manager" : "Assign Project Manager"}
+                description="Select a project manager to oversee this assignment"
                 people={ADMIN_PM_LIST}
                 currentPerson={pmName}
                 onSelect={setPmName}
-                icon={UserCog}
             />
 
             {/* Freelancer Sheet */}
@@ -126,11 +125,10 @@ export default function AdminAssignmentDetailPage() {
                 open={flSheetOpen}
                 onOpenChange={setFlSheetOpen}
                 title={freelancerName ? "Update Freelancer" : "Assign Freelancer"}
-                description="Select a freelancer for this assignment"
+                description="Select a freelancer to work on this assignment"
                 people={ADMIN_FREELANCER_LIST}
                 currentPerson={freelancerName}
                 onSelect={setFreelancerName}
-                icon={PenTool}
             />
         </div>
     );
