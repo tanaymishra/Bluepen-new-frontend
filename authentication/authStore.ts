@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, StateStorage, StorageValue } from 'zustand/middleware';
 
-type UserRole = 'admin' | 'student' | 'freelancer' | 'PM' | 'HR' | 'Admin' | "Tech";
+type UserRole = 'admin' | 'super_admin' | 'pm' | 'student' | 'freelancer';
 
 interface StoreUserParams {
     role: UserRole;

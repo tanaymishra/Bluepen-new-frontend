@@ -95,7 +95,8 @@ export default function AdminAuthenticatedLayout({
     /* ── Auth guard ── */
     useEffect(() => {
         if (!isHydrated) return;
-        if (!user || user.role !== "admin") {
+        const adminRoles = ["admin", "super_admin", "pm"];
+        if (!user || !adminRoles.includes(user.role)) {
             router.replace("/admin/login");
         }
     }, [isHydrated, user, router]);

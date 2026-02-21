@@ -66,7 +66,7 @@ export function useAdminLogin() {
                     return;
                 }
 
-                storeUser({ role: "admin", userObject: json.data.user });
+                storeUser({ role: json.data.user.role ?? "admin", userObject: json.data.user });
                 setState((prev) => ({ ...prev, isLoading: false }));
                 router.push("/admin/dashboard");
             } catch {
