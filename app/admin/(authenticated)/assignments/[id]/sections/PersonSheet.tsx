@@ -60,7 +60,7 @@ export default function PersonSheet({
                         initial={{ x: "100%" }}
                         animate={{ x: 0 }}
                         exit={{ x: "100%" }}
-                        transition={{ type: "spring", damping: 30, stiffness: 300 }}
+                        transition={{ ease: "circOut", duration: 0.35 }}
                         className="fixed right-0 top-0 bottom-0 w-full sm:w-[480px] bg-white shadow-2xl z-50 flex flex-col"
                     >
                         {/* Header */}
@@ -83,8 +83,8 @@ export default function PersonSheet({
                             </div>
 
                             {/* Search */}
-                            <div className="relative">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                            <div className="relative mt-2">
+                                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 z-10 pointer-events-none" />
                                 <Input
                                     type="text"
                                     placeholder="Search by name..."
@@ -101,13 +101,10 @@ export default function PersonSheet({
                                 filteredPeople.map((person, index) => {
                                     const isActive = person === currentPerson;
                                     const initials = person.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
-                                    
+
                                     return (
-                                        <motion.button
+                                        <button
                                             key={person}
-                                            initial={{ opacity: 0, x: 20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ duration: 0.2, delay: index * 0.05 }}
                                             onClick={() => {
                                                 onSelect(person);
                                                 onOpenChange(false);
@@ -145,7 +142,7 @@ export default function PersonSheet({
                                                 </p>
                                             </div>
                                             {isActive && (
-                                                <motion.div 
+                                                <motion.div
                                                     initial={{ scale: 0 }}
                                                     animate={{ scale: 1 }}
                                                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -154,7 +151,7 @@ export default function PersonSheet({
                                                     <Check className="w-4 h-4 text-[#012551]" strokeWidth={3} />
                                                 </motion.div>
                                             )}
-                                        </motion.button>
+                                        </button>
                                     );
                                 })
                             ) : (
