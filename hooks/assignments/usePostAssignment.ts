@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import { uploadFile } from '@/lib/upload';
 
-const API_URL   = process.env.NEXT_PUBLIC_API_URL!;
-const UPLOAD_URL = process.env.NEXT_PUBLIC_FILES_UPLOAD_URL!;
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 const UPLOAD_FOLDER = '/assignments/freelancing';
 
 interface PostAssignmentPayload {
@@ -26,22 +26,11 @@ interface UsePostAssignmentReturn {
 
 export function usePostAssignment(): UsePostAssignmentReturn {
     const [submitting, setSubmitting] = useState(false);
-    const [error, setError]           = useState<string | null>(null);
-    const router                       = useRouter();
+    const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
-    const uploadFile = async (file: File): Promise<string> => {
-        const fd = new FormData();
-        fd.append('folder', UPLOAD_FOLDER);
-        fd.append('file', file);
 
-        const res = await fetch(UPLOAD_URL, { method: 'POST', body: fd });
-        if (!res.ok) throw new Error(`File upload failed: ${file.name}`);
 
-        const data = await res.json();
-        const savedAs: string = data?.files?.[0]?.savedAs;
-        if (!savedAs) throw new Error(`No savedAs in upload response for: ${file.name}`);
-        return savedAs;
-    };
 
     const submit = useCallback(async (payload: PostAssignmentPayload) => {
         setSubmitting(true);
@@ -51,25 +40,25 @@ export function usePostAssignment(): UsePostAssignmentReturn {
             /* 1. Upload files one by one, collect savedAs filenames */
             const attachments: string[] = [];
             for (const file of payload.files) {
-                const savedAs = await uploadFile(file);
+                const savedAs = await uploadFile(file, UPLOAD_FOLDER);
                 attachments.push(savedAs);
             }
 
             /* 2. POST assignment to backend */
             const res = await fetch(`${API_URL}/api/assignments`, {
-                method:      'POST',
+                method: 'POST',
                 credentials: 'include', // send HttpOnly cookie
-                headers:     { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    type:             payload.type,
-                    subtype:          payload.subtype,
-                    title:            payload.title,
-                    academicLevel:    payload.academicLevel,
-                    subject:          payload.subject,
-                    wordCount:        payload.wordCount,
-                    deadline:         payload.deadline?.toISOString(),
+                    type: payload.type,
+                    subtype: payload.subtype,
+                    title: payload.title,
+                    academicLevel: payload.academicLevel,
+                    subject: payload.subject,
+                    wordCount: payload.wordCount,
+                    deadline: payload.deadline?.toISOString(),
                     referencingStyle: payload.referencingStyle,
-                    instructions:     payload.instructions,
+                    instructions: payload.instructions,
                     attachments,
                 }),
             });
