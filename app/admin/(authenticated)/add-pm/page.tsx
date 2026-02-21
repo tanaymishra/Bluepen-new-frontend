@@ -118,7 +118,7 @@ export default function AddPMPage() {
                     <Label className="text-[13px] font-semibold text-gray-700 font-poppins">Phone</Label>
                     <PhoneInput
                         value={form.phone}
-                        onChange={(val) => update("phone", val)}
+                        onChange={(e) => update("phone", e.target.value)}
                         onCountryChange={(code) => setCountryCode(code)}
                         defaultCountry="in"
                         placeholder="98123 00001"
