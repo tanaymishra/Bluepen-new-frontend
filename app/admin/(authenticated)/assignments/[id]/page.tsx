@@ -1,17 +1,14 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
-    ADMIN_ASSIGNMENTS,
     ADMIN_STATUS_STEPS,
     ADMIN_PM_LIST,
     ADMIN_FREELANCER_LIST,
-    getStageByKey,
-    type AssignmentStageKey,
 } from "@/lib/static";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +20,6 @@ import {
 } from "@/components/ui/sheet";
 import {
     ChevronLeft,
-    ChevronRight,
     Trash2,
     MoreVertical,
     Check,
@@ -35,13 +31,44 @@ import {
     User,
     Award,
     RotateCcw,
-    ArrowLeft,
+    Loader2
 } from "lucide-react";
 import AssignmentNotFound from "./sections/AssignmentNotFound";
+
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+
+/* ─── Types ─── */
+interface AssignmentDetail {
+    id: string;
+    title: string;
+    description: string;
+    type: string;
+    subtype: string;
+    subject: string;
+    stream: string;
+    academicLevel: string;
+    wordCount: string | number;
+    deadline: string;
+    submittedAt: string;
+    stage: string;
+    freelancerAmount: number;
+    totalAmount: number;
+    referencingStyle: string;
+    marks: number | null;
+    studentName: string;
+    studentEmail: string;
+    studentPhone: string;
+    pmName: string;
+    pmPhone: string;
+    freelancerName: string;
+    freelancerPhone: string;
+    currentStep: number;
+}
 
 /* ─── Helpers ─── */
 
 function formatDateTime(iso: string) {
+    if (!iso || iso === "—") return "—";
     return new Date(iso).toLocaleDateString("en-IN", {
         day: "numeric",
         month: "long",
@@ -50,6 +77,7 @@ function formatDateTime(iso: string) {
 }
 
 function formatDateShort(iso: string) {
+    if (!iso || iso === "—") return "—";
     return new Date(iso).toLocaleDateString("en-IN", {
         day: "2-digit",
         month: "2-digit",
@@ -58,17 +86,18 @@ function formatDateShort(iso: string) {
 }
 
 function formatCurrency(amount: number) {
-    return amount.toLocaleString("en-IN");
+    if (amount === undefined || amount === null) return "—";
+    return amount.toLocaleString("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 });
 }
 
 /* ─── Detail Cell (3-col grid item) ─── */
 
-function DetailCell({ label, value }: { label: string; value: string }) {
+function DetailCell({ label, value }: { label: string; value: string | number }) {
     return (
         <div>
             <p className="text-[11.5px] text-gray-400 font-poppins mb-1">{label}</p>
             <p className="text-[14px] font-bold text-gray-900 font-poppins leading-snug">
-                {value}
+                {value ?? "—"}
             </p>
         </div>
     );
@@ -163,7 +192,7 @@ function StatusTimeline({
                                                     : "text-gray-300"
                                         )}
                                     >
-                                        {status === "done" && "13 Feb 2026, 06:31 PM"}
+                                        {status === "done" && "Done"}
                                         {status === "in-progress" && "in-progress"}
                                         {status === "pending" && "yet to accomplish"}
                                     </p>
@@ -298,31 +327,58 @@ export default function AdminAssignmentDetailPage() {
     const router = useRouter();
     const id = params.id as string;
 
-    const assignmentData = useMemo(
-        () => ADMIN_ASSIGNMENTS.find((a) => a.id === id),
-        [id]
-    );
+    const [assignment, setAssignment] = useState<AssignmentDetail | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     /* local state for PM/Freelancer assignment */
-    const [pmName, setPmName] = useState(assignmentData?.pmName ?? "");
-    const [freelancerName, setFreelancerName] = useState(
-        assignmentData?.freelancerName ?? ""
-    );
+    const [pmName, setPmName] = useState("");
+    const [freelancerName, setFreelancerName] = useState("");
+
     const [pmSheetOpen, setPmSheetOpen] = useState(false);
     const [flSheetOpen, setFlSheetOpen] = useState(false);
 
-    /* navigation helpers */
-    const allIds = ADMIN_ASSIGNMENTS.map((a) => a.id);
-    const currentIdx = allIds.indexOf(id);
-    const prevId = currentIdx > 0 ? allIds[currentIdx - 1] : null;
-    const nextId = currentIdx < allIds.length - 1 ? allIds[currentIdx + 1] : null;
+    useEffect(() => {
+        const fetchAssignmentData = async () => {
+            try {
+                const res = await fetch(`${API}/api/admin/assignments/${id}`, {
+                    credentials: "include"
+                });
+                if (res.status === 404) {
+                    setError(true);
+                    return;
+                }
+                if (!res.ok) throw new Error("Failed to fetch");
 
-    /* ─── Not Found ─── */
-    if (!assignmentData) {
-        return <AssignmentNotFound id={id} />;
+                const data = await res.json();
+                setAssignment(data.data);
+
+                // Initialize local state based on fetched data
+                if (data.data.pmName !== "—") setPmName(data.data.pmName);
+                if (data.data.freelancerName !== "—") setFreelancerName(data.data.freelancerName);
+
+            } catch (err) {
+                console.error(err);
+                setError(true);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAssignmentData();
+    }, [id]);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center py-32">
+                <Loader2 className="w-8 h-8 text-primary animate-spin" />
+            </div>
+        );
     }
 
-    const assignment = assignmentData;
+    if (error || !assignment) {
+        return <AssignmentNotFound id={id} />;
+    }
 
     return (
         <div className="max-w-[1100px] mx-auto">
@@ -342,7 +398,7 @@ export default function AdminAssignmentDetailPage() {
                         back
                     </button>
                     <h1 className="text-[22px] sm:text-[28px] font-bold text-gray-900 font-montserrat">
-                        Assignments #{assignment.id.replace("ASG-", "")}
+                        Assignment #{assignment.id}
                     </h1>
                 </div>
                 <div className="flex items-center gap-2">
@@ -350,36 +406,6 @@ export default function AdminAssignmentDetailPage() {
                         <Trash2 className="w-3.5 h-3.5 mr-1.5" />
                         Delete
                     </Button>
-                    <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden bg-white">
-                        {prevId ? (
-                            <Link
-                                href={`/admin/assignments/${prevId}`}
-                                className="flex items-center gap-1 px-3 py-1.5 text-[12.5px] font-medium font-poppins text-gray-600 hover:bg-gray-50 transition-colors border-r border-gray-200"
-                            >
-                                <ChevronLeft className="w-3.5 h-3.5" />
-                                Previous
-                            </Link>
-                        ) : (
-                            <span className="flex items-center gap-1 px-3 py-1.5 text-[12.5px] font-medium font-poppins text-gray-300 border-r border-gray-200 cursor-not-allowed">
-                                <ChevronLeft className="w-3.5 h-3.5" />
-                                Previous
-                            </span>
-                        )}
-                        {nextId ? (
-                            <Link
-                                href={`/admin/assignments/${nextId}`}
-                                className="flex items-center gap-1 px-3 py-1.5 text-[12.5px] font-medium font-poppins text-gray-600 hover:bg-gray-50 transition-colors"
-                            >
-                                Next
-                                <ChevronRight className="w-3.5 h-3.5" />
-                            </Link>
-                        ) : (
-                            <span className="flex items-center gap-1 px-3 py-1.5 text-[12.5px] font-medium font-poppins text-gray-300 cursor-not-allowed">
-                                Next
-                                <ChevronRight className="w-3.5 h-3.5" />
-                            </span>
-                        )}
-                    </div>
                 </div>
             </motion.div>
 
@@ -427,15 +453,15 @@ export default function AdminAssignmentDetailPage() {
                         {/* Title + Description */}
                         <div className="p-5 sm:p-6 pb-5">
                             <div className="flex items-start justify-between gap-3 mb-3">
-                                <h2 className="text-[18px] sm:text-[20px] font-bold text-gray-900 font-montserrat leading-snug">
-                                    {assignment.title.charAt(0).toLowerCase() + assignment.title.slice(1)}
+                                <h2 className="text-[18px] sm:text-[20px] font-bold text-gray-900 font-montserrat leading-snug break-words">
+                                    {assignment.title.charAt(0).toUpperCase() + assignment.title.slice(1)}
                                 </h2>
                                 <button className="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:bg-gray-100 transition-colors shrink-0">
                                     <MoreVertical className="w-4 h-4" />
                                 </button>
                             </div>
-                            <p className="text-[13px] text-gray-400 font-poppins leading-[1.8] mb-6">
-                                {assignment.description}
+                            <p className="text-[13px] text-gray-400 font-poppins leading-[1.8] mb-6 whitespace-pre-line">
+                                {assignment.description || "No description provided."}
                             </p>
 
                             {/* ─── Detail Grid (3 columns matching reference) ─── */}
@@ -444,7 +470,7 @@ export default function AdminAssignmentDetailPage() {
                                 <DetailCell label="Stream" value={assignment.stream} />
                                 <DetailCell label="Type" value={assignment.type} />
                                 <DetailCell label="Submitted by" value={assignment.studentName} />
-                                <DetailCell label="Word Count" value={assignment.wordCount.toLocaleString()} />
+                                <DetailCell label="Word Count" value={assignment.wordCount ? assignment.wordCount.toLocaleString() : "—"} />
                                 <DetailCell label="Posted on" value={formatDateShort(assignment.submittedAt)} />
                                 <DetailCell label="Deadline" value={formatDateShort(assignment.deadline)} />
                                 <DetailCell label="Freelancer Amount" value={formatCurrency(assignment.freelancerAmount)} />
@@ -483,7 +509,7 @@ export default function AdminAssignmentDetailPage() {
                                     <p className="text-[15px] font-bold text-gray-900 font-poppins truncate">
                                         {pmName || "Not assigned"}
                                     </p>
-                                    {pmName && (
+                                    {pmName && assignment.pmPhone !== "—" && (
                                         <p className="text-[12px] text-gray-500 font-poppins flex items-center gap-1.5 mt-0.5">
                                             <Phone className="w-3 h-3" />
                                             {assignment.pmPhone}
@@ -516,7 +542,7 @@ export default function AdminAssignmentDetailPage() {
                                     <p className="text-[15px] font-bold text-gray-900 font-poppins truncate">
                                         {freelancerName || "Not assigned"}
                                     </p>
-                                    {freelancerName && (
+                                    {freelancerName && assignment.freelancerPhone !== "—" && (
                                         <p className="text-[12px] text-gray-500 font-poppins flex items-center gap-1.5 mt-0.5">
                                             <Phone className="w-3 h-3" />
                                             {assignment.freelancerPhone}
@@ -548,14 +574,18 @@ export default function AdminAssignmentDetailPage() {
                                 </p>
                             </div>
                             <div className="space-y-2 pl-[52px]">
-                                <p className="text-[12.5px] text-gray-500 font-poppins flex items-center gap-2">
-                                    <Phone className="w-3.5 h-3.5 text-gray-400" />
-                                    {assignment.studentPhone}
-                                </p>
-                                <p className="text-[12.5px] text-gray-500 font-poppins flex items-center gap-2">
-                                    <Mail className="w-3.5 h-3.5 text-gray-400" />
-                                    {assignment.studentEmail}
-                                </p>
+                                {assignment.studentPhone !== "—" && (
+                                    <p className="text-[12.5px] text-gray-500 font-poppins flex items-center gap-2">
+                                        <Phone className="w-3.5 h-3.5 text-gray-400" />
+                                        {assignment.studentPhone}
+                                    </p>
+                                )}
+                                {assignment.studentEmail !== "—" && (
+                                    <p className="text-[12.5px] text-gray-500 font-poppins flex items-center gap-2">
+                                        <Mail className="w-3.5 h-3.5 text-gray-400" />
+                                        {assignment.studentEmail}
+                                    </p>
+                                )}
                             </div>
                         </div>
 
