@@ -561,113 +561,139 @@ export interface DeadlineEntry {
 }
 
 export const ADMIN_DEADLINE_MAP: Record<number, { count: number; assignments: DeadlineEntry[] }> = {
-    1: { count: 2, assignments: [
-        { id: "BP-4901", title: "Essay on Climate Change", pm: "Ravi Krishnan", writer: "Ananya Verma" },
-        { id: "BP-4903", title: "Marketing Plan", pm: "Sneha Mehra", writer: "Deepak Joshi" },
-    ]},
-    3: { count: 5, assignments: [
-        { id: "BP-4910", title: "Data Structures Lab", pm: "Ravi Krishnan", writer: "Priya Patel" },
-        { id: "BP-4912", title: "Financial Analysis", pm: "Sneha Mehra", writer: "Ananya Verma" },
-        { id: "BP-4915", title: "Psychology Essay", pm: "Arjun Nair", writer: "Kavita Rao" },
-        { id: "BP-4917", title: "History Report", pm: "Ravi Krishnan", writer: "Vikram Singh" },
-        { id: "BP-4919", title: "Web Dev Project", pm: "Sneha Mehra", writer: "Deepak Joshi" },
-    ]},
-    4: { count: 3, assignments: [
-        { id: "BP-4920", title: "Statistics HW", pm: "Arjun Nair", writer: "Priya Patel" },
-        { id: "BP-4922", title: "English Literature", pm: "Ravi Krishnan", writer: "Kavita Rao" },
-        { id: "BP-4925", title: "Physics Lab", pm: "Sneha Mehra", writer: "Vikram Singh" },
-    ]},
-    7: { count: 1, assignments: [
-        { id: "BP-4930", title: "Business Case Study", pm: "Arjun Nair", writer: "Ananya Verma" },
-    ]},
-    10: { count: 8, assignments: [
-        { id: "BP-4940", title: "Dissertation Ch.3", pm: "Ravi Krishnan", writer: "Ananya Verma" },
-        { id: "BP-4941", title: "Accounting Assignment", pm: "Sneha Mehra", writer: "Deepak Joshi" },
-        { id: "BP-4942", title: "Medical Ethics", pm: "Arjun Nair", writer: "Priya Patel" },
-        { id: "BP-4943", title: "Civil Engineering", pm: "Ravi Krishnan", writer: "Vikram Singh" },
-        { id: "BP-4944", title: "AI Research", pm: "Sneha Mehra", writer: "Kavita Rao" },
-        { id: "BP-4945", title: "Database Design", pm: "Arjun Nair", writer: "Ananya Verma" },
-        { id: "BP-4946", title: "Nursing Essay", pm: "Ravi Krishnan", writer: "Priya Patel" },
-        { id: "BP-4947", title: "Law Brief", pm: "Sneha Mehra", writer: "Deepak Joshi" },
-    ]},
-    12: { count: 4, assignments: [
-        { id: "BP-4950", title: "OS Lab Report", pm: "Arjun Nair", writer: "Vikram Singh" },
-        { id: "BP-4951", title: "Sociology Paper", pm: "Ravi Krishnan", writer: "Kavita Rao" },
-        { id: "BP-4952", title: "Chemistry Lab", pm: "Sneha Mehra", writer: "Ananya Verma" },
-        { id: "BP-4953", title: "Art History", pm: "Arjun Nair", writer: "Priya Patel" },
-    ]},
-    15: { count: 18, assignments: [
-        { id: "BP-4960", title: "Thesis Defense Prep", pm: "Ravi Krishnan", writer: "Ananya Verma" },
-        { id: "BP-4961", title: "MBA Case Study", pm: "Sneha Mehra", writer: "Deepak Joshi" },
-        { id: "BP-4962", title: "Network Security", pm: "Arjun Nair", writer: "Vikram Singh" },
-        { id: "BP-4963", title: "Pharmacology", pm: "Ravi Krishnan", writer: "Kavita Rao" },
-        { id: "BP-4964", title: "UX Design", pm: "Sneha Mehra", writer: "Priya Patel" },
-        { id: "BP-4965", title: "Microeconomics", pm: "Arjun Nair", writer: "Ananya Verma" },
-        { id: "BP-4966", title: "Genetics Lab", pm: "Ravi Krishnan", writer: "Deepak Joshi" },
-        { id: "BP-4967", title: "Philosophy Essay", pm: "Sneha Mehra", writer: "Vikram Singh" },
-        { id: "BP-4968", title: "Cloud Computing", pm: "Arjun Nair", writer: "Kavita Rao" },
-        { id: "BP-4969", title: "Organic Chemistry", pm: "Ravi Krishnan", writer: "Priya Patel" },
-        { id: "BP-4970", title: "Public Health", pm: "Sneha Mehra", writer: "Ananya Verma" },
-        { id: "BP-4971", title: "Machine Learning", pm: "Arjun Nair", writer: "Deepak Joshi" },
-        { id: "BP-4972", title: "Contract Law", pm: "Ravi Krishnan", writer: "Vikram Singh" },
-        { id: "BP-4973", title: "Calculus III", pm: "Sneha Mehra", writer: "Kavita Rao" },
-        { id: "BP-4974", title: "Environmental Sci", pm: "Arjun Nair", writer: "Priya Patel" },
-        { id: "BP-4975", title: "Digital Marketing", pm: "Ravi Krishnan", writer: "Ananya Verma" },
-        { id: "BP-4976", title: "Software Testing", pm: "Sneha Mehra", writer: "Deepak Joshi" },
-        { id: "BP-4977", title: "Political Science", pm: "Arjun Nair", writer: "Vikram Singh" },
-    ]},
-    18: { count: 6, assignments: [
-        { id: "BP-4980", title: "Anatomy Report", pm: "Ravi Krishnan", writer: "Kavita Rao" },
-        { id: "BP-4981", title: "Java Programming", pm: "Sneha Mehra", writer: "Priya Patel" },
-        { id: "BP-4982", title: "Thermal Physics", pm: "Arjun Nair", writer: "Ananya Verma" },
-        { id: "BP-4983", title: "Supply Chain", pm: "Ravi Krishnan", writer: "Deepak Joshi" },
-        { id: "BP-4984", title: "Criminal Justice", pm: "Sneha Mehra", writer: "Vikram Singh" },
-        { id: "BP-4985", title: "Biotech Paper", pm: "Arjun Nair", writer: "Kavita Rao" },
-    ]},
-    20: { count: 2, assignments: [
-        { id: "BP-4990", title: "Electrical Circuits", pm: "Ravi Krishnan", writer: "Priya Patel" },
-        { id: "BP-4991", title: "Education Theory", pm: "Sneha Mehra", writer: "Ananya Verma" },
-    ]},
-    22: { count: 10, assignments: [
-        { id: "BP-4995", title: "Capstone Project", pm: "Arjun Nair", writer: "Deepak Joshi" },
-        { id: "BP-4996", title: "Forensic Science", pm: "Ravi Krishnan", writer: "Vikram Singh" },
-        { id: "BP-4997", title: "Quantum Mechanics", pm: "Sneha Mehra", writer: "Kavita Rao" },
-        { id: "BP-4998", title: "Investment Analysis", pm: "Arjun Nair", writer: "Priya Patel" },
-        { id: "BP-4999", title: "Pediatric Nursing", pm: "Ravi Krishnan", writer: "Ananya Verma" },
-        { id: "BP-5000", title: "Robotics Lab", pm: "Sneha Mehra", writer: "Deepak Joshi" },
-        { id: "BP-5001", title: "Taxation", pm: "Arjun Nair", writer: "Vikram Singh" },
-        { id: "BP-5002", title: "Social Work", pm: "Ravi Krishnan", writer: "Kavita Rao" },
-        { id: "BP-5003", title: "Signal Processing", pm: "Sneha Mehra", writer: "Priya Patel" },
-        { id: "BP-5004", title: "Media Studies", pm: "Arjun Nair", writer: "Ananya Verma" },
-    ]},
-    25: { count: 7, assignments: [
-        { id: "BP-5010", title: "Embedded Systems", pm: "Ravi Krishnan", writer: "Deepak Joshi" },
-        { id: "BP-5011", title: "Clinical Psychology", pm: "Sneha Mehra", writer: "Vikram Singh" },
-        { id: "BP-5012", title: "Strategic Mgmt", pm: "Arjun Nair", writer: "Kavita Rao" },
-        { id: "BP-5013", title: "Fluid Mechanics", pm: "Ravi Krishnan", writer: "Priya Patel" },
-        { id: "BP-5014", title: "Data Mining", pm: "Sneha Mehra", writer: "Ananya Verma" },
-        { id: "BP-5015", title: "Neuroscience", pm: "Arjun Nair", writer: "Deepak Joshi" },
-        { id: "BP-5016", title: "Real Estate Law", pm: "Ravi Krishnan", writer: "Vikram Singh" },
-    ]},
-    27: { count: 3, assignments: [
-        { id: "BP-5020", title: "Compiler Design", pm: "Sneha Mehra", writer: "Kavita Rao" },
-        { id: "BP-5021", title: "Epidemiology", pm: "Arjun Nair", writer: "Priya Patel" },
-        { id: "BP-5022", title: "Brand Strategy", pm: "Ravi Krishnan", writer: "Ananya Verma" },
-    ]},
-    28: { count: 12, assignments: [
-        { id: "BP-5024", title: "Final Submissions", pm: "Sneha Mehra", writer: "Deepak Joshi" },
-        { id: "BP-5025", title: "Semester Closeout", pm: "Arjun Nair", writer: "Vikram Singh" },
-        { id: "BP-5026", title: "Research Methods", pm: "Ravi Krishnan", writer: "Kavita Rao" },
-        { id: "BP-5027", title: "Cybersecurity", pm: "Sneha Mehra", writer: "Priya Patel" },
-        { id: "BP-5028", title: "Bioinformatics", pm: "Arjun Nair", writer: "Ananya Verma" },
-        { id: "BP-5029", title: "HRM Assignment", pm: "Ravi Krishnan", writer: "Deepak Joshi" },
-        { id: "BP-5030", title: "Power Systems", pm: "Sneha Mehra", writer: "Vikram Singh" },
-        { id: "BP-5031", title: "Ethics in AI", pm: "Arjun Nair", writer: "Kavita Rao" },
-        { id: "BP-5032", title: "Palliative Care", pm: "Ravi Krishnan", writer: "Priya Patel" },
-        { id: "BP-5033", title: "Game Theory", pm: "Sneha Mehra", writer: "Ananya Verma" },
-        { id: "BP-5034", title: "Maritime Law", pm: "Arjun Nair", writer: "Deepak Joshi" },
-        { id: "BP-5035", title: "Nanotechnology", pm: "Ravi Krishnan", writer: "Vikram Singh" },
-    ]},
+    1: {
+        count: 2, assignments: [
+            { id: "BP-4901", title: "Essay on Climate Change", pm: "Ravi Krishnan", writer: "Ananya Verma" },
+            { id: "BP-4903", title: "Marketing Plan", pm: "Sneha Mehra", writer: "Deepak Joshi" },
+        ]
+    },
+    3: {
+        count: 5, assignments: [
+            { id: "BP-4910", title: "Data Structures Lab", pm: "Ravi Krishnan", writer: "Priya Patel" },
+            { id: "BP-4912", title: "Financial Analysis", pm: "Sneha Mehra", writer: "Ananya Verma" },
+            { id: "BP-4915", title: "Psychology Essay", pm: "Arjun Nair", writer: "Kavita Rao" },
+            { id: "BP-4917", title: "History Report", pm: "Ravi Krishnan", writer: "Vikram Singh" },
+            { id: "BP-4919", title: "Web Dev Project", pm: "Sneha Mehra", writer: "Deepak Joshi" },
+        ]
+    },
+    4: {
+        count: 3, assignments: [
+            { id: "BP-4920", title: "Statistics HW", pm: "Arjun Nair", writer: "Priya Patel" },
+            { id: "BP-4922", title: "English Literature", pm: "Ravi Krishnan", writer: "Kavita Rao" },
+            { id: "BP-4925", title: "Physics Lab", pm: "Sneha Mehra", writer: "Vikram Singh" },
+        ]
+    },
+    7: {
+        count: 1, assignments: [
+            { id: "BP-4930", title: "Business Case Study", pm: "Arjun Nair", writer: "Ananya Verma" },
+        ]
+    },
+    10: {
+        count: 8, assignments: [
+            { id: "BP-4940", title: "Dissertation Ch.3", pm: "Ravi Krishnan", writer: "Ananya Verma" },
+            { id: "BP-4941", title: "Accounting Assignment", pm: "Sneha Mehra", writer: "Deepak Joshi" },
+            { id: "BP-4942", title: "Medical Ethics", pm: "Arjun Nair", writer: "Priya Patel" },
+            { id: "BP-4943", title: "Civil Engineering", pm: "Ravi Krishnan", writer: "Vikram Singh" },
+            { id: "BP-4944", title: "AI Research", pm: "Sneha Mehra", writer: "Kavita Rao" },
+            { id: "BP-4945", title: "Database Design", pm: "Arjun Nair", writer: "Ananya Verma" },
+            { id: "BP-4946", title: "Nursing Essay", pm: "Ravi Krishnan", writer: "Priya Patel" },
+            { id: "BP-4947", title: "Law Brief", pm: "Sneha Mehra", writer: "Deepak Joshi" },
+        ]
+    },
+    12: {
+        count: 4, assignments: [
+            { id: "BP-4950", title: "OS Lab Report", pm: "Arjun Nair", writer: "Vikram Singh" },
+            { id: "BP-4951", title: "Sociology Paper", pm: "Ravi Krishnan", writer: "Kavita Rao" },
+            { id: "BP-4952", title: "Chemistry Lab", pm: "Sneha Mehra", writer: "Ananya Verma" },
+            { id: "BP-4953", title: "Art History", pm: "Arjun Nair", writer: "Priya Patel" },
+        ]
+    },
+    15: {
+        count: 18, assignments: [
+            { id: "BP-4960", title: "Thesis Defense Prep", pm: "Ravi Krishnan", writer: "Ananya Verma" },
+            { id: "BP-4961", title: "MBA Case Study", pm: "Sneha Mehra", writer: "Deepak Joshi" },
+            { id: "BP-4962", title: "Network Security", pm: "Arjun Nair", writer: "Vikram Singh" },
+            { id: "BP-4963", title: "Pharmacology", pm: "Ravi Krishnan", writer: "Kavita Rao" },
+            { id: "BP-4964", title: "UX Design", pm: "Sneha Mehra", writer: "Priya Patel" },
+            { id: "BP-4965", title: "Microeconomics", pm: "Arjun Nair", writer: "Ananya Verma" },
+            { id: "BP-4966", title: "Genetics Lab", pm: "Ravi Krishnan", writer: "Deepak Joshi" },
+            { id: "BP-4967", title: "Philosophy Essay", pm: "Sneha Mehra", writer: "Vikram Singh" },
+            { id: "BP-4968", title: "Cloud Computing", pm: "Arjun Nair", writer: "Kavita Rao" },
+            { id: "BP-4969", title: "Organic Chemistry", pm: "Ravi Krishnan", writer: "Priya Patel" },
+            { id: "BP-4970", title: "Public Health", pm: "Sneha Mehra", writer: "Ananya Verma" },
+            { id: "BP-4971", title: "Machine Learning", pm: "Arjun Nair", writer: "Deepak Joshi" },
+            { id: "BP-4972", title: "Contract Law", pm: "Ravi Krishnan", writer: "Vikram Singh" },
+            { id: "BP-4973", title: "Calculus III", pm: "Sneha Mehra", writer: "Kavita Rao" },
+            { id: "BP-4974", title: "Environmental Sci", pm: "Arjun Nair", writer: "Priya Patel" },
+            { id: "BP-4975", title: "Digital Marketing", pm: "Ravi Krishnan", writer: "Ananya Verma" },
+            { id: "BP-4976", title: "Software Testing", pm: "Sneha Mehra", writer: "Deepak Joshi" },
+            { id: "BP-4977", title: "Political Science", pm: "Arjun Nair", writer: "Vikram Singh" },
+        ]
+    },
+    18: {
+        count: 6, assignments: [
+            { id: "BP-4980", title: "Anatomy Report", pm: "Ravi Krishnan", writer: "Kavita Rao" },
+            { id: "BP-4981", title: "Java Programming", pm: "Sneha Mehra", writer: "Priya Patel" },
+            { id: "BP-4982", title: "Thermal Physics", pm: "Arjun Nair", writer: "Ananya Verma" },
+            { id: "BP-4983", title: "Supply Chain", pm: "Ravi Krishnan", writer: "Deepak Joshi" },
+            { id: "BP-4984", title: "Criminal Justice", pm: "Sneha Mehra", writer: "Vikram Singh" },
+            { id: "BP-4985", title: "Biotech Paper", pm: "Arjun Nair", writer: "Kavita Rao" },
+        ]
+    },
+    20: {
+        count: 2, assignments: [
+            { id: "BP-4990", title: "Electrical Circuits", pm: "Ravi Krishnan", writer: "Priya Patel" },
+            { id: "BP-4991", title: "Education Theory", pm: "Sneha Mehra", writer: "Ananya Verma" },
+        ]
+    },
+    22: {
+        count: 10, assignments: [
+            { id: "BP-4995", title: "Capstone Project", pm: "Arjun Nair", writer: "Deepak Joshi" },
+            { id: "BP-4996", title: "Forensic Science", pm: "Ravi Krishnan", writer: "Vikram Singh" },
+            { id: "BP-4997", title: "Quantum Mechanics", pm: "Sneha Mehra", writer: "Kavita Rao" },
+            { id: "BP-4998", title: "Investment Analysis", pm: "Arjun Nair", writer: "Priya Patel" },
+            { id: "BP-4999", title: "Pediatric Nursing", pm: "Ravi Krishnan", writer: "Ananya Verma" },
+            { id: "BP-5000", title: "Robotics Lab", pm: "Sneha Mehra", writer: "Deepak Joshi" },
+            { id: "BP-5001", title: "Taxation", pm: "Arjun Nair", writer: "Vikram Singh" },
+            { id: "BP-5002", title: "Social Work", pm: "Ravi Krishnan", writer: "Kavita Rao" },
+            { id: "BP-5003", title: "Signal Processing", pm: "Sneha Mehra", writer: "Priya Patel" },
+            { id: "BP-5004", title: "Media Studies", pm: "Arjun Nair", writer: "Ananya Verma" },
+        ]
+    },
+    25: {
+        count: 7, assignments: [
+            { id: "BP-5010", title: "Embedded Systems", pm: "Ravi Krishnan", writer: "Deepak Joshi" },
+            { id: "BP-5011", title: "Clinical Psychology", pm: "Sneha Mehra", writer: "Vikram Singh" },
+            { id: "BP-5012", title: "Strategic Mgmt", pm: "Arjun Nair", writer: "Kavita Rao" },
+            { id: "BP-5013", title: "Fluid Mechanics", pm: "Ravi Krishnan", writer: "Priya Patel" },
+            { id: "BP-5014", title: "Data Mining", pm: "Sneha Mehra", writer: "Ananya Verma" },
+            { id: "BP-5015", title: "Neuroscience", pm: "Arjun Nair", writer: "Deepak Joshi" },
+            { id: "BP-5016", title: "Real Estate Law", pm: "Ravi Krishnan", writer: "Vikram Singh" },
+        ]
+    },
+    27: {
+        count: 3, assignments: [
+            { id: "BP-5020", title: "Compiler Design", pm: "Sneha Mehra", writer: "Kavita Rao" },
+            { id: "BP-5021", title: "Epidemiology", pm: "Arjun Nair", writer: "Priya Patel" },
+            { id: "BP-5022", title: "Brand Strategy", pm: "Ravi Krishnan", writer: "Ananya Verma" },
+        ]
+    },
+    28: {
+        count: 12, assignments: [
+            { id: "BP-5024", title: "Final Submissions", pm: "Sneha Mehra", writer: "Deepak Joshi" },
+            { id: "BP-5025", title: "Semester Closeout", pm: "Arjun Nair", writer: "Vikram Singh" },
+            { id: "BP-5026", title: "Research Methods", pm: "Ravi Krishnan", writer: "Kavita Rao" },
+            { id: "BP-5027", title: "Cybersecurity", pm: "Sneha Mehra", writer: "Priya Patel" },
+            { id: "BP-5028", title: "Bioinformatics", pm: "Arjun Nair", writer: "Ananya Verma" },
+            { id: "BP-5029", title: "HRM Assignment", pm: "Ravi Krishnan", writer: "Deepak Joshi" },
+            { id: "BP-5030", title: "Power Systems", pm: "Sneha Mehra", writer: "Vikram Singh" },
+            { id: "BP-5031", title: "Ethics in AI", pm: "Arjun Nair", writer: "Kavita Rao" },
+            { id: "BP-5032", title: "Palliative Care", pm: "Ravi Krishnan", writer: "Priya Patel" },
+            { id: "BP-5033", title: "Game Theory", pm: "Sneha Mehra", writer: "Ananya Verma" },
+            { id: "BP-5034", title: "Maritime Law", pm: "Arjun Nair", writer: "Deepak Joshi" },
+            { id: "BP-5035", title: "Nanotechnology", pm: "Ravi Krishnan", writer: "Vikram Singh" },
+        ]
+    },
 };
 
 export const ADMIN_WIN_LOSS = { wins: 4024, losses: 181 };
@@ -697,85 +723,121 @@ export const ADMIN_METRICS: GrowthMetric[] = [
         id: "assignments",
         name: "Assignment Growth",
         description: "Total new assignments received",
-        "1m": { growth: 12.4, data: [
-            { label: "Week 1", value: 110 }, { label: "Week 2", value: 134 }, { label: "Week 3", value: 128 }, { label: "Week 4", value: 152 },
-        ]},
-        "6m": { growth: 34.2, data: [
-            { label: "Sep", value: 380 }, { label: "Oct", value: 420 }, { label: "Nov", value: 465 }, { label: "Dec", value: 510 }, { label: "Jan", value: 548 }, { label: "Feb", value: 524 },
-        ]},
-        "1y": { growth: 58.7, data: [
-            { label: "Mar", value: 310 }, { label: "Apr", value: 330 }, { label: "May", value: 355 }, { label: "Jun", value: 290 }, { label: "Jul", value: 275 }, { label: "Aug", value: 340 }, { label: "Sep", value: 380 }, { label: "Oct", value: 420 }, { label: "Nov", value: 465 }, { label: "Dec", value: 510 }, { label: "Jan", value: 548 }, { label: "Feb", value: 524 },
-        ]},
+        "1m": {
+            growth: 12.4, data: [
+                { label: "Week 1", value: 110 }, { label: "Week 2", value: 134 }, { label: "Week 3", value: 128 }, { label: "Week 4", value: 152 },
+            ]
+        },
+        "6m": {
+            growth: 34.2, data: [
+                { label: "Sep", value: 380 }, { label: "Oct", value: 420 }, { label: "Nov", value: 465 }, { label: "Dec", value: 510 }, { label: "Jan", value: 548 }, { label: "Feb", value: 524 },
+            ]
+        },
+        "1y": {
+            growth: 58.7, data: [
+                { label: "Mar", value: 310 }, { label: "Apr", value: 330 }, { label: "May", value: 355 }, { label: "Jun", value: 290 }, { label: "Jul", value: 275 }, { label: "Aug", value: 340 }, { label: "Sep", value: 380 }, { label: "Oct", value: 420 }, { label: "Nov", value: 465 }, { label: "Dec", value: 510 }, { label: "Jan", value: 548 }, { label: "Feb", value: 524 },
+            ]
+        },
     },
     {
         id: "dissertations",
         name: "Dissertation Growth",
         description: "Dissertation & thesis orders",
-        "1m": { growth: 8.1, data: [
-            { label: "Week 1", value: 22 }, { label: "Week 2", value: 28 }, { label: "Week 3", value: 25 }, { label: "Week 4", value: 31 },
-        ]},
-        "6m": { growth: 22.5, data: [
-            { label: "Sep", value: 65 }, { label: "Oct", value: 72 }, { label: "Nov", value: 80 }, { label: "Dec", value: 88 }, { label: "Jan", value: 95 }, { label: "Feb", value: 106 },
-        ]},
-        "1y": { growth: 41.3, data: [
-            { label: "Mar", value: 52 }, { label: "Apr", value: 55 }, { label: "May", value: 60 }, { label: "Jun", value: 48 }, { label: "Jul", value: 45 }, { label: "Aug", value: 58 }, { label: "Sep", value: 65 }, { label: "Oct", value: 72 }, { label: "Nov", value: 80 }, { label: "Dec", value: 88 }, { label: "Jan", value: 95 }, { label: "Feb", value: 106 },
-        ]},
+        "1m": {
+            growth: 8.1, data: [
+                { label: "Week 1", value: 22 }, { label: "Week 2", value: 28 }, { label: "Week 3", value: 25 }, { label: "Week 4", value: 31 },
+            ]
+        },
+        "6m": {
+            growth: 22.5, data: [
+                { label: "Sep", value: 65 }, { label: "Oct", value: 72 }, { label: "Nov", value: 80 }, { label: "Dec", value: 88 }, { label: "Jan", value: 95 }, { label: "Feb", value: 106 },
+            ]
+        },
+        "1y": {
+            growth: 41.3, data: [
+                { label: "Mar", value: 52 }, { label: "Apr", value: 55 }, { label: "May", value: 60 }, { label: "Jun", value: 48 }, { label: "Jul", value: 45 }, { label: "Aug", value: 58 }, { label: "Sep", value: 65 }, { label: "Oct", value: 72 }, { label: "Nov", value: 80 }, { label: "Dec", value: 88 }, { label: "Jan", value: 95 }, { label: "Feb", value: 106 },
+            ]
+        },
     },
     {
         id: "referrals",
         name: "Referral Growth",
         description: "New referral signups via codes",
-        "1m": { growth: 18.6, data: [
-            { label: "Week 1", value: 34 }, { label: "Week 2", value: 42 }, { label: "Week 3", value: 38 }, { label: "Week 4", value: 47 },
-        ]},
-        "6m": { growth: 45.0, data: [
-            { label: "Sep", value: 88 }, { label: "Oct", value: 102 }, { label: "Nov", value: 115 }, { label: "Dec", value: 130 }, { label: "Jan", value: 145 }, { label: "Feb", value: 161 },
-        ]},
-        "1y": { growth: 72.4, data: [
-            { label: "Mar", value: 60 }, { label: "Apr", value: 65 }, { label: "May", value: 70 }, { label: "Jun", value: 58 }, { label: "Jul", value: 62 }, { label: "Aug", value: 78 }, { label: "Sep", value: 88 }, { label: "Oct", value: 102 }, { label: "Nov", value: 115 }, { label: "Dec", value: 130 }, { label: "Jan", value: 145 }, { label: "Feb", value: 161 },
-        ]},
+        "1m": {
+            growth: 18.6, data: [
+                { label: "Week 1", value: 34 }, { label: "Week 2", value: 42 }, { label: "Week 3", value: 38 }, { label: "Week 4", value: 47 },
+            ]
+        },
+        "6m": {
+            growth: 45.0, data: [
+                { label: "Sep", value: 88 }, { label: "Oct", value: 102 }, { label: "Nov", value: 115 }, { label: "Dec", value: 130 }, { label: "Jan", value: 145 }, { label: "Feb", value: 161 },
+            ]
+        },
+        "1y": {
+            growth: 72.4, data: [
+                { label: "Mar", value: 60 }, { label: "Apr", value: 65 }, { label: "May", value: 70 }, { label: "Jun", value: 58 }, { label: "Jul", value: 62 }, { label: "Aug", value: 78 }, { label: "Sep", value: 88 }, { label: "Oct", value: 102 }, { label: "Nov", value: 115 }, { label: "Dec", value: 130 }, { label: "Jan", value: 145 }, { label: "Feb", value: 161 },
+            ]
+        },
     },
     {
         id: "signups",
         name: "User Signup Growth",
         description: "New student registrations",
-        "1m": { growth: 15.2, data: [
-            { label: "Week 1", value: 68 }, { label: "Week 2", value: 82 }, { label: "Week 3", value: 74 }, { label: "Week 4", value: 91 },
-        ]},
-        "6m": { growth: 38.8, data: [
-            { label: "Sep", value: 210 }, { label: "Oct", value: 245 }, { label: "Nov", value: 268 }, { label: "Dec", value: 290 }, { label: "Jan", value: 315 }, { label: "Feb", value: 340 },
-        ]},
-        "1y": { growth: 65.1, data: [
-            { label: "Mar", value: 155 }, { label: "Apr", value: 168 }, { label: "May", value: 180 }, { label: "Jun", value: 145 }, { label: "Jul", value: 138 }, { label: "Aug", value: 190 }, { label: "Sep", value: 210 }, { label: "Oct", value: 245 }, { label: "Nov", value: 268 }, { label: "Dec", value: 290 }, { label: "Jan", value: 315 }, { label: "Feb", value: 340 },
-        ]},
+        "1m": {
+            growth: 15.2, data: [
+                { label: "Week 1", value: 68 }, { label: "Week 2", value: 82 }, { label: "Week 3", value: 74 }, { label: "Week 4", value: 91 },
+            ]
+        },
+        "6m": {
+            growth: 38.8, data: [
+                { label: "Sep", value: 210 }, { label: "Oct", value: 245 }, { label: "Nov", value: 268 }, { label: "Dec", value: 290 }, { label: "Jan", value: 315 }, { label: "Feb", value: 340 },
+            ]
+        },
+        "1y": {
+            growth: 65.1, data: [
+                { label: "Mar", value: 155 }, { label: "Apr", value: 168 }, { label: "May", value: 180 }, { label: "Jun", value: 145 }, { label: "Jul", value: 138 }, { label: "Aug", value: 190 }, { label: "Sep", value: 210 }, { label: "Oct", value: 245 }, { label: "Nov", value: 268 }, { label: "Dec", value: 290 }, { label: "Jan", value: 315 }, { label: "Feb", value: 340 },
+            ]
+        },
     },
     {
         id: "revenue",
         name: "Revenue Growth",
         description: "Monthly revenue trend",
-        "1m": { growth: 9.8, data: [
-            { label: "Week 1", value: 180 }, { label: "Week 2", value: 210 }, { label: "Week 3", value: 195 }, { label: "Week 4", value: 230 },
-        ]},
-        "6m": { growth: 28.6, data: [
-            { label: "Sep", value: 520 }, { label: "Oct", value: 580 }, { label: "Nov", value: 640 }, { label: "Dec", value: 710 }, { label: "Jan", value: 760 }, { label: "Feb", value: 815 },
-        ]},
-        "1y": { growth: 52.3, data: [
-            { label: "Mar", value: 380 }, { label: "Apr", value: 400 }, { label: "May", value: 430 }, { label: "Jun", value: 350 }, { label: "Jul", value: 340 }, { label: "Aug", value: 460 }, { label: "Sep", value: 520 }, { label: "Oct", value: 580 }, { label: "Nov", value: 640 }, { label: "Dec", value: 710 }, { label: "Jan", value: 760 }, { label: "Feb", value: 815 },
-        ]},
+        "1m": {
+            growth: 9.8, data: [
+                { label: "Week 1", value: 180 }, { label: "Week 2", value: 210 }, { label: "Week 3", value: 195 }, { label: "Week 4", value: 230 },
+            ]
+        },
+        "6m": {
+            growth: 28.6, data: [
+                { label: "Sep", value: 520 }, { label: "Oct", value: 580 }, { label: "Nov", value: 640 }, { label: "Dec", value: 710 }, { label: "Jan", value: 760 }, { label: "Feb", value: 815 },
+            ]
+        },
+        "1y": {
+            growth: 52.3, data: [
+                { label: "Mar", value: 380 }, { label: "Apr", value: 400 }, { label: "May", value: 430 }, { label: "Jun", value: 350 }, { label: "Jul", value: 340 }, { label: "Aug", value: 460 }, { label: "Sep", value: 520 }, { label: "Oct", value: 580 }, { label: "Nov", value: 640 }, { label: "Dec", value: 710 }, { label: "Jan", value: 760 }, { label: "Feb", value: 815 },
+            ]
+        },
     },
     {
         id: "completion_rate",
         name: "Completion Rate",
         description: "Percentage of assignments completed on time",
-        "1m": { growth: 2.1, data: [
-            { label: "Week 1", value: 91 }, { label: "Week 2", value: 93 }, { label: "Week 3", value: 92 }, { label: "Week 4", value: 94 },
-        ]},
-        "6m": { growth: 5.4, data: [
-            { label: "Sep", value: 88 }, { label: "Oct", value: 89 }, { label: "Nov", value: 90 }, { label: "Dec", value: 91 }, { label: "Jan", value: 93 }, { label: "Feb", value: 94 },
-        ]},
-        "1y": { growth: 8.2, data: [
-            { label: "Mar", value: 85 }, { label: "Apr", value: 86 }, { label: "May", value: 86 }, { label: "Jun", value: 87 }, { label: "Jul", value: 87 }, { label: "Aug", value: 88 }, { label: "Sep", value: 88 }, { label: "Oct", value: 89 }, { label: "Nov", value: 90 }, { label: "Dec", value: 91 }, { label: "Jan", value: 93 }, { label: "Feb", value: 94 },
-        ]},
+        "1m": {
+            growth: 2.1, data: [
+                { label: "Week 1", value: 91 }, { label: "Week 2", value: 93 }, { label: "Week 3", value: 92 }, { label: "Week 4", value: 94 },
+            ]
+        },
+        "6m": {
+            growth: 5.4, data: [
+                { label: "Sep", value: 88 }, { label: "Oct", value: 89 }, { label: "Nov", value: 90 }, { label: "Dec", value: 91 }, { label: "Jan", value: 93 }, { label: "Feb", value: 94 },
+            ]
+        },
+        "1y": {
+            growth: 8.2, data: [
+                { label: "Mar", value: 85 }, { label: "Apr", value: 86 }, { label: "May", value: 86 }, { label: "Jun", value: 87 }, { label: "Jul", value: 87 }, { label: "Aug", value: 88 }, { label: "Sep", value: 88 }, { label: "Oct", value: 89 }, { label: "Nov", value: 90 }, { label: "Dec", value: 91 }, { label: "Jan", value: 93 }, { label: "Feb", value: 94 },
+            ]
+        },
     },
 ];
 
@@ -802,14 +864,12 @@ export const ADMIN_WRITER_WORKLOADS: WriterWorkload[] = [
 /* ═══════════════════════ Admin Assignments ═══════════════════════ */
 
 export const ADMIN_STATUS_STEPS = [
-    "Posted",
-    "Processing",
-    "Assigned to PM",
-    "Assigned to Freelancer",
+    "Submitted",
+    "Assigned PM",
+    "Assigned Freelancer",
     "In Progress",
-    "Completed (Marks Pending)",
     "Completed",
-    "Review Received",
+    "Marks Received",
 ] as const;
 
 export const ADMIN_STREAMS = [
